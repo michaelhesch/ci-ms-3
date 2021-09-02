@@ -2,6 +2,7 @@
 {% block content %}
 <h3 class="text-center">Register a new account</h3>
 <div class="container-lg">
+  <div class="row">
   <form method="POST" action="{{ url_for('register') }}">
     <!-- 2 column grid layout for the first and last name inputs -->
     <div class="row mb-4">
@@ -50,5 +51,14 @@
       </div>
     </div>
   </form>
+  </div>
+  <div class="row">
+    <div class="col">
+      <p class="text-center">
+        Already have an account?
+        <a href="{{ url_for('login') }}">Log In Here</a>
+      </p>
+    </div>
+  </div>
 </div>
 {% endblock %}
