@@ -88,6 +88,18 @@
     </header>
     <!-- Main content block -->
     <main>
+    <!-- Flash messages container -->
+    <section>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="row text-center flash-message">
+                        <h5>{{ message }}</h5>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </section>
     {% block content %}
     {% endblock %}
     </main>

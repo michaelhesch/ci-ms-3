@@ -1,25 +1,29 @@
 {% extends "base.html" %}
 {% block content %}
+<h3 class="text-center">Register a new account</h3>
 <div class="container-lg">
-  <form>
-    <!-- 2 column grid layout with text inputs for the first and last names -->
+  <form method="POST" action="{{ url_for('register') }}">
+    <!-- 2 column grid layout for the first and last name inputs -->
     <div class="row mb-4">
       <div class="col">
         <div class="form-outline">
-          <input type="text" id="firstName" name="firstName" class="form-control" />
+          <input type="text" id="firstName" name="firstName" class="form-control" 
+          pattern="^[a-zA-Z]{4,20}$" />
           <label class="form-label" for="firstName">First name</label>
         </div>
       </div>
       <div class="col">
         <div class="form-outline">
-          <input type="text" id="lastName" name="lastName" class="form-control" />
+          <input type="text" id="lastName" name="lastName" class="form-control" 
+          pattern="^[a-zA-Z]{4,20}$" />
           <label class="form-label" for="lastName">Last name</label>
         </div>
       </div>
     </div>
     <!-- Username input -->
     <div class="form-outline mb-4">
-      <input type="text" id="username" name="username" class="form-control" />
+      <input type="text" id="username" name="username" class="form-control" 
+      pattern="^[a-zA-Z0-9]{4,20}$" />
       <label class="form-label" for="username">Username</label>
     </div>
     <!-- Email input -->
@@ -29,16 +33,22 @@
     </div>
     <!-- Password input -->
     <div class="form-outline mb-4">
-      <input type="password" id="pass1" name="pass2" class="form-control" />
+      <input type="password" id="pass1" name="pass1" class="form-control" 
+      pattern="^[a-zA-Z0-9]{6,20}$" />
       <label class="form-label" for="pass1">Password</label>
     </div>
     <!-- Confirm password input -->
     <div class="form-outline mb-4">
-      <input type="password" id="pass2" name="pass2" class="form-control" />
+      <input type="password" id="pass2" name="pass2" class="form-control" 
+      pattern="^[a-zA-Z0-9]{6,20}$" />
       <label class="form-label" for="pass2">Confirm Password</label>
     </div>
     <!-- Submit button -->
-    <button type="submit" class="btn btn-primary btn-block mb-4">Register</button>
+    <div class="row">
+      <div class="form-outline col-4 col-md-4">
+        <button type="submit" class="btn btn-primary btn-block mb-4">Register</button>
+      </div>
+    </div>
   </form>
 </div>
 {% endblock %}
