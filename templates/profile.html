@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-<h3 class="text-center">{{ username }}'s Profile</h3>
+<h3 class="text-center">{{ username|capitalize }}'s Profile</h3>
 <div class="container-lg">
+  <p class="text-center">Below are all of the photos you have added to the platform!</p>
+  <br />
   <div class="row row-cols-1 row-cols-md-2 g-4">
     {% for photo in photos %}
     <div class="col">
