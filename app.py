@@ -2,6 +2,7 @@ import os
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+from datetime import datetime
 from dotenv import load_dotenv
 from flask_pymongo import PyMongo
 from flask import (
@@ -150,18 +151,19 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route("/photo")
-def photo():
-    #photo = 
+@app.route("/photo/<photo>")
+def photo(photo):
+    photo =  mongo.db.photos.find_one({"_id": ObjectId(photo)})
 
     username = mongo.db.users.find_one(
         {"user_name": session["user"]})["user_name"]
-    return render_template("photo.html", username=username)
+    return render_template("photo.html", username=username, photo=photo)
 
 
 @app.route("/add_photo", methods=["GET", "POST"])
 def add_photo():
     categories = mongo.db.categories.find().sort("category_name", 1)
+
     return render_template("add_photo.html", categories=categories)
 
 
@@ -170,8 +172,8 @@ def upload_photo():
 # Cloudinary image upload
     cloudinary.config(
         cloud_name = os.getenv('CLOUD_NAME'), 
-        api_key=os.getenv('API_KEY'), 
-        api_secret=os.getenv('API_SECRET'))
+        api_key = os.getenv('API_KEY'), 
+        api_secret = os.getenv('API_SECRET'))
 
     upload_result = None
 
@@ -180,11 +182,29 @@ def upload_photo():
 
         if file_to_upload:
             upload_result = cloudinary.uploader.upload(file_to_upload)
-            flash("Photo upload sucessful!")
-            return jsonify(upload_result)
-    
+            jsonify(upload_result)
+            # Converts form data into dictionary before inserting to DB
+            photo = {
+                "category_name": request.form.get("category_name"),
+                "title": request.form.get("title"),
+                "description": request.form.get("description"),
+                "user_uploaded_by": session["user"],
+                "user_added_datetime": datetime.now(),
+                "url": "",
+                "num_likes": 0
+            }
+            mongo.db.photos.insert_one(photo)
+            flash("Photo added!")
+        return redirect(url_for("profile", username=session["user"]))
+
     else:
         flash("Photo not uploaded, please try again.")
+
+
+@app.route("/feed")
+def photo_feed():
+    photos = list(mongo.db.photos.find())
+    return render_template("feed.html", photos=photos)
 
 
 # Create app
