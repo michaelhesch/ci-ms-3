@@ -2,7 +2,7 @@
 {% block content %}
 <div class="container-lg">
   <div class="row">
-    <form method="POST" action="{{ url_for('upload_photo') }}">
+    <form method="POST" enctype="multipart/form-data" action="{{ url_for('upload_photo') }}">
       <!-- Photo title input -->
       <div class="form-outline mb-4">
         <input type="text" id="title" name="title" class="form-control" 
@@ -17,12 +17,12 @@
       </div>
         <!-- Section title -->
       <div class="form-outline mb-4">
-        <p>Select Photo Category</p>
+        <label for="category_name">Select Photo Category</label>
         <section class="border p-4 mb-4 d-flex justify-content-left">
-            <select class="select" required>
+            <select class="select" id="category_name" name="category_name">
               <option value="" disabled selected>Choose Photo Category</option>
             {% for category in categories %}
-              <option value="{{ category.category_name }}" name="{{ category.category_name }}">{{ category.category_name }}</option>
+              <option value="{{ category.category_name }}">{{ category.category_name }}</option>
             {% endfor %}
             </select>
             <!--<label class="form-label select-label"> category.description </label>-->
@@ -31,13 +31,13 @@
       <!-- Photo picker input-->
       <div class="form-outline mb-4">
         Select Photo File:<br />
-        <input id="media" type="file" />
+        <input id="media" type="file" name="file" />
         <br />
       </div>
-    <input type="submit" name="" class="btn btn-primary mb-4" value="Upload Photo" /><br />
+    <input type="submit" class="btn btn-primary mb-4" value="Upload Photo" /><br />
 </form>
 
-<script>
+<!--<script>
   document.querySelector("form").addEventListener("submit", (event) => {
     event.preventDefault();
     const fileInput = document.querySelector("#media");
@@ -64,7 +64,7 @@
         console.log(error);
       });
   });
-</script>
+</script>-->
 
 
 {% endblock %}

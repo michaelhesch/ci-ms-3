@@ -2,6 +2,7 @@ import os
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+import json
 from datetime import datetime
 from dotenv import load_dotenv
 from flask_pymongo import PyMongo
@@ -167,7 +168,7 @@ def add_photo():
     return render_template("add_photo.html", categories=categories)
 
 
-@app.route("/upload", methods=["POST"])
+@app.route("/upload", methods=["GET", "POST"])
 def upload_photo():
 # Cloudinary image upload
     cloudinary.config(
@@ -182,23 +183,21 @@ def upload_photo():
 
         if file_to_upload:
             upload_result = cloudinary.uploader.upload(file_to_upload)
-            jsonify(upload_result)
-            # Converts form data into dictionary before inserting to DB
-            photo = {
-                "category_name": request.form.get("category_name"),
-                "title": request.form.get("title"),
-                "description": request.form.get("description"),
-                "user_uploaded_by": session["user"],
-                "user_added_datetime": datetime.now(),
-                "url": "",
-                "num_likes": 0
-            }
-            mongo.db.photos.insert_one(photo)
-            flash("Photo added!")
-        return redirect(url_for("profile", username=session["user"]))
+        
+        # Build dictionary from form data before sending to DB
+        photo = {
+            "category_name": request.form.get("category_name"),
+            "title": request.form.get("title"),
+            "description": request.form.get("description"),
+            "user_uploaded_by": session["user"],
+            "user_added_datetime": datetime.now(),
+            "url": upload_result["secure_url"],
+            "num_likes": 0
+        }
+        mongo.db.photos.insert_one(photo)
+        flash("Photo added!")
 
-    else:
-        flash("Photo not uploaded, please try again.")
+    return redirect(url_for("profile", username=session["user"]))
 
 
 @app.route("/feed")
