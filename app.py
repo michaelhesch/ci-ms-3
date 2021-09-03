@@ -184,7 +184,7 @@ def upload_photo():
         if file_to_upload:
             upload_result = cloudinary.uploader.upload(file_to_upload)
         
-        # Build dictionary from form data before sending to DB
+        # Build dictionary from form data before sending to Photos table
         photo = {
             "category_name": request.form.get("category_name"),
             "title": request.form.get("title"),
@@ -205,6 +205,37 @@ def photo_feed():
     photos = list(mongo.db.photos.find())
     return render_template("feed.html", photos=photos)
 
+
+@app.route("/like/<photo>,<user>", methods=["GET", "POST"])
+def like_photo(photo, user):
+    print(photo)
+    print(user)
+    if request.method == "POST":
+        # TODO: Extract the _id string only, not as an ObjectId
+        # TODO: Add check against db for existing photo/user record
+        user_id = mongo.db.users.find_one(
+            {"user_name": session["user"]})["_id"]
+        username = mongo.db.users.find_one(
+            {"user_name": session["user"]})["user_name"]
+        user_photo = {
+            "user_id": ObjectId(user_id),
+            "photo_id": photo,
+            "liked": True,
+            "liked_by": username
+        }
+        # Insert new like record into DB
+        mongo.db.userPhotos.insert_one(user_photo)
+        # Increment like count on photo table in DB
+        # TODO: Implement like/unlike toggle functionality
+        current_photo = mongo.db.photos.find_one(
+            {"_id": ObjectId(photo)})
+        current_likes = current_photo["num_likes"]
+        new_likes = current_likes + 1
+        filter = { '_id': ObjectId(photo) }
+        update_likes = { "$set": { 'num_likes': new_likes }}
+        mongo.db.photos.update_one(filter, update_likes)
+
+    return redirect(url_for('photo', photo=photo))
 
 # Create app
 if __name__ == "__main__":
