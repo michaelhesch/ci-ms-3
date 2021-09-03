@@ -5,12 +5,25 @@ from flask import (
     redirect, request, session, url_for)
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import LoginManager, login_required, current_user
 # Import environment variables for local development
 if os.path.exists("env.py"):
     import env
 
 # Define Flask app
 app = Flask(__name__)
+
+# Initialize login manager
+#login_manager = LoginManager()
+#login_manager.init_app(app)
+
+
+#@login_manager.user_loader
+#def load_user(user):
+#    if session["user"]:
+#        return mongo.db.users.find_one(
+#            {"user_name": request.form.get("username").lower()})
+
 
 # Import environment variables for MongoDB
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
@@ -112,24 +125,35 @@ def login():
 
 
 @app.route("/profile/<username>", methods=["GET", "POST"])
+#@login_required
 def profile(username):
     # Take current session user's username and pass to profile page
     username = mongo.db.users.find_one(
         {"user_name": session["user"]})["user_name"]
 
+    photos = list(mongo.db.photos.find())
     # Check session cookie is correct for user before returning profile
     if session["user"]:
-        return render_template("profile.html", username=username)
+        return render_template("profile.html", username=username, photos=photos)
 
     return redirect(url_for("login"))
 
 
 @app.route("/logout")
+#@login_required
 def logout():
     flash("You have been logged out.")
     session.pop("user")
     return redirect(url_for("login"))
 
+
+@app.route("/photo")
+def photo():
+    #photo = 
+
+    username = mongo.db.users.find_one(
+        {"user_name": session["user"]})["user_name"]
+    return render_template("photo.html", username=username)
 
 # Create app
 if __name__ == "__main__":
