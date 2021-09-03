@@ -1,7 +1,11 @@
 import os
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+from dotenv import load_dotenv
 from flask_pymongo import PyMongo
 from flask import (
-    Flask, render_template, flash, 
+    Flask, render_template, flash, jsonify,
     redirect, request, session, url_for)
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -24,6 +28,7 @@ app = Flask(__name__)
 #        return mongo.db.users.find_one(
 #            {"user_name": request.form.get("username").lower()})
 
+load_dotenv()
 
 # Import environment variables for MongoDB
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
@@ -102,9 +107,7 @@ def login():
         
         if existing_user:
             # Check hashed pass from DB matches user input
-            if request.form.get("pass1") != request.form.get("pass2"):
-                flash("Incorrect login details, please try again.")
-            elif check_password_hash(
+            if check_password_hash(
                 existing_user["password"], request.form.get("pass1")):
                     session["user"] = request.form.get("username").lower()
                     flash("Welcome back, {}".format(
@@ -154,6 +157,35 @@ def photo():
     username = mongo.db.users.find_one(
         {"user_name": session["user"]})["user_name"]
     return render_template("photo.html", username=username)
+
+
+@app.route("/add_photo", methods=["GET", "POST"])
+def add_photo():
+    categories = mongo.db.categories.find().sort("category_name", 1)
+    return render_template("add_photo.html", categories=categories)
+
+
+@app.route("/upload", methods=["POST"])
+def upload_photo():
+# Cloudinary image upload
+    cloudinary.config(
+        cloud_name = os.getenv('CLOUD_NAME'), 
+        api_key=os.getenv('API_KEY'), 
+        api_secret=os.getenv('API_SECRET'))
+
+    upload_result = None
+
+    if request.method == 'POST':
+        file_to_upload = request.files['file']
+
+        if file_to_upload:
+            upload_result = cloudinary.uploader.upload(file_to_upload)
+            flash("Photo upload sucessful!")
+            return jsonify(upload_result)
+    
+    else:
+        flash("Photo not uploaded, please try again.")
+
 
 # Create app
 if __name__ == "__main__":
