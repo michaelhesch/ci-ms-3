@@ -11,6 +11,14 @@
           <p class="card-text">
             {{ photo.description }}
           </p>
+          <p>
+            Number of likes: {{ photo.num_likes }}
+          <form method="POST" action="{{ url_for('like_photo', photo=photo._id, user=session['user']) }}">
+            <button type="submit" class="btn btn-primary">
+              Like
+            </button>
+          </form>
+          </p>
           <button class="btn btn-primary mb-4" onclick="goBack()">Go Back</button>
         </div>
       </div>
