@@ -113,7 +113,7 @@
     <!-- Main content block -->
     <main>
     <!-- Flash messages container -->
-    <section>
+    <header>
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 {% for message in messages %}
@@ -124,7 +124,7 @@
             {% endif %}
         {% endwith %}
         <br />
-    </section>
+    </header>
     <!-- Main content container -->
     {% block content %}
     {% endblock %}
