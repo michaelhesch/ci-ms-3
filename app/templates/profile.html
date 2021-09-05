@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="py-4 text-center">
+  <h1>User: {{ user.username }}</h1>
+  <p>E-Mail Address: {{ user.email }}</p>
+  <p>About Me: {{ user.about_me }}</p>
+  <hr>
+  <p><a class="nav-link" href="{{ url_for('edit_profile', id=user.id) }}">Edit About Me</a></p>
+</div>
+{% endblock %}
