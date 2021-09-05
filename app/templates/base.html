@@ -71,17 +71,17 @@
                                         href="{{ url_for('index') }}">Add Photo</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ url_for('logout') }}">Log Out</a>
+                                    <a class="nav-link" href="{{ url_for('auth.logout') }}">Log Out</a>
                                 </li>
                             {% else %}
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+                                    <a class="nav-link" href="#">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                                    <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+                                    <a class="nav-link" href="{{ url_for('auth.register') }}">Register</a>
                                 </li>
                         {% endif %}
                     </ul>
@@ -117,20 +117,22 @@
     <!-- Main content block -->
     <main>
     <!-- Flash messages container -->
-    <header>
+    <div class="container">
         {% with messages = get_flashed_messages() %}
             {% if messages %}
-            <div class="row text-center flash-message">
-                <ul>
                 {% for message in messages %}
-                            <li>{{ message }}</li>
+                <div class="row text-center alert alert-info" role="alert">
+                    {{ message }}
+                </div>
                 {% endfor %}
-                </ul>
-            </div>
             {% endif %}
         {% endwith %}
         <br />
-    </header>
+        <div class="row text-center">
+            {% block app_content %}
+            {% endblock %}
+        </div>
+    </div>
     <!-- Main content container -->
     {% block content %}
     {% endblock %}
