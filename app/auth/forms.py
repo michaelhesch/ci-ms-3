@@ -1,9 +1,7 @@
-from typing import Text
 from flask_wtf import FlaskForm
-from mongoengine.fields import EmailField
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
-from wtforms.widgets.core import TextArea
+# from wtforms.widgets.core import TextArea
 from app.models import User
 
 # Define login form structure & validation
@@ -55,8 +53,3 @@ class RegistrationForm(FlaskForm):
         if duplicate is not None:
             raise ValidationError(
                 'Invalid username, please try a new username.')
-
-# Define edit user profile form
-class EditProfileForm(FlaskForm):
-    about_me = TextAreaField('About Me', validators=[Length(min=0, max=180)])
-    submit = SubmitField('Submit')
