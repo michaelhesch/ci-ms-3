@@ -15,4 +15,4 @@ login = LoginManager(app)
 login.session_protection = "strong"
 login.login_view = 'login'
 
-from app import routes
+from app import routes, models, errors

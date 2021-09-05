@@ -2,7 +2,7 @@ from app import app
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
-from app.forms import LoginForm, RegistrationForm
+from app.forms import EditProfileForm, LoginForm, RegistrationForm
 from app.models import User
 
 @app.route('/')
@@ -64,6 +64,35 @@ def register():
         flash("You have registered a new account!")
         return redirect(url_for('index'))
     return render_template('register.html', title='Register', form=form)
+
+
+@app.route('/profile/<username>')
+@login_required
+def profile(username):
+    # Checks for username match, returns 404 error if no match found
+    user = User.objects(username=username).first_or_404()
+    return render_template('/profile.html', title=f"{user.username}", user=user)
+
+
+@app.route('/edit_profile/<id>', methods=["GET", "POST"])
+@login_required
+def edit_profile(id):
+    user = User.objects.get(pk=id)
+    # Check for match of user's username against session username
+    if user != current_user:
+        flash('You can only edit your own profile!')
+        return redirect(url_for('index'))
+    form = EditProfileForm()
+    # Update form logic on post request
+    if form.validate_on_submit():
+        user.about_me = form.about_me.data
+        user.save()
+        flash("Your account has been updated!")
+        return redirect(url_for('profile', username=user.username))
+    # Populate form with existing data on get request
+    elif request.method == "GET":
+        form.about_me.data = user.about_me
+    return render_template('edit_profile.html', title='Edit Profile', user=user, form=form)
 
 
 @app.route('/logout')

@@ -7,6 +7,7 @@ class User(UserMixin, db.Document):
     first_name = db.StringField(max_length=25, required=True)
     last_name = db.StringField(max_length=35, required=True)
     email = db.EmailField(max_length=100, unique=True, required=True)
+    about_me = db.StringField(max_length=180)
     password_hash = db.StringField(required=True)
 
     def set_password(self, password):
