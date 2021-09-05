@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<h3 class="text-center">{{ photo.title }}</h3>
+<div class="container-lg">
+  <div class="row row-cols-1">
+    <div class="col">
+      <div class="card">
+        <img src="{{ photo.url }}" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <small><em>Uploaded by: {{ photo.user_uploaded_by }}</em></small>
+          <p class="card-text">
+            {{ photo.description }}
+          </p>
+          <p>
+            Number of likes: {{ photo.num_likes }}
+          <form method="POST" action="{{ url_for('like_photo', photo=photo._id, user=session['user']) }}">
+            <button type="submit" class="btn btn-primary">
+              Like
+            </button>
+          </form>
+          </p>
+          <button class="btn btn-primary mb-4" onclick="goBack()">Go Back</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Returns user to previous page -->
+<!-- Accounts for images able to be
+   viewed from feed or profile page -->
+<script>
+  function goBack() {
+    window.history.back();
+  }
+</script>
+{% endblock %}
