@@ -6,7 +6,7 @@ class User(UserMixin, db.Document):
     username = db.StringField(max_length=14, unique=True, required=True)
     first_name = db.StringField(max_length=25, required=True)
     last_name = db.StringField(max_length=35, required=True)
-    email = db.EmailField(max_length=100, unique=True, required=True)
+    email = db.EmailField(max_length=50, unique=True, required=True)
     about_me = db.StringField(max_length=180)
     password_hash = db.StringField(required=True)
 
