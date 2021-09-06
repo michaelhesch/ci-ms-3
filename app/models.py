@@ -2,6 +2,7 @@ import datetime
 from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from cloudinary import uploader
 
 # User class setup
 class User(UserMixin, db.Document):
@@ -34,12 +35,16 @@ class Photo(db.Document):
     title = db.StringField(max_length=30, unique=True, required=True)
     description = db.StringField(max_length=180)
     user_uploaded_by = db.StringField(max_length=14, required=True)
-    user_added_datetime = db.DateTimeField(default=datetime.datetime)
+    user_added_datetime = db.DateTimeField(default=datetime.datetime.utcnow)
     url = db.URLField()
     likes = db.IntField()
 
     def __repr__(self):
         return '<Photo {}>'.format(self.title)
+
+    def upload_photo(self, user, new_photo):
+        user_folder = f"ooo/{user}"
+        upload_result = uploader.upload(new_photo, user_folder=user_folder)
 
 # Flask login user loader - gets user ID from DB
 @login.user_loader
