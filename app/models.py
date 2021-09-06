@@ -42,9 +42,10 @@ class Photo(db.Document):
     def __repr__(self):
         return '<Photo {}>'.format(self.title)
 
-    def upload_photo(self, user, new_photo):
+    # TODO implement folders for each user's photos in cloudinary
+    """def upload_photo(self, user, new_photo):
         user_folder = f"ooo/{user}"
-        upload_result = uploader.upload(new_photo, user_folder=user_folder)
+        upload_result = uploader.upload(new_photo, user_folder=user_folder)"""
 
 # Flask login user loader - gets user ID from DB
 @login.user_loader
