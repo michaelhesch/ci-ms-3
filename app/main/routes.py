@@ -1,26 +1,17 @@
 from app import db
 from flask import render_template, flash, redirect, url_for, request, current_app
 from flask_login import current_user, login_required
-# from werkzeug.urls import url_parse
 from app.main.forms import EditProfileForm
 from app.models import User
 from app.main import bp
 
 @bp.route('/')
 @bp.route('/index')
-@login_required
 def index():
-    posts = [
-        {
-        'author': {'username': 'John'},
-        'body': 'Beautiful day in Portland!'
-        },
-        {
-        'author': {'username': 'Susan'},
-        'body': 'The Avengers movie was so cool!'
-        }
-    ]
-    return render_template('index.html', title='Home', posts=posts)
+    if current_user.is_authenticated == False:
+        return redirect(url_for('auth.login'))
+
+    return render_template('index.html', title='Home')
 
 
 @bp.route('/profile/<username>')
