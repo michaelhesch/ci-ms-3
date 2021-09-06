@@ -34,7 +34,7 @@ def profile(username):
 @bp.route('/edit_profile/<id>', methods=["GET", "POST"])
 @login_required
 def edit_profile(id):
-    user = User.objects.get(pk=id)
+    user = User.objects.get_or_404(pk=id)
     # Check for match of user's username against session username
     if user != current_user:
         flash('You can only edit your own profile!')
