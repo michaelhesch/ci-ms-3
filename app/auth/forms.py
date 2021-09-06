@@ -1,7 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
-# from wtforms.widgets.core import TextArea
 from app.models import User
 
 # Define login form structure & validation
@@ -21,15 +20,15 @@ class RegistrationForm(FlaskForm):
     email = StringField('Email', validators=[
         DataRequired(message="Please enter your email."), 
         Email()])
-    first_name = StringField('first_name', validators=[
+    first_name = StringField('First Name', validators=[
         DataRequired(message="Please enter your first name.")])
-    last_name = StringField('last_name', validators=[
+    last_name = StringField('Last Name', validators=[
         DataRequired(message="Please enter your last name.")])
     about_me = TextAreaField('About Me', validators=[
         Length(min=0, max=180)])
     password = PasswordField('Password', validators=[
         DataRequired(message="Please enter your password.")])
-    password2 = PasswordField('RepeatPassword', validators=[
+    password2 = PasswordField('Confirm Password', validators=[
         DataRequired(message="Please re-enter your password."), 
         EqualTo('password')])
     submit = SubmitField('Register')
