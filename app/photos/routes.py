@@ -74,4 +74,4 @@ def like_photo(id):
             photo.update(push__liked_by_user=user.id)
             photo.save()
     
-    return redirect(url_for('photos.view_photo', title=f"{photo.title}", user=user, id=photo.id))
+    return redirect(request.referrer)
