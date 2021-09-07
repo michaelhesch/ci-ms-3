@@ -12,21 +12,24 @@
             {{ photo.description }}
           </p>
           <p>
-            Number of likes: {{ photo.num_likes }}
-          <form method="POST" action="">
+            Number of likes: {{ photo.likes }}
+          <form method="POST" action="{{ url_for('photos.like_photo', id=photo.id)}}">
             <button type="submit" class="btn btn-primary" name="liked">
               Like
             </button>
+            <br />
             <div class="form-outline">
               <textarea class="form-control" id="textAreaExample" rows="4" name="comment"></textarea>
               <label class="form-label" for="textAreaExample">Message</label>
             </div>
+            <br />
             <button type="submit" class="btn btn-primary">
               Submit
             </button>
           </form>
           </p>
-          <button class="btn btn-primary mb-4" onclick="goBack()">Go Back</button>
+          <a href="{{ url_for('main.profile', username=current_user.username) }}">Back to Profile</a>
+          <!--<button class="btn btn-primary mb-4" onclick="goBack()">Go Back</button>-->
         </div>
       </div>
     </div>
