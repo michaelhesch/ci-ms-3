@@ -37,7 +37,8 @@ class Photo(db.Document):
     user_uploaded_by = db.StringField(max_length=14, required=True)
     user_added_datetime = db.DateTimeField(default=datetime.datetime.utcnow)
     url = db.URLField()
-    likes = db.IntField()
+    likes = db.IntField(default=0)
+    liked_by_user = db.ListField(db.ReferenceField(User))
 
     def __repr__(self):
         return '<Photo {}>'.format(self.title)
@@ -46,6 +47,9 @@ class Photo(db.Document):
     """def upload_photo(self, user, new_photo):
         user_folder = f"ooo/{user}"
         upload_result = uploader.upload(new_photo, user_folder=user_folder)"""
+
+
+# Comment class setup
 
 # Flask login user loader - gets user ID from DB
 @login.user_loader
