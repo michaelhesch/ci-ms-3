@@ -15,8 +15,9 @@
             Number of likes: {{ photo.likes }}
           <form method="POST" action="{{ url_for('photos.like_photo', id=photo.id)}}">
             <button type="submit" class="btn btn-primary" name="liked">
-              Like
+              <i class="fas fa-thumbs-up"></i>
             </button>
+            <br />
             <br />
             <div class="form-outline">
               <textarea class="form-control" id="textAreaExample" rows="4" name="comment"></textarea>
@@ -24,12 +25,12 @@
             </div>
             <br />
             <button type="submit" class="btn btn-primary">
-              Submit
+              Add Comment
             </button>
           </form>
           </p>
-          <a href="{{ url_for('main.profile', username=current_user.username) }}">Back to Profile</a>
-          <!--<button class="btn btn-primary mb-4" onclick="goBack()">Go Back</button>-->
+          <a class="btn btn-primary" href="{{ url_for('main.profile', username=current_user.username) }}">Back to Profile</a>
+            <!--<button class="btn btn-primary mb-4" onclick="goBack()">Go Back</button>-->
         </div>
       </div>
     </div>
