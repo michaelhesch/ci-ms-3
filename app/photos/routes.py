@@ -7,6 +7,7 @@ from app.photos import bp
 from app.photos.forms import UploadPhoto
 import datetime
 from cloudinary import uploader
+from bson.objectid import ObjectId
 
 
 @bp.route('/feed')
@@ -44,3 +45,33 @@ def upload_photo():
         return redirect(url_for('main.profile', username=current_user.username))
     
     return render_template('photos/upload.html', title='Upload Photo', form=form)
+
+
+@bp.route('/photo/<id>')
+@login_required
+def view_photo(id):
+    photo = Photo.objects(pk=id).first_or_404()
+    user = User.objects(username=current_user.username).first_or_404()
+
+    return render_template('photos/photo.html', title=f"{photo.title}", user=user, photo=photo)
+
+
+@bp.route('/photos/like/<id>', methods=["GET", "POST"])
+@login_required
+def like_photo(id):
+    photo = Photo.objects(pk=id).first_or_404()
+    user = User.objects(username=current_user.username).first_or_404()
+
+    if request.method =="POST":
+        # Check for existing like by current user, remove if already liked, then update db
+        if current_user in photo.liked_by_user:
+            photo.update(dec__likes=1)
+            photo.update(pull__liked_by_user=user.id)
+            photo.save()
+        # If user has not liked the photo, add a like and user liked by value, then update db
+        else:
+            photo.update(inc__likes=1)
+            photo.update(push__liked_by_user=user.id)
+            photo.save()
+    
+    return redirect(url_for('photos.view_photo', title=f"{photo.title}", user=user, id=photo.id))

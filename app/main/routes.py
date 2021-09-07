@@ -2,7 +2,7 @@ from app import db
 from flask import render_template, flash, redirect, url_for, request, current_app
 from flask_login import current_user, login_required
 from app.main.forms import EditProfileForm
-from app.models import User
+from app.models import User, Photo
 from app.main import bp
 
 @bp.route('/')
@@ -19,7 +19,8 @@ def index():
 def profile(username):
     # Checks for username match, returns 404 error if no match found
     user = User.objects(username=username).first_or_404()
-    return render_template('profile.html', title=f"{user.username}", user=user)
+    photos = list(Photo.objects)
+    return render_template('profile.html', title=f"{user.username}", user=user, photos=photos)
 
 
 @bp.route('/edit_profile/<id>', methods=["GET", "POST"])
