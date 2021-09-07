@@ -1,5 +1,4 @@
-from app import db
-from flask import render_template, flash, redirect, url_for, request, current_app
+from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_required
 from app.main.forms import EditProfileForm
 from app.models import User, Photo
@@ -9,6 +8,7 @@ from app.main import bp
 @bp.route('/index')
 def index():
     if current_user.is_authenticated == False:
+        flash("Welcome, please log in to access the site!")
         return redirect(url_for('auth.login'))
 
     return render_template('index.html', title='Home')
