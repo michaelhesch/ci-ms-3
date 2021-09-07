@@ -15,6 +15,20 @@
         </a>
         <div class="card-body">
           <h5 class="card-title">{{ photo.title }}</h5>
+          {% if current_user.is_authenticated == True %}
+          <div class="row">
+            <div class="col">
+              <form method="POST" action="{{ url_for('photos.like_photo', id=photo.id)}}">
+                <button type="submit" class="btn btn-primary" name="liked">
+                  <i class="fas fa-thumbs-up"></i>
+                </button>
+              </form>
+            </div>
+          {% endif %}
+            <div class="col">
+              <small><i class="fas fa-thumbs-up"></i>: {{ photo.likes }}</small>
+            </div>
+          </div>
           <small><em>Uploaded by: {{ photo.user_uploaded_by }}</em></small>
           <p class="card-text">
             {{ photo.description }}
