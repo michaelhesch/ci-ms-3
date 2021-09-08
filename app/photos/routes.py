@@ -2,12 +2,11 @@ from app import db
 from flask import render_template, flash, redirect, url_for, request, current_app
 from flask_login import current_user, login_required
 # from app.photos.forms import 
-from app.models import User, Photo
+from app.models import User, Photo, Comment
 from app.photos import bp
-from app.photos.forms import UploadPhoto
+from app.photos.forms import UploadPhoto, AddComment
 import datetime
 from cloudinary import uploader
-from bson.objectid import ObjectId
 
 
 @bp.route('/feed')
@@ -32,7 +31,8 @@ def upload_photo():
         if file_to_upload:
             upload_result = uploader.upload(file_to_upload)
         # Populate Photo object to send to mongoDB
-        new_photo = Photo(title=form.title.data,
+        new_photo = Photo(
+            title=form.title.data,
             description=form.description.data,
             user_uploaded_by=current_user.username,
             user_added_datetime=datetime.datetime.utcnow,
@@ -52,8 +52,10 @@ def upload_photo():
 def view_photo(id):
     photo = Photo.objects(pk=id).first_or_404()
     user = User.objects(username=current_user.username).first_or_404()
+    comments = Comment.objects(photo_commented_on=id)
+    form = AddComment()
 
-    return render_template('photos/photo.html', title=f"{photo.title}", user=user, photo=photo)
+    return render_template('photos/photo.html', title=f"{photo.title}", user=user, photo=photo, form=form, comments=comments)
 
 
 @bp.route('/photos/like/<id>', methods=["GET", "POST"])
@@ -73,5 +75,27 @@ def like_photo(id):
             photo.update(inc__likes=1)
             photo.update(push__liked_by_user=user.id)
             photo.save()
+    
+    return redirect(request.referrer)
+
+
+@bp.route('/photos/comment/<id>', methods=["GET", "POST"])
+@login_required
+def add_comment(id):
+    user = User.objects(username=current_user.username).first_or_404()
+    photo = Photo.objects(pk=id).first_or_404()
+    form = AddComment()
+
+    if request.method == "POST" and form.validate_on_submit():
+        # Add new comment
+        new_comment = Comment(
+            user_comment_by = user,
+            user_comment_datetime = datetime.datetime.utcnow,
+            photo_commented_on = photo,
+            comment_text = form.comment_text.data,
+            likes = 0
+        )
+        new_comment.save()
+        flash("Thanks for the comment!")
     
     return redirect(request.referrer)

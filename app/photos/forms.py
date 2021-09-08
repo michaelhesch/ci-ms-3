@@ -20,3 +20,11 @@ class UploadPhoto(FlaskForm):
             message="Please choose a category.")])
     # url = FileField('Photo')
     submit = SubmitField('Add Photo')
+
+
+class AddComment(FlaskForm):
+    comment_text = TextAreaField(
+        validators=[
+            DataRequired('Please add text to submit a comment.'), 
+            Length(min=2, max=200)])
+    submit = SubmitField('Add Comment')
