@@ -1,7 +1,6 @@
 from app import db
 from flask import render_template, flash, redirect, url_for, request, current_app
 from flask_login import current_user, login_required
-# from app.photos.forms import 
 from app.models import User, Photo, Comment
 from app.photos import bp
 from app.photos.forms import UploadPhoto, AddComment
@@ -87,7 +86,7 @@ def add_comment(id):
     form = AddComment()
 
     if request.method == "POST" and form.validate_on_submit():
-        # Add new comment
+        # Add new comment to DB
         new_comment = Comment(
             user_comment_by = user,
             user_comment_datetime = datetime.datetime.utcnow,
@@ -97,5 +96,26 @@ def add_comment(id):
         )
         new_comment.save()
         flash("Thanks for the comment!")
+    
+    return redirect(request.referrer)
+
+
+@bp.route('/photos/like_comment/<id>', methods=["GET", "POST"])
+@login_required
+def like_comment(id):
+    comment = Comment.objects(pk=id).first_or_404()
+    user = User.objects(username=current_user.username).first_or_404()
+
+    if request.method =="POST":
+        # Check for existing like by current user, remove if already liked, then update db
+        if current_user in comment.liked_by_user:
+            comment.update(dec__likes=1)
+            comment.update(pull__liked_by_user=user.id)
+            comment.save()
+        # If user has not liked the comment, add a like and user liked by value, then update db
+        else:
+            comment.update(inc__likes=1)
+            comment.update(push__liked_by_user=user.id)
+            comment.save()
     
     return redirect(request.referrer)
