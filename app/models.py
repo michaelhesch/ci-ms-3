@@ -18,15 +18,17 @@ class User(UserMixin, db.Document):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+    # Dunder method to configure how User object is returned when printed
     def __repr__(self):
-        return '<User {}>'.format(self.username)
+        return f"User('{self.username}', '{self.email}')"
 
 # Photo category class setup
 class Category(db.Document):
     category_name = db.StringField(required=True) 
 
+    # Dunder method to configure how Category object is returned when printed
     def __repr__(self):
-        return "<Category {}".format(self.category_name)
+        return f"Category('{self.category_name}')"
 
 # Photo class setup
 class Photo(db.Document):
@@ -39,8 +41,9 @@ class Photo(db.Document):
     likes = db.IntField(default=0)
     liked_by_user = db.ListField(db.ReferenceField(User))
 
+    # Dunder method to configure how Photo object is returned when printed
     def __repr__(self):
-        return '<Photo {}>'.format(self.title)
+        return f"Photo('{self.title}', '{self.category_name}', '{self.user_uploaded_by}')"
 
     # TODO implement folders for each user's photos in cloudinary
     """def upload_photo(self, user, new_photo):
@@ -49,6 +52,18 @@ class Photo(db.Document):
 
 
 # Comment class setup
+class Comment(db.Document):
+    user_comment_by = db.ReferenceField(User)
+    user_comment_datetime = db.DateTimeField(default=datetime.datetime.utcnow)
+    photo_commented_on = db.ReferenceField(Photo)
+    comment_text = db.StringField(min_length=2, max_length=200, required=True)
+    likes = db.IntField(default=0)
+    liked_by_user = db.ListField(db.ReferenceField(User))
+
+    # Dunder method to configure how Comment object is returned when printed
+    def __repr__(self):
+        return f"Comment('{self.user_comment_by}', '{self.photo_commented_on}', '{self.comment_text}')"
+
 
 # Flask login user loader - gets user ID from DB
 @login.user_loader
