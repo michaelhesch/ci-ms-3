@@ -13,23 +13,34 @@
           </p>
           <p>
             Number of likes: {{ photo.likes }}
+          </p>
           <form method="POST" action="{{ url_for('photos.like_photo', id=photo.id)}}">
             <button type="submit" class="btn btn-primary" name="liked">
               <i class="fas fa-thumbs-up"></i>
             </button>
             <br />
             <br />
-            <div class="form-outline">
-              <textarea class="form-control" id="textAreaExample" rows="4" name="comment"></textarea>
-              <label class="form-label" for="textAreaExample">Message</label>
-            </div>
-            <br />
-            <button type="submit" class="btn btn-primary">
-              Add Comment
-            </button>
           </form>
-          </p>
-          <a class="btn btn-primary" href="{{ url_for('main.profile', username=current_user.username) }}">Back to Profile</a>
+          <div>
+            {% for comment in comments %}
+            <div class="row">
+              <strong>{{ comment.user_comment_by.username }} says:</strong>
+              <p>{{ comment.comment_text }}</p>
+            </div>
+            {% endfor %}
+          </div>
+          <form method="POST" action="{{ url_for('photos.add_comment', id=photo.id)}}">
+            {{ form.hidden_tag() }}
+            <legend class="border-bottom mb-4">Add a comment</legend>
+              <div class="form-group mb-4">
+              {{ form.comment_text.label(class_="form-control-label") }}<br>
+              {{ form.comment_text(class_="form-control", placeholder="Add a comment!") }}
+              {% for error in form.comment_text.errors %}
+                <span style="color: red;">{{ error }}</span>
+              {% endfor %}
+              {{ form.submit(class_="btn btn-primary")}}
+          </form>
+          <a class="btn btn-primary" href="{{ url_for('main.profile', username=current_user.username) }}">Back</a>
             <!--<button class="btn btn-primary mb-4" onclick="goBack()">Go Back</button>-->
         </div>
       </div>
