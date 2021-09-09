@@ -43,7 +43,7 @@
                 <div class="card-body">
                   <h5 class="card-title">{{ comment.user_comment_by.username }} says:</h5>
                   <p><i class="fas fa-thumbs-up"></i> {{ comment.likes }}</p>
-                  <form method="POST" action="{{ url_for('photos.like_comment', id=comment.id)}}">
+                  <form method="POST" action="{{ url_for('photos.like_comment', id=comment.id) }}">
                     <small><button type="submit" class="btn btn-primary" name="liked">
                       <i class="fas fa-thumbs-up"></i>
                     </button></small>
@@ -52,6 +52,59 @@
                 </div>
                 <p class="card-text">{{ comment.comment_text }}</p>
                 <div class="card-footer text-muted"><em>Comment added on: {{ comment.user_comment_datetime.date() }}</em></div>
+                {% if comment.user_comment_by == current_user %}
+                <!-- move edit button outside of form. when clicked, display form -->
+                <form method="POST" action="{{ url_for('photos.edit_comment', id=comment.id) }}">
+                  <button type="submit" class="btn btn-secondary btn-sm m-1">
+                    Edit Comment
+                  </button>
+                </form>
+                <!-- MDB Pop-Up Modal Layout below -->
+                <!-- Delete button -->
+                <button 
+                  type="button" 
+                  class="btn btn-danger btn-sm m-1"
+                  data-mdb-toggle="modal"
+                  data-mdb-target="#deleteModal"
+                >
+                  Delete Comment
+                </button>
+                <!-- Modal for delete button -->
+                <div
+                  class="modal fade"
+                  id="deleteModal"
+                  tabindex="-1"
+                  aria-labelledby="deleteModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">
+                          Delete comment?
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-mdb-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        Are you sure you want to delete your comment? It will be gone forever!
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+                          Cancel
+                        </button>
+                        <form method="POST" action="{{ url_for('photos.delete_comment', id=comment.id) }}">
+                          <input class="btn btn-danger" type="submit" value="Delete Post">
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
               </div>
             {% endfor %}
           <button class="btn btn-primary mb-4" onclick="goBack()">Go Back</button>
@@ -62,8 +115,6 @@
 </div>
 
 <!-- Returns user to previous page -->
-<!-- Accounts for images able to be
-   viewed from feed or profile page -->
 <script>
   function goBack() {
     window.history.back();
