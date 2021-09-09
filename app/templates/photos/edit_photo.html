@@ -6,6 +6,7 @@
     <img src="{{ photo.url }}" class="card-img-top" alt="..." />
     <form action="" method="POST">
       <fieldset class="form-group">
+        <legend>{{ legend }}</legend>
         <div class="form-group mb4">
           {{ form.title.label(class_="form-control-label") }}
           {% if form.title.errors %}
@@ -32,7 +33,8 @@
             {{ form.description(class_="form-control") }}
           {% endif %}
         </div>
-        <div class="form-group mb4">
+        <!-- Temporarily remove category selection from edit form -->
+        <!--<div class="form-group mb4">
           {{ form.category.label(class_="form-control-label") }}
           {% if form.category.errors %}
             {{ form.category(class_="form-control is-invalid") }}
@@ -44,7 +46,7 @@
           {% else %}
             {{ form.category(class_="form-control") }}
           {% endif %}
-        </div>
+        </div>-->
       </fieldset>
     </form>
     <br />

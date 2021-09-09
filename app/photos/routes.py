@@ -1,5 +1,5 @@
 from app import db
-from flask import render_template, flash, redirect, url_for, request, current_app
+from flask import render_template, flash, redirect, url_for, request, abort
 from flask_login import current_user, login_required
 from app.models import User, Photo, Comment
 from app.photos import bp
@@ -33,6 +33,7 @@ def upload_photo():
         new_photo = Photo(
             title=form.title.data,
             description=form.description.data,
+            category_name=form.category_name.data,
             user_uploaded_by=current_user.username,
             user_added_datetime=datetime.datetime.utcnow,
             # Select the secure url value from cloudinary response
@@ -57,20 +58,27 @@ def edit_photo(id):
         return redirect(request.referrer)
 
     form = EditPhotoForm()
+    # Pre-populate the form fields with the existing data
+    form.title.data = photo.title
+    form.description.data = photo.description
+    #form.category.data = photo.category_name
 
+    # TODO: Confirm if category should be editable?
+    # Dropdown causes issues with validator
     if form.validate_on_submit() and photo.user_uploaded_by == current_user.username:
-        photo.title = form.title.data
-        photo.description = form.description.data
-        photo.category_name = form.category.data
+        photo.update(title = form.title.data)
+        photo.update(description = form.description.data)
+        # photo.category_name = form.category.data
         photo.save()
         flash("Your photo has been updated!")
         return redirect(request.referrer)
     elif request.method == "GET":
         form.title.data = photo.title
         form.description.data = photo.description
-        form.category.data = photo.category_name
+        #form.category.data = photo.category_name
 
-    return render_template('photos/edit_photo.html', title='Edit Photo', user=user, form=form, photo=photo)
+    return render_template('photos/edit_photo.html', title='Edit Photo', 
+        legend='Edit Photo', user=user, form=form, photo=photo)
 
 
 @bp.route('/photo/<id>')
@@ -81,7 +89,8 @@ def view_photo(id):
     comments = Comment.objects(photo_commented_on=id)
     form = AddComment()
 
-    return render_template('photos/photo.html', title=f"{photo.title}", user=user, photo=photo, form=form, comments=comments)
+    return render_template('photos/photo.html', title=f"{photo.title}", 
+        user=user, photo=photo, form=form, comments=comments)
 
 
 @bp.route('/photos/like/<id>', methods=["GET", "POST"])
@@ -91,12 +100,14 @@ def like_photo(id):
     user = User.objects(username=current_user.username).first_or_404()
 
     if request.method =="POST":
-        # Check for existing like by current user, remove if already liked, then update db
+        # Check for existing like by current user, 
+        # remove if already liked, then update db
         if current_user in photo.liked_by_user:
             photo.update(dec__likes=1)
             photo.update(pull__liked_by_user=user.id)
             photo.save()
-        # If user has not liked the photo, add a like and user liked by value, then update db
+        # If user has not liked the photo, add a like and user liked by value, 
+        # then update db
         else:
             photo.update(inc__likes=1)
             photo.update(push__liked_by_user=user.id)
@@ -112,7 +123,7 @@ def add_comment(id):
     photo = Photo.objects(pk=id).first_or_404()
     form = AddComment()
 
-    if request.method == "POST" and form.validate_on_submit():
+    if form.validate_on_submit():
         # Add new comment to DB
         new_comment = Comment(
             user_comment_by = user,
@@ -134,15 +145,79 @@ def like_comment(id):
     user = User.objects(username=current_user.username).first_or_404()
 
     if request.method =="POST":
-        # Check for existing like by current user, remove if already liked, then update db
+        # Check for existing like by current user, 
+        # remove if already liked, then update db
         if current_user in comment.liked_by_user:
             comment.update(dec__likes=1)
             comment.update(pull__liked_by_user=user.id)
             comment.save()
-        # If user has not liked the comment, add a like and user liked by value, then update db
+        # If user has not liked the comment, add a like and user liked by value, 
+        # then update db
         else:
             comment.update(inc__likes=1)
             comment.update(push__liked_by_user=user.id)
             comment.save()
     
     return redirect(request.referrer)
+
+
+@bp.route('/photos/edit_comment/<id>', methods=["GET", "POST"])
+@login_required
+def edit_comment(id):
+    comment = Comment.objects(pk=id).first_or_404()
+    photo = Photo.objects(pk=id).first_or_404()
+    user = User.objects(username=current_user.username).first_or_404()
+
+    # Confirm current user is the comment creator
+    if current_user.id != comment.user_comment_by.id:
+        # TODO: Should this route back to where they came from or
+        # return the forbidden error response?
+        flash('You can only edit your own comments!')
+        abort(403)
+    
+    form = AddComment()
+    if form.validate_on_submit():
+        # Edit comment and save changes to DB
+        comment.update(comment_text = form.comment_text)
+        comment.update(user_comment_datetime = datetime.datetime.utcnow)
+        comment.save()
+        flash("Your comment has been updated!")
+        return redirect(request.referrer)
+    elif request.method == "GET":
+        form.comment_text = comment.comment_text
+    
+    return render_template('photos/photo.html', 
+        form=form, user=user, photo=photo, comment=comment)
+
+
+@bp.route('/photos/delete_comment/<id>', methods=["POST"])
+@login_required
+def delete_comment(id):
+    comment = Comment.objects(pk=id).first_or_404()
+
+    # Confirm current user is the comment creator
+    if current_user.id != comment.user_comment_by.id:
+        # TODO: Should this route back to where they came from or
+        # return the forbidden error response?
+        flash('You can only delete your own comments!')
+        abort(403)
+    if request.method == "POST":
+        comment.delete()
+        flash('Your comment has been deleted.')
+        return redirect(request.referrer)
+
+
+@bp.route('/photos/delete_photo/<id>', methods=["POST"])
+@login_required
+def delete_photo(id):
+    photo = Photo.objects(pk=id).first_or_404()
+    # Confirm current user is the comment creator
+    if current_user.id != photo.user_uploaded_by.id:
+        # TODO: Should this route back to where they came from or
+        # return the forbidden error response?
+        flash('You can only delete your own photos!')
+        abort(403)
+    if request.method == "POST":
+        photo.delete()
+        flash('Your photo has been deleted.')
+        return redirect(request.referrer)

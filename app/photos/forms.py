@@ -15,7 +15,7 @@ class UploadPhoto(FlaskForm):
         validators=[DataRequired(
             message="Please enter a description."),
             Length(min=0, max=180)])
-    category = SelectField('Choose Category',
+    category_name = SelectField('Choose Category',
         choices=[
             (category.category_name) 
             for category in Category.objects],

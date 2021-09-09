@@ -11,7 +11,7 @@ def index():
         flash("Welcome, please log in to access the site!")
         return redirect(url_for('auth.login'))
     else:
-        return redirect(url_for('photos.feed'))
+        return redirect(url_for('photos.photo_feed'))
 
 
 @bp.route('/profile/<username>')
@@ -41,4 +41,5 @@ def edit_profile(id):
     # Populate form with existing data on get request
     elif request.method == "GET":
         form.about_me.data = user.about_me
-    return render_template('edit_profile.html', title='Edit Profile', user=user, form=form)
+    return render_template('edit_profile.html', title='Edit Profile', 
+        legend='Edit Profile', user=user, form=form)

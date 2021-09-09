@@ -24,8 +24,8 @@
           </div>
           <!-- Photo category selection -->
           <div class="form-group mb-4">
-            {{ form.category.label(class_="form-control-label") }}
-            {{ form.category(class_="form-control") }}
+            {{ form.category_name.label(class_="form-control-label") }}
+            {{ form.category_name(class_="form-control") }}
             {% for error in form.description.errors %}
               <span style="color: red;">{{ error }}</span>
             {% endfor %}
