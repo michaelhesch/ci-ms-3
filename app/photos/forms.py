@@ -21,7 +21,6 @@ class UploadPhoto(FlaskForm):
             for category in Category.objects],
         validators=[DataRequired(
             message="Please choose a category.")])
-    # url = FileField('Photo')
     submit = SubmitField('Add Photo')
 
 
@@ -51,3 +50,11 @@ class AddComment(FlaskForm):
             DataRequired('Please add text to submit a comment.'), 
             Length(min=2, max=200)])
     submit = SubmitField('Add Comment')
+
+
+class EditComment(FlaskForm):
+    comment_text = TextAreaField('Edit Comment', 
+        validators=[
+            DataRequired('Comment cannot be blank!'), 
+            Length(min=2, max=200)])
+    submit = SubmitField('Save Changes')
