@@ -8,12 +8,55 @@
         <img src="{{ photo.url }}" class="card-img-top" alt="..." />
         <div class="card-body">
           {% if current_user.username == photo.user_uploaded_by %}
-          <form method="POST" action="{{ url_for('photos.edit_photo', id=photo.id)}}">
-            <button type="submit" class="btn btn-primary" name="liked">
-              Edit Photo
-            </button>
-            <br />
-          </form>
+            <form method="POST" action="{{ url_for('photos.edit_photo', id=photo.id)}}">
+              <button type="submit" class="btn btn-primary" name="liked">
+                Edit Photo Details
+              </button>
+              <br />
+            </form>
+            <button 
+                  type="button" 
+                  class="btn btn-danger btn-sm m-1"
+                  data-mdb-toggle="modal"
+                  data-mdb-target="#deletePhotoModal"
+                >
+                  Delete Photo
+                </button>
+                <!-- Modal for delete button -->
+                <div
+                  class="modal fade"
+                  id="deletePhotoModal"
+                  tabindex="-1"
+                  aria-labelledby="deletePhotoModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="deletePhotoModalLabel">
+                          Delete Photo?
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-mdb-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        Are you sure you want to delete your photo? It will be gone forever!
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+                          Cancel
+                        </button>
+                        <form method="POST" action="{{ url_for('photos.delete_photo', id=photo.id) }}">
+                          <input class="btn btn-danger" type="submit" value="Delete Photo">
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
           {% endif %}
           <small><em>Uploaded by: {{ photo.user_uploaded_by }}</em></small>
           <p class="card-text">{{ photo.description }}</p>
@@ -53,12 +96,53 @@
                 <p class="card-text">{{ comment.comment_text }}</p>
                 <div class="card-footer text-muted"><em>Comment added on: {{ comment.user_comment_datetime.date() }}</em></div>
                 {% if comment.user_comment_by == current_user %}
-                <!-- move edit button outside of form. when clicked, display form -->
-                <form method="POST" action="{{ url_for('photos.edit_comment', id=comment.id) }}">
-                  <button type="submit" class="btn btn-secondary btn-sm m-1">
-                    Edit Comment
-                  </button>
-                </form>
+                <!-- MDB Pop-Up Modal Layout below -->
+                <!-- Edit comment button -->
+                <button 
+                  type="button" 
+                  class="btn btn-secondary btn-sm m-1"
+                  data-mdb-toggle="modal"
+                  data-mdb-target="#editCommentModal"
+                >
+                  Edit Comment
+                </button>
+                <!-- Modal for edit comment button -->
+                <div
+                  class="modal fade"
+                  id="editCommentModal"
+                  tabindex="-1"
+                  aria-labelledby="editCommentModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="editCommentModalLabel">
+                          Delete comment?
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-mdb-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <form method="POST" action="{{ url_for('photos.edit_comment', id=comment.id) }}">
+                          {{ form.comment_text.label(class_="form-control-label") }}
+                          {{ form.comment_text(class_="form-control") }}
+                          {{ form.submit(class_="btn btn-primary", value="Save Changes") }}
+                        </form>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+                          Cancel
+                        </button>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <!-- MDB Pop-Up Modal Layout below -->
                 <!-- Delete button -->
                 <button 
@@ -98,7 +182,7 @@
                           Cancel
                         </button>
                         <form method="POST" action="{{ url_for('photos.delete_comment', id=comment.id) }}">
-                          <input class="btn btn-danger" type="submit" value="Delete Post">
+                          <input class="btn btn-danger" type="submit" value="Delete Comment">
                         </form>
                       </div>
                     </div>
