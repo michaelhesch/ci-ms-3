@@ -3,7 +3,7 @@ from flask import render_template, flash, redirect, url_for, request, current_ap
 from flask_login import current_user, login_required
 from app.models import User, Photo, Comment
 from app.photos import bp
-from app.photos.forms import UploadPhoto, AddComment
+from app.photos.forms import UploadPhoto, AddComment, EditPhotoForm
 import datetime
 from cloudinary import uploader
 
@@ -18,7 +18,7 @@ def photo_feed():
 @bp.route('/upload', methods=["GET", "POST"])
 @login_required
 def upload_photo():
-    # Create empty result variable for cloudinary upload
+    # Create empty result variable to hold cloudinary file to upload
     upload_result = None
     # Create instance of UploadPhoto form class
     form = UploadPhoto()
@@ -44,6 +44,33 @@ def upload_photo():
         return redirect(url_for('main.profile', username=current_user.username))
     
     return render_template('photos/upload.html', title='Upload Photo', form=form)
+
+
+@bp.route('/photo/edit/<id>', methods=["GET", "POST"])
+@login_required
+def edit_photo(id):
+    photo = Photo.objects(pk=id).first_or_404()
+    user = User.objects(username=current_user.username).first_or_404()
+    
+    if photo.user_uploaded_by != current_user.username:
+        flash('You can only edit your own photos!')
+        return redirect(request.referrer)
+
+    form = EditPhotoForm()
+
+    if form.validate_on_submit() and photo.user_uploaded_by == current_user.username:
+        photo.title = form.title.data
+        photo.description = form.description.data
+        photo.category_name = form.category.data
+        photo.save()
+        flash("Your photo has been updated!")
+        return redirect(request.referrer)
+    elif request.method == "GET":
+        form.title.data = photo.title
+        form.description.data = photo.description
+        form.category.data = photo.category_name
+
+    return render_template('photos/edit_photo.html', title='Edit Photo', user=user, form=form, photo=photo)
 
 
 @bp.route('/photo/<id>')
