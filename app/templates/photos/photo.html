@@ -7,6 +7,14 @@
       <div class="card">
         <img src="{{ photo.url }}" class="card-img-top" alt="..." />
         <div class="card-body">
+          {% if current_user.username == photo.user_uploaded_by %}
+          <form method="POST" action="{{ url_for('photos.edit_photo', id=photo.id)}}">
+            <button type="submit" class="btn btn-primary" name="liked">
+              Edit Photo
+            </button>
+            <br />
+          </form>
+          {% endif %}
           <small><em>Uploaded by: {{ photo.user_uploaded_by }}</em></small>
           <p class="card-text">{{ photo.description }}</p>
           <p><i class="fas fa-thumbs-up"></i> {{ photo.likes }}</p>
@@ -17,6 +25,18 @@
             <br />
           </form>
           <br />
+          <form method="POST" action="{{ url_for('photos.add_comment', id=photo.id)}}">
+            {{ form.hidden_tag() }}
+            <legend class="border-bottom mb-4">Add a comment</legend>
+              <div class="form-group mb-4">
+              {{ form.comment_text.label(class_="form-control-label") }}<br>
+              {{ form.comment_text(class_="form-control", placeholder="Add a comment!") }}
+              {% for error in form.comment_text.errors %}
+                <span style="color: red;">{{ error }}</span>
+              {% endfor %}
+              <br />
+              {{ form.submit(class_="btn btn-primary mb-4")}}
+          </form>
           <h4>Comments:</h4>
             {% for comment in comments %}
               <div class="card w75">
@@ -34,19 +54,6 @@
                 <div class="card-footer text-muted"><em>Comment added on: {{ comment.user_comment_datetime }}</em></div>
               </div>
             {% endfor %}
-          <form method="POST" action="{{ url_for('photos.add_comment', id=photo.id)}}">
-            {{ form.hidden_tag() }}
-            <legend class="border-bottom mb-4">Add a comment</legend>
-              <div class="form-group mb-4">
-              {{ form.comment_text.label(class_="form-control-label") }}<br>
-              {{ form.comment_text(class_="form-control", placeholder="Add a comment!") }}
-              {% for error in form.comment_text.errors %}
-                <span style="color: red;">{{ error }}</span>
-              {% endfor %}
-              <br />
-              {{ form.submit(class_="btn btn-primary mb-4")}}
-          </form>
-          <!--<a class="btn btn-primary" href="{{ url_for('main.profile', username=current_user.username) }}">Back</a>-->
           <button class="btn btn-primary mb-4" onclick="goBack()">Go Back</button>
         </div>
       </div>
