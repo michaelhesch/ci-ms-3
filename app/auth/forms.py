@@ -16,9 +16,9 @@ class LoginForm(FlaskForm):
 # Define registration form structure & validation
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[
-        DataRequired(message="Please enter your username.")])
+        DataRequired(message="Please enter your desired username.")])
     email = StringField('Email', validators=[
-        DataRequired(message="Please enter your email."), 
+        DataRequired(message="Please enter your email address."), 
         Email()])
     first_name = StringField('First Name', validators=[
         DataRequired(message="Please enter your first name.")])
@@ -33,22 +33,21 @@ class RegistrationForm(FlaskForm):
         EqualTo('password')])
     submit = SubmitField('Register')
 
+    # TODO: Duplicate username validation check not working on form submit
+
+    # Check for existing username in DB
+    def check_username(self, username):
+        existing_user = User.objects(username=username.data).first()
+        if existing_user:
+            raise ValidationError('Username already exists, please select a new username.')
+
+    # Check for existing email in DB
+    def check_email(self, email):
+        existing_email = User.objects(email=email.data).first()
+        if existing_email:
+            raise ValidationError('Email address has already been registered, please use a different email address.')
     """
     If DataRequired does not have any arguments passed, for example message, the following error is returned
     This prevents the application from running
     TypeError: __init__() got an unexpected keyword argument 'valdiators'
     """
-
-    # Check for duplicate username in db (first match)
-    def check_username(self, username):
-        duplicate = User.objects(username=username.data).first()
-        if duplicate is not None:
-            raise ValidationError(
-                'Invalid username, please try a new username.')
-
-    # Check for duplicate email in db (first match)
-    def check_email(self, email):
-        duplicate = User.objects(email=email.data).first()
-        if duplicate is not None:
-            raise ValidationError(
-                'Invalid username, please try a new username.')

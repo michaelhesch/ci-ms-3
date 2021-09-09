@@ -5,6 +5,7 @@ from app.auth.forms import LoginForm, RegistrationForm
 from app.models import User
 from app.auth import bp
 
+
 @bp.route('/login', methods=["GET", "POST"])
 def login():
     # Redirect user to index if already logged in
@@ -46,6 +47,7 @@ def register():
         login_user(user)
         flash("You have registered a new account!")
         return redirect(url_for('main.index'))
+
     return render_template('auth/register.html', title='Register', form=form)
 
 
