@@ -1,8 +1,10 @@
 import datetime
+from mongoengine import CASCADE
 from mongoengine.errors import ValidationError
 from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from cloudinary import uploader
 
 # User class setup
 class User(db.Document, UserMixin):
@@ -48,6 +50,11 @@ class Photo(db.Document):
     def __repr__(self):
         return f"Photo('{self.title}', '{self.category_name}', '{self.user_uploaded_by}')"
 
+    # TODO: Need to implement photo removal from cloud as part of delete from DB operation
+    def delete_photo_db(self):
+        url = self.url
+        uploader.destroy(url)
+
     # TODO implement folders for each user's photos in cloudinary
     """def upload_photo(self, user, new_photo):
         user_folder = f"ooo/{user}"
@@ -56,9 +63,9 @@ class Photo(db.Document):
 
 # Comment class setup
 class Comment(db.Document):
-    user_comment_by = db.ReferenceField(User)
+    user_comment_by = db.ReferenceField(User, reverse_delete_rule=CASCADE)
     user_comment_datetime = db.DateTimeField(default=datetime.datetime.utcnow)
-    photo_commented_on = db.ReferenceField(Photo)
+    photo_commented_on = db.ReferenceField(Photo, reverse_delete_rule=CASCADE)
     comment_text = db.StringField(min_length=2, max_length=200, required=True)
     likes = db.IntField(default=0)
     liked_by_user = db.ListField(db.ReferenceField(User))
