@@ -10,8 +10,8 @@ def index():
     if current_user.is_authenticated == False:
         flash("Welcome, please log in to access the site!")
         return redirect(url_for('auth.login'))
-
-    return render_template('index.html', title='Home')
+    else:
+        return redirect(url_for('photos.feed'))
 
 
 @bp.route('/profile/<username>')
@@ -30,7 +30,7 @@ def edit_profile(id):
     # Check for match of user's username against session username
     if user != current_user:
         flash('You can only edit your own profile!')
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.profile'))
     form = EditProfileForm()
     # Update form logic on post request
     if form.validate_on_submit():

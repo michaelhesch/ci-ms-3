@@ -1,10 +1,11 @@
 import datetime
+from mongoengine.errors import ValidationError
 from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
 # User class setup
-class User(UserMixin, db.Document):
+class User(db.Document, UserMixin):
     username = db.StringField(max_length=14, unique=True, required=True)
     first_name = db.StringField(max_length=25, required=True)
     last_name = db.StringField(max_length=35, required=True)
@@ -12,9 +13,11 @@ class User(UserMixin, db.Document):
     about_me = db.StringField(max_length=180)
     password_hash = db.StringField(required=True)
 
+    # Password hashing function
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
+    # Check password vs hashed password function
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
@@ -65,7 +68,9 @@ class Comment(db.Document):
         return f"Comment('{self.user_comment_by}', '{self.photo_commented_on}', '{self.comment_text}')"
 
 
-# Flask login user loader - gets user ID from DB
+# Flask login manager user loader - gets current user ID from DB
+# User model above inherits from UserMixin class to provide required 
+# validation attributes & methods to login manager
 @login.user_loader
 def load_user(id):
     return User.objects.get(pk=id) # TODO: Confirm why only pk=id works as this argument?

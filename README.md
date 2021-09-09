@@ -1,6 +1,15 @@
 # Milestone Project Three - TBD
 
-![Am I Responsive Image](#)
+## THIS PROJECT IS A WORK IN PROGRESS
+### Expected completion: 16 Septebmer, 2021
+    Please check back for the fully functional "production" version of the project, including the detailed Readme documentation.
+
+    The current work-in-progress version of the live application can be viewed [here.](https://ci-ms-3-mh.herokuapp.com/auth/login)
+
+    This is a full stack web application featuring a back-end developed using Python and the Flask micro framework, featuring additional technologies such as Cloudinary, and a responsive design built with Material Design Bootstrap.
+---
+
+![Am I Responsive Image - Placeholder](#)
 
 ## TBU
  The purpose of #### is to provide users with a custom generated map of cities to visit in Ireland, along with selected points of interest for each city.  The tool will generate a randomized list of cities including two, three or four primary destinations as results, based on the user's selection.  The user can then drill down into each destination to view a list of selected points of interest, which they can then filter by 'cateogry' to further refine their trip.

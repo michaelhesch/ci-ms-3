@@ -5,11 +5,14 @@
     <h3>{{ user.username|capitalize }}'s Profile</h3>
     <p>E-Mail Address: {{ user.email }}</p>
     <p>About Me: {{ user.about_me }}</p>
-    <p><a class="btn btn-primary" href="{{ url_for('main.edit_profile', id=user.id) }}">Edit About Me</a></p>
+    <ul class="nav">
+      <li><a class="btn btn-primary" href="{{ url_for('main.edit_profile', id=user.id) }}">Edit About Me</a></li>
+      <li><a class="btn btn-primary" href="{{ url_for('photos.upload_photo') }}">Add A Photo!</a></li>
+    </ul>
     <hr>
     <h3 class="text-center">{{ user.username|capitalize }}'s Photos</h3>
     <p class="text-center">Below are all of the photos you have added to the platform!</p>
-  </div>
+    </div>
   <div class="row row-cols-1 row-cols-md-2 g-4">
     {% for photo in photos %}
       {% if photo.user_uploaded_by == user.username %}
