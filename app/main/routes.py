@@ -34,10 +34,14 @@ def edit_profile(id):
     form = EditProfileForm()
     # Update form logic on post request
     if form.validate_on_submit():
-        user.about_me = form.about_me.data
-        user.save()
-        flash("Your account has been updated!")
-        return redirect(url_for('main.profile', username=user.username))
+        # If there is no change in about me data, return to profile page
+        if user.about_me == form.about_me.data:
+            return redirect(url_for('main.profile', username=user.username))
+        else:
+            user.about_me = form.about_me.data
+            user.save()
+            flash("Your account has been updated!")
+            return redirect(url_for('main.profile', username=user.username))
     # Populate form with existing data on get request
     elif request.method == "GET":
         form.about_me.data = user.about_me
