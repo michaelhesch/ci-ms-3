@@ -2,12 +2,13 @@
 {% block content %}
 <div class="row text-center">
   <h3>Out of Office</h3>
-  <p>Check out all of the great holiday photos below!  Be sure to leave a "like" and comment on the photos you like most!</p>
+  <p>Check out all of the great holiday photos below!</p>
+  <p>Be sure to leave a "like" and comment on the photos you like most!</p>
 <br />
 </div>
 <div class="container-lg">
   <div class="row row-cols-1 row-cols-md-2 g-4">
-    {% for photo in photos %}
+    {% for photo in photos.items %}
     <div class="col">
       <div class="card">
         {% if current_user.is_authenticated == True %}

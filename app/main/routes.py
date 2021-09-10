@@ -17,9 +17,10 @@ def index():
 @bp.route('/profile/<username>')
 @login_required
 def profile(username):
+    page = request.args.get("page", 1, type=int)
     # Checks for username match, returns 404 error if no match found
     user = User.objects(username=username).first_or_404()
-    photos = list(Photo.objects)
+    photos = Photo.objects.order_by('-user_added_datetime').paginate(page=page, per_page=8)
     return render_template('profile.html', title=f"{user.username}", user=user, photos=photos)
 
 

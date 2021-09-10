@@ -10,7 +10,11 @@ from cloudinary import uploader
 
 @bp.route('/feed')
 def photo_feed():
-    photos = list(Photo.objects)
+    # Gets page parameter, sets default page to 1, type=int allows only ints to be passed
+    page = request.args.get("page", 1, type=int)
+    # Query db for all photo documents, order by likes, pass in current page value
+    # Paginate at 9 items per page
+    photos = Photo.objects.order_by('-likes').paginate(page=page, per_page=8)
     
     return render_template("photos/feed.html", photos=photos)
 
