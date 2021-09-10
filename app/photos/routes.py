@@ -37,8 +37,10 @@ def upload_photo():
             user_uploaded_by=current_user.username,
             user_added_datetime=datetime.datetime.utcnow,
             # Select the secure url value from cloudinary response
-            url= upload_result["secure_url"])
+            url=upload_result["secure_url"],
+            public_id=upload_result["public_id"])
         # Save to mongodb
+        print(upload_result)
         new_photo.save()
         # Flash message to user and return to profile page
         flash("New photo added!")
@@ -47,7 +49,7 @@ def upload_photo():
     return render_template('photos/upload.html', title='Upload Photo', form=form)
 
 
-@bp.route('/photo/edit/<id>', methods=["GET", "POST"])
+@bp.route('/edit/<id>', methods=["GET", "POST"])
 @login_required
 def edit_photo(id):
     photo = Photo.objects(pk=id).first_or_404()
@@ -81,7 +83,7 @@ def edit_photo(id):
         legend='Edit Photo', user=user, form=form, photo=photo)
 
 
-@bp.route('/photo/<id>')
+@bp.route('/<id>')
 @login_required
 def view_photo(id):
     photo = Photo.objects(pk=id).first_or_404()
@@ -93,7 +95,7 @@ def view_photo(id):
         user=user, photo=photo, form=form, comments=comments)
 
 
-@bp.route('/photos/like/<id>', methods=["GET", "POST"])
+@bp.route('/like/<id>', methods=["GET", "POST"])
 @login_required
 def like_photo(id):
     photo = Photo.objects(pk=id).first_or_404()
@@ -116,7 +118,7 @@ def like_photo(id):
     return redirect(request.referrer)
 
 
-@bp.route('/photos/comment/<id>', methods=["GET", "POST"])
+@bp.route('/comment/<id>', methods=["GET", "POST"])
 @login_required
 def add_comment(id):
     user = User.objects(username=current_user.username).first_or_404()
@@ -138,7 +140,7 @@ def add_comment(id):
     return redirect(request.referrer)
 
 
-@bp.route('/photos/like_comment/<id>', methods=["GET", "POST"])
+@bp.route('/like_comment/<id>', methods=["GET", "POST"])
 @login_required
 def like_comment(id):
     comment = Comment.objects(pk=id).first_or_404()
@@ -190,7 +192,7 @@ def edit_comment(id):
     return redirect(request.referrer)
 
 
-@bp.route('/photos/delete_comment/<id>', methods=["POST"])
+@bp.route('/delete_comment/<id>', methods=["POST"])
 @login_required
 def delete_comment(id):
     comment = Comment.objects(pk=id).first_or_404()
@@ -207,7 +209,7 @@ def delete_comment(id):
         return redirect(request.referrer)
 
 
-@bp.route('/photos/delete_photo/<id>', methods=["POST"])
+@bp.route('/delete_photo/<id>', methods=["POST"])
 @login_required
 def delete_photo(id):
     photo = Photo.objects(pk=id).first_or_404()
