@@ -14,8 +14,8 @@ def photo_feed():
     page = request.args.get("page", 1, type=int)
     # Query db for all photo documents, order by likes, pass in current page value
     # Paginate at 9 items per page
-    photos = Photo.objects.order_by('-likes').paginate(page=page, per_page=8)
-    
+    photos = Photo.objects.order_by('-likes', '-user_added_datetime').paginate(page=page, per_page=8)
+
     return render_template("photos/feed.html", photos=photos)
 
 
@@ -44,7 +44,6 @@ def upload_photo():
             url=upload_result["secure_url"],
             public_id=upload_result["public_id"])
         # Save to mongodb
-        print(upload_result)
         new_photo.save()
         # Flash message to user and return to profile page
         flash("New photo added!")
