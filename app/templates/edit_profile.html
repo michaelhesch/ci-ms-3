@@ -23,7 +23,14 @@
         </fieldset>
         <div class="form-group">
             {{ form.submit(class_="btn btn-primary mb-4") }}
+            <button class="btn btn-primary mb-4" onclick="goBack()">Go Back</button>
         </div>
     </form>
 </div>
+<!-- Enables user to return to previous page -->
+<script>
+    function goBack() {
+      window.history.back();
+    }
+</script>
 {% endblock %}

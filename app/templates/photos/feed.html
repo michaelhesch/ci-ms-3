@@ -10,9 +10,13 @@
     {% for photo in photos %}
     <div class="col">
       <div class="card">
-        <a href="{{ url_for('photos.view_photo', id=photo.id )}}">
+        {% if current_user.is_authenticated == True %}
+          <a href="{{ url_for('photos.view_photo', id=photo.id )}}">
+            <img src="{{ photo.url }}" class="card-img-top" alt="..." />
+          </a>
+        {% else %}
           <img src="{{ photo.url }}" class="card-img-top" alt="..." />
-        </a>
+        {% endif %}
         <div class="card-body">
           <h5 class="card-title">{{ photo.title }}</h5>
           {% if current_user.is_authenticated == True %}
