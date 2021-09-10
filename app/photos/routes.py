@@ -24,28 +24,32 @@ def photo_feed():
 def upload_photo():
     # Create empty result variable to hold cloudinary file to upload
     upload_result = None
-    # Create instance of UploadPhoto form class
     form = UploadPhoto()
     # Check for post request and form validate on submit
     if request.method == "POST" and form.validate_on_submit():
-        # Capture file from form for cloudinary upload
         file_to_upload = request.files['file']
-        # If file is found, upload to cloudinary
+
         if file_to_upload:
-            upload_result = uploader.upload(file_to_upload)
-        # Populate Photo object to send to mongoDB
+            # Set Cloudinary parameters to optimize image size
+            upload_result = uploader.upload(
+                file_to_upload,
+                quality = "auto",
+                fetch_format = "auto",
+                overwrite = True,
+                height=1280,
+                width=720,
+                crop="fit"
+                )
+        # Populate Photo object with form inputs and save to mongoDB
         new_photo = Photo(
             title=form.title.data,
             description=form.description.data,
             category_name=form.category_name.data,
             user_uploaded_by=current_user.username,
             user_added_datetime=datetime.datetime.utcnow,
-            # Select the secure url value from cloudinary response
             url=upload_result["secure_url"],
             public_id=upload_result["public_id"])
-        # Save to mongodb
         new_photo.save()
-        # Flash message to user and return to profile page
         flash("New photo added!")
         return redirect(url_for('main.profile', username=current_user.username))
     
@@ -57,7 +61,7 @@ def upload_photo():
 def edit_photo(id):
     photo = Photo.objects(pk=id).first_or_404()
     user = User.objects(username=current_user.username).first_or_404()
-    
+
     if photo.user_uploaded_by != current_user.username:
         flash('You can only edit your own photos!')
         return redirect(request.referrer)
