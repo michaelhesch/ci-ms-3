@@ -9,7 +9,7 @@
         <div class="card-body">
           {% if current_user.username == photo.user_uploaded_by %}
             <form method="POST" action="{{ url_for('photos.edit_photo', id=photo.id)}}">
-              <button type="submit" class="btn btn-primary" name="liked">
+              <button type="submit" class="btn btn-primary btn-sm m-1">
                 Edit Photo Details
               </button>
               <br />
@@ -58,11 +58,11 @@
                   </div>
                 </div>
           {% endif %}
-          <small><em>Uploaded by: {{ photo.user_uploaded_by }}</em></small>
+          <small><em>Uploaded by {{ photo.user_uploaded_by }} on {{ photo.user_added_datetime.date() }}</em></small>
           <p class="card-text">{{ photo.description }}</p>
-          <p><i class="fas fa-thumbs-up"></i> {{ photo.likes }}</p>
           <form method="POST" action="{{ url_for('photos.like_photo', id=photo.id)}}">
-            <button type="submit" class="btn btn-primary" name="liked">
+            <i class="fas fa-thumbs-up"></i> {{ photo.likes }}
+            <button type="submit" class="btn btn-primary btn-sm">
               <i class="fas fa-thumbs-up"></i>
             </button>
             <br />
@@ -80,22 +80,27 @@
               <br />
               {{ form.submit(class_="btn btn-primary mb-4")}}
           </form>
+          {% if comments %}
           <h4>Comments:</h4>
+          {% endif %}
             {% for comment in comments %}
               <div class="card w75">
                 <div class="card-body">
                   <h5 class="card-title">{{ comment.user_comment_by.username }} says:</h5>
-                  <p><i class="fas fa-thumbs-up"></i> {{ comment.likes }}</p>
                   <form method="POST" action="{{ url_for('photos.like_comment', id=comment.id) }}">
-                    <small><button type="submit" class="btn btn-primary" name="liked">
-                      <i class="fas fa-thumbs-up"></i>
-                    </button></small>
+                    <small>
+                      <i class="fas fa-thumbs-up"></i> {{ comment.likes }}
+                      <button type="submit" class="btn btn-primary btn-sm" name="liked">
+                        <i class="fas fa-thumbs-up"></i>
+                      </button>
+                    </small>
                     <br />
                   </form>
                 </div>
                 <p class="card-text">{{ comment.comment_text }}</p>
                 <div class="card-footer text-muted"><em>Comment added on: {{ comment.user_comment_datetime.date() }}</em></div>
                 {% if comment.user_comment_by == current_user %}
+                <div class="card-body">
                 <!-- MDB Pop-Up Modal Layout below -->
                 <!-- Edit comment button -->
                 <button 
@@ -138,7 +143,6 @@
                         <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
                           Cancel
                         </button>
-                        
                       </div>
                     </div>
                   </div>
@@ -188,10 +192,13 @@
                     </div>
                   </div>
                 </div>
+                </div>
                 {% endif %}
               </div>
             {% endfor %}
-          <button class="btn btn-primary mb-4" onclick="goBack()">Go Back</button>
+          <div class="card-footer">
+            <button class="btn btn-primary mb-4" onclick="goBack()">Go Back</button>
+          </div>
         </div>
       </div>
     </div>
