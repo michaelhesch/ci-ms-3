@@ -43,6 +43,7 @@ class Photo(db.Document):
     user_uploaded_by = db.StringField(max_length=14, required=True)
     user_added_datetime = db.DateTimeField(default=datetime.datetime.utcnow)
     url = db.URLField()
+    public_id = db.StringField(required=True)
     likes = db.IntField(default=0)
     liked_by_user = db.ListField(db.ReferenceField(User))
 
@@ -50,16 +51,11 @@ class Photo(db.Document):
     def __repr__(self):
         return f"Photo('{self.title}', '{self.category_name}', '{self.user_uploaded_by}')"
 
-    # TODO: Need to implement photo removal from cloud as part of delete from DB operation
+    # Use cloudinary uploader to delete photo from cloud if user deletes photo in the app
+    # Passes in the photo's public_id which is created at upload and stored in the DB.
     def delete_photo_db(self):
-        url = self.url
-        uploader.destroy(url)
-
-    # TODO implement folders for each user's photos in cloudinary
-    """def upload_photo(self, user, new_photo):
-        user_folder = f"ooo/{user}"
-        upload_result = uploader.upload(new_photo, user_folder=user_folder)"""
-
+        public_id = self.public_id
+        uploader.destroy(public_id)
 
 # Comment class setup
 class Comment(db.Document):
