@@ -6,6 +6,7 @@ from app.photos import bp
 from app.photos.forms import UploadPhoto, AddComment, EditPhotoForm, EditComment
 import datetime
 from cloudinary import uploader
+from mongoengine.errors import NotUniqueError
 
 
 @bp.route('/feed')
@@ -30,30 +31,37 @@ def upload_photo():
         file_to_upload = request.files['file']
 
         if file_to_upload:
-            # Set Cloudinary parameters to optimize image size
-            upload_result = uploader.upload(
-                file_to_upload,
-                quality = "auto",
-                fetch_format = "auto",
-                allowed_formats = ['png', 'jpg', 'jpeg'],
-                overwrite = True,
-                height=1280,
-                width=720,
-                crop="fit"
-                )
-        # Populate Photo object with form inputs and save to mongoDB
-        new_photo = Photo(
-            title=form.title.data,
-            description=form.description.data,
-            category_name=form.category_name.data,
-            user_uploaded_by=current_user.username,
-            user_added_datetime=datetime.datetime.utcnow,
-            url=upload_result["secure_url"],
-            public_id=upload_result["public_id"])
-        new_photo.save()
-        flash("New photo added!")
-        return redirect(url_for('main.profile', username=current_user.username))
-    
+            try:
+                # Set Cloudinary parameters for image upload
+                upload_result = uploader.upload(
+                    file_to_upload,
+                    quality = "auto",
+                    fetch_format = "auto",
+                    allowed_formats = ['png', 'jpg', 'jpeg'],
+                    overwrite = True,
+                    height=1280,
+                    width=720,
+                    crop="fit",
+                    moderation = "aws_rek"
+                    )
+                # Populate Photo object with form inputs and save to mongoDB
+                new_photo = Photo(
+                    title=form.title.data,
+                    description=form.description.data,
+                    category_name=form.category_name.data,
+                    user_uploaded_by=current_user.username,
+                    user_added_datetime=datetime.datetime.utcnow,
+                    url=upload_result["secure_url"],
+                    public_id=upload_result["public_id"])
+                new_photo.save()
+                flash("New photo added!")
+                return redirect(url_for('main.profile', username=current_user.username))
+            except NotUniqueError:
+                # If user manages to submit an upload request multiple times,
+                # this logic returns them to their profile once cloudinary upload 
+                # is complete, but supresses mongoengine duplicate key error.
+                return redirect(url_for('main.profile', username=current_user.username))
+
     return render_template('photos/upload.html', title='Upload Photo', form=form)
 
 
