@@ -6,43 +6,34 @@
   <p>Be sure to leave a "like" and comment on the photos you like most!</p>
 <br />
 </div>
-<div class="container-lg">
-  <div class="row row-cols-1 row-cols-md-2 g-4">
+<!--<div class="container-lg">
+  <div class="row row-cols-1 row-cols-md-2 g-4">-->
+    <div class="row" data-masonry='{"percentPosition": true }'>
     {% for photo in photos.items %}
-    <div class="col">
-      <div class="card">
-        {% if current_user.is_authenticated == True %}
-          <a href="{{ url_for('photos.view_photo', id=photo.id )}}">
-            <img src="{{ photo.url }}" class="card-img-top" alt="..." />
-          </a>
-        {% else %}
-          <img src="{{ photo.url }}" class="card-img-top" alt="..." />
-        {% endif %}
-        <div class="card-body">
-          <h5 class="card-title">{{ photo.title }}</h5>
+    <div class="col-sm-6 col-lg-4 mb-4">
+        <div class="card">
           {% if current_user.is_authenticated == True %}
-          <div class="row">
-            <div class="col">
-              <form method="POST" action="{{ url_for('photos.like_photo', id=photo.id)}}">
-                <button type="submit" class="btn btn-primary" name="liked">
-                  <i class="fas fa-thumbs-up"></i>
-                </button>
-              </form>
-            </div>
+            <a href="{{ url_for('photos.view_photo', id=photo.id )}}">
+              <img src="{{ photo.url }}" class="card-img-top" alt="..." />
+            </a>
+          {% else %}
+            <img src="{{ photo.url }}" class="card-img-top" alt="..." />
           {% endif %}
-            <div class="col">
-              <small><i class="fas fa-thumbs-up"></i>: {{ photo.likes }}</small>
+          <div class="card-body">
+            <div class="row">
+            <div class="col justify-content-left">
+                <h5 class="card-title">{{ photo.title }}</h5>
+            </div>
+            <div class="col justify-content-right">
+                <small><i class="fas fa-thumbs-up"></i>: {{ photo.likes }}</small>
             </div>
           </div>
-          <small><em>Uploaded by {{ photo.user_uploaded_by }} on {{ photo.user_added_datetime.date() }}</em></small>
-          <p class="card-text">
-            {{ photo.description }}
-          </p>
+          </div>
         </div>
       </div>
-    </div>
     {% endfor %}
   </div>
+  <!--</div>-->
   <div class="row m-5">
     <!-- Pagination setup following Python Flask Tutorial YouTube series -->
     <!-- Please see readme for full crediting details -->
@@ -66,5 +57,12 @@
       </ul>
     </nav>
   </div>
-</div>
+<!--</div>-->
+
+<!-- Masonry grid JS -->
+<script 
+  src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" 
+  integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" 
+  crossorigin="anonymous" async></script>
+  
 {% endblock %}
