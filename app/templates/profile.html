@@ -17,14 +17,16 @@
       <p class="text-center">You have not added any photos yet, try uploading one now!</p>
     {% endif %}
   </div>
-  <div class="row row-cols-1 row-cols-md-2 g-4">
+  <div class="row" data-masonry='{"percentPosition": true }'>
     {% for photo in photos.items %}
       {% if photo.user_uploaded_by == user.username %}
-        <div class="col">
+        <div class="col-sm-6 col-lg-4 mb-4">
           <div class="card">
-            <a href="{{ url_for('photos.view_photo', id=photo.id )}}">
-              <img src="{{ photo.url }}" class="card-img-top" alt="{{ photo.title }}" />
-            </a>
+            <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+              <a href="{{ url_for('photos.view_photo', id=photo.id )}}">
+                <img src="{{ photo.url }}" class="card-img-top" alt="{{ photo.title }}" />
+              </a>
+            </div>
             <div class="card-body">
               <div class="col">
                 <h5 class="card-title">{{ photo.title }}</h5>
@@ -55,7 +57,7 @@
       {% endif %}
     {% endfor %}
   </div>
-  {% if photos.items|length > 8 %}
+  {% if photos.items|length > 9 %}
   <div class="row m-5">
     <!-- Pagination setup following Python Flask Tutorial YouTube series -->
     <!-- Please see readme for full crediting details -->
@@ -81,4 +83,9 @@
   </div>
   {% endif %}
 </div>
+<!-- Masonry grid JS -->
+<script 
+  src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" 
+  integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" 
+  crossorigin="anonymous" async></script>
 {% endblock %}
