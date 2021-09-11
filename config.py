@@ -1,6 +1,7 @@
 import os
 import cloudinary
-from dotenv import load_dotenv
+from datetime import timedelta
+#from dotenv import load_dotenv
 
 #basedir = os.path.abspath(os.path.dirname(__file__))
 #load_dotenv(os.path.join(basedir, '.env'))
@@ -8,7 +9,8 @@ from dotenv import load_dotenv
 class Config(object):
     # Import flask secret key environment variable
     SECRET_KEY = os.environ.get("SECRET_KEY")
-
+    # Configure LoginManager to invalidate sessions after 15 min
+    PERMANENT_SESSION_LIFETIME = timedelta(minutes=15)
     # Import cloudinary configuration environment variables
     cloudinary.config(
         cloud_name = os.getenv('CLOUD_NAME'), 

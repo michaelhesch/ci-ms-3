@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, session
 from flask_login import current_user, login_user, logout_user
 from werkzeug.urls import url_parse
 from app.auth.forms import LoginForm, RegistrationForm
@@ -15,10 +15,13 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.objects.get(username=form.username.data.lower())
+        # Check for incorrect credentials
         if user is None or not user.check_password(form.password.data):
             flash('Incorrect login details, please try again.')
             return redirect(url_for('auth.login'))
         login_user(user, remember=form.remember_me.data)
+        # Set session to permanent to enable automatic timeout
+        session.permanent = True
         # Check for next argument from login_required action
         next_page = request.args.get('next')
         # If next argument not passed, redirect to index
