@@ -36,15 +36,17 @@ def edit_profile(id):
     # Update form logic on post request
     if form.validate_on_submit():
         # If there is no change in about me data, return to profile page
-        if user.about_me == form.about_me.data:
+        if user.about_me == form.about_me.data and user.avatar == form.avatar.data:
             return redirect(url_for('main.profile', username=user.username))
         else:
             user.about_me = form.about_me.data
+            user.avatar = form.avatar.data
             user.save()
             flash("Your account has been updated!")
             return redirect(url_for('main.profile', username=user.username))
     # Populate form with existing data on get request
     elif request.method == "GET":
         form.about_me.data = user.about_me
+        form.avatar.data = user.avatar
     return render_template('edit_profile.html', title='Edit Profile', 
         legend='Edit Profile', user=user, form=form)
