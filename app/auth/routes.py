@@ -4,7 +4,7 @@ from werkzeug.urls import url_parse
 from app.auth.forms import LoginForm, RegistrationForm
 from app.models import User
 from app.auth import bp
-
+from mongoengine.errors import NotUniqueError
 
 @bp.route('/login', methods=["GET", "POST"])
 def login():
@@ -36,17 +36,26 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
     form = RegistrationForm()
-    if form.validate_on_submit():
-        user = User(
-            username=form.username.data.lower(),
-            email=form.email.data,
-            first_name=form.first_name.data.lower(),
-            last_name=form.last_name.data.lower())
-        user.set_password(form.password.data)
-        user.save()
-        login_user(user)
-        flash("You have registered a new account!")
-        return redirect(url_for('main.index'))
+    if request.method == "POST" and form.validate_on_submit():
+        try:
+            user = User(
+                username=form.username.data.lower(),
+                email=form.email.data,
+                first_name=form.first_name.data.lower(),
+                last_name=form.last_name.data.lower())
+            user.set_password(form.password.data)
+            user.save()
+            login_user(user)
+            flash("You have registered a new account!")
+            return redirect(url_for('main.index'))
+        except NotUniqueError:
+            """
+            Handles Mongoengine duplicate key value error
+            returned when a user provides a username or email
+            that already exists in the db.
+            """
+            flash("The username or email address provided already exists, please try again.")
+            return redirect(request.referrer)
 
     return render_template('auth/register.html', title='Register', form=form)
 
