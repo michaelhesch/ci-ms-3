@@ -115,7 +115,7 @@ def like_photo(id):
             photo.update(dec__likes=1)
             photo.update(pull__liked_by_user=user.id)
             photo.save()
-        # If user has not liked the photo, add a like and user liked by value, 
+        # If user has not liked the photo, add a like and user's ID, 
         # then update db
         else:
             photo.update(inc__likes=1)
@@ -174,9 +174,7 @@ def like_comment(id):
 @login_required
 def edit_comment(id):
     comment = Comment.objects(pk=id).first_or_404()
-    #photo = comment.photo_commented_on
-    #user = User.objects(username=current_user.username).first_or_404()
-
+    
     # Confirm current user is the comment creator
     if current_user.id != comment.user_comment_by.id:
         # TODO: Should this route back to where they came from or
@@ -185,16 +183,14 @@ def edit_comment(id):
         abort(403)
     
     form = EditComment()
-    #form.comment_text.data = comment.comment_text
-    if form.validate_on_submit():
+    if request.method == "POST":
         # Edit comment and save changes to DB
         comment.update(comment_text = form.comment_text.data)
         comment.update(user_comment_datetime = datetime.datetime.utcnow)
         comment.save()
         flash('Your comment has been updated!')
         return redirect(request.referrer)
-    elif request.method == "GET":
-        form.comment_text.data = comment.comment_text
+
     
     return redirect(request.referrer)
 
