@@ -14,6 +14,7 @@ class User(db.Document, UserMixin):
     email = db.EmailField(max_length=50, unique=True, required=True)
     about_me = db.StringField(max_length=180)
     password_hash = db.StringField(required=True)
+    avatar = db.IntField(default=0)
 
     # Password hashing function
     def set_password(self, password):

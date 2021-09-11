@@ -14,7 +14,7 @@ def photo_feed():
     page = request.args.get("page", 1, type=int)
     # Query db for all photo documents, order by likes, pass in current page value
     # Paginate at 9 items per page
-    photos = Photo.objects.order_by('-likes', '-user_added_datetime').paginate(page=page, per_page=8)
+    photos = Photo.objects.order_by('-likes', '-user_added_datetime').paginate(page=page, per_page=9)
 
     return render_template("photos/feed.html", photos=photos)
 
@@ -35,6 +35,7 @@ def upload_photo():
                 file_to_upload,
                 quality = "auto",
                 fetch_format = "auto",
+                allowed_formats = ['png', 'jpg', 'jpeg'],
                 overwrite = True,
                 height=1280,
                 width=720,
@@ -130,8 +131,8 @@ def like_photo(id):
 def add_comment(id):
     user = User.objects(username=current_user.username).first_or_404()
     photo = Photo.objects(pk=id).first_or_404()
-    form = AddComment()
 
+    form = AddComment()
     if form.validate_on_submit():
         # Add new comment to DB
         new_comment = Comment(
@@ -190,8 +191,9 @@ def edit_comment(id):
         comment.save()
         flash('Your comment has been updated!')
         return redirect(request.referrer)
+    elif request.method == "GET":
+        form.comment_text.data = comment.comment_text
 
-    
     return redirect(request.referrer)
 
 

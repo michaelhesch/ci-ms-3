@@ -1,3 +1,9 @@
 .flash-message {
   line-height: 2;
 }
+
+.photo-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
