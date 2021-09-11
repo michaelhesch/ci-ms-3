@@ -65,12 +65,19 @@
             <span style="color: red;">{{ error }}</span>
           {% endfor %}
         </div>
+        <div class="form-group">
+          {{ form.avatar.label }}<br />
+        </div>
+        <div class="form-group">
+            {{ form.avatar }}
+        </div>
+        <!--
         <div>Select avatar
           <i class="fas fa-user fa-3x" style=" color: orange"></i>
           <i class="fas fa-user fa-3x" style=" color: blue"></i>
           <i class="fas fa-user fa-3x" style=" color: green"></i>
           <i class="fas fa-user fa-3x" style=" color: pink"></i>
-        </div>
+        </div>-->
       </fieldset>
         <div class="form-group mb-4">
           {{ form.submit(class_="btn btn-primary btn-block mb-4") }}
