@@ -123,7 +123,7 @@
                     <div class="modal-content">
                       <div class="modal-header">
                         <h5 class="modal-title" id="editCommentModalLabel">
-                          Delete comment?
+                          Edit comment?
                         </h5>
                         <button
                           type="button"
@@ -134,6 +134,7 @@
                       </div>
                       <div class="modal-body">
                         <form method="POST" action="{{ url_for('photos.edit_comment', id=comment.id) }}">
+                          {{ form.comment_text.process_data(value=comment.comment_text) }}
                           {{ form.comment_text.label(class_="form-control-label") }}
                           {{ form.comment_text(class_="form-control") }}
                           {{ form.submit(class_="btn btn-primary", value="Save Changes") }}
