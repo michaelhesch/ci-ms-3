@@ -4,6 +4,7 @@ from app.main.forms import EditProfileForm
 from app.models import User, Photo
 from app.main import bp
 
+
 @bp.route('/')
 @bp.route('/index')
 def index():
@@ -18,9 +19,10 @@ def index():
 @login_required
 def profile(username):
     page = request.args.get("page", 1, type=int)
-    # Checks for username match, returns 404 error if no match found
     user = User.objects(username=username).first_or_404()
-    photos = Photo.objects.order_by('-user_added_datetime').paginate(page=page, per_page=9)
+    photos = Photo.objects(user_uploaded_by=user.username).paginate(page=page, per_page=9) #order by
+    # photos = Photo.objects.order_by('-user_added_datetime')
+
     return render_template('profile.html', title=f"{user.username}", user=user, photos=photos)
 
 
@@ -39,8 +41,19 @@ def edit_profile(id):
         if user.about_me == form.about_me.data and user.avatar == form.avatar.data:
             return redirect(url_for('main.profile', username=user.username))
         else:
+            color = ""
+            if form.avatar.data == "1":
+                color = "#FF6347"
+            elif form.avatar.data == "2":
+                color = "#88FF47"
+            elif form.avatar.data == "3":
+                color = "#47E3FF"
+            elif form.avatar.data == "4":
+                color = "#BF47FF"
+            else:
+                pass
             user.about_me = form.about_me.data
-            user.avatar = form.avatar.data
+            user.avatar = color
             user.save()
             flash("Your account has been updated!")
             return redirect(url_for('main.profile', username=user.username))

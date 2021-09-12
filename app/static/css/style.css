@@ -7,3 +7,38 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+#avatar {
+  list-style-type: none;
+}
+
+/* ---- .grid-item ---- */
+
+.grid-sizer,
+.grid-item {
+  width: 33.333%;
+}
+
+.grid-item {
+  float: left;
+  padding-bottom: 24px;
+}
+
+.grid-item img {
+  display: block;
+  max-width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .grid-sizer,
+  .grid-item {
+  width: 50%;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .grid-sizer,
+  .grid-item {
+  width: 100%;
+  }
+}

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, RadioField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
 from app.models import User
 
@@ -32,6 +32,12 @@ class RegistrationForm(FlaskForm):
     password2 = PasswordField('Confirm Password', validators=[
         DataRequired(message="Please re-enter your password."), 
         EqualTo('password', message="Your passwords do not match!")])
+    avatar = RadioField('Choose Your Avatar Color', 
+        choices=[
+            ('1', 'Orange'), 
+            ('2', 'Green'), 
+            ('3', 'Blue'),
+            ('4', 'Purple')])
     submit = SubmitField('Register')
 
     """

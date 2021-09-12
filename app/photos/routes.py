@@ -39,8 +39,8 @@ def upload_photo():
                     fetch_format = "auto",
                     allowed_formats = ['png', 'jpg', 'jpeg'],
                     overwrite = True,
-                    height=1280,
-                    width=720,
+                    height=1920,
+                    width=1080,
                     crop="fit",
                     moderation = "aws_rek"
                     )

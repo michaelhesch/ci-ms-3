@@ -1,71 +1,84 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="row text-center">
+<!-- Masonry JS for Masonry layouts -->
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
+<!-- ImagesLoaded JS for feed image preloading -->
+<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.js"></script>
+<div class="row text-center m-2">
   <h3>Out of Office</h3>
   <p>Check out all of the great holiday photos below!</p>
   <p>Be sure to leave a "like" and comment on the photos you like most!</p>
-<br />
 </div>
-<!--<div class="container-lg">
-  <div class="row row-cols-1 row-cols-md-2 g-4">-->
-    <div class="row" data-masonry='{"percentPosition": true }'>
-      {% for photo in photos.items %}
-      <div class="col-sm-6 col-lg-4 mb-4">
-        <div class="card">
-          <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-            {% if current_user.is_authenticated == True %}
-            <a href="{{ url_for('photos.view_photo', id=photo.id )}}">
-              <img src="{{ photo.url }}" class="card-img-top" alt="..." />
-              <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-            </a>
+<div class="row masonry-grid">
+  <div class="grid-sizer"></div>
+  {% for photo in photos.items %}
+  <div class="grid-item">
+    <div class="card hover-shadow border">
+      <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+        {% if current_user.is_authenticated == True %}
+        <a href="{{ url_for('photos.view_photo', id=photo.id )}}">
+          <img src="{{ photo.url }}" class="card-img-top" alt="..." />
+          <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+        </a>
+        {% else %}
+        <img src="{{ photo.url }}" class="card-img-top" alt="..." />
+        {% endif %}
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col">
+            <h5 class="card-title photo-title">{{ photo.title }}</h5>
+          </div>
+          <div class="col" style="text-align: right;">
+            {% if current_user in photo.liked_by_user %}
+              <small><span style="color: blue"><i class="fas fa-thumbs-up"></i>: {{ photo.likes }}</span></small>
             {% else %}
-            <img src="{{ photo.url }}" class="card-img-top" alt="..." />
+              <small><span><i class="fas fa-thumbs-up"></i>: {{ photo.likes }}</span></small>
             {% endif %}
           </div>
-            <div class="card-body">
-              <div class="row">
-                <div class="col">
-                  <h5 class="card-title photo-title">{{ photo.title }}</h5>
-                </div>
-                <div class="col" style="text-align: right;">
-                  <small><i class="fas fa-thumbs-up"></i>: {{ photo.likes }}</small>
-                </div>
-              </div>
-            </div>
         </div>
       </div>
-      {% endfor %}
     </div>
-  <!--</div>-->
-  <div class="row m-5">
-    <!-- Pagination setup following Python Flask Tutorial YouTube series -->
-    <!-- Please see readme for full crediting details -->
-    <nav aria-label="page selection navigation">
-      <ul class="pagination justify-content-center">
-      {% for page_num in photos.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-        {% if page_num %}
-          {% if photos.page == page_num %}
-          <li class="page-item active">
-            <a class="page-link" href="{{ url_for('photos.photo_feed', page=page_num)}}">{{ page_num }}</a>
-          </li>
-          {% else %}
-          <li class="page-item">
-            <a class="page-link" href="{{ url_for('photos.photo_feed', page=page_num)}}">{{ page_num }}</a>
-          </li>
-          {% endif %}
-        {% else %}
-          ...
-        {% endif %}
-      {% endfor %}
-      </ul>
-    </nav>
   </div>
-<!--</div>-->
+  {% endfor %}
+</div>
+<div class="row m-5">
+  <!-- Pagination setup following Python Flask Tutorial YouTube series -->
+  <!-- Please see readme for full crediting details -->
+  <nav aria-label="page selection navigation">
+    <ul class="pagination justify-content-center">
+      {% for page_num in photos.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+      {% if page_num %}
+      {% if photos.page == page_num %}
+      <li class="page-item active">
+        <a class="page-link" href="{{ url_for('photos.photo_feed', page=page_num)}}">{{ page_num }}</a>
+      </li>
+      {% else %}
+      <li class="page-item">
+        <a class="page-link" href="{{ url_for('photos.photo_feed', page=page_num)}}">{{ page_num }}</a>
+      </li>
+      {% endif %}
+      {% else %}
+      ...
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </nav>
+</div>
 
-<!-- Masonry grid JS -->
-<script 
-  src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" 
-  integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" 
-  crossorigin="anonymous" async></script>
-  
+<script>
+  // Image preloading solution from https://codepen.io/desandro/pen/MwJoZQ
+  var grid = document.querySelector('.masonry-grid');
+
+  var msnry = new Masonry( grid, {
+    itemSelector: '.grid-item',
+    columnWidth: '.grid-sizer',
+    percentPosition: true
+  });
+
+  imagesLoaded( grid ).on( 'progress', function() {
+    // layout Masonry after each image loads
+    msnry.layout();
+  });
+</script>
 {% endblock %}

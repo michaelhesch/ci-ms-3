@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-<h3 class="text-center">{{ photo.title }}</h3>
 <div class="container-lg">
+  <h3 class="text-center m-2">{{ photo.title }}</h3>
+  <p class="text-center"><em>By {{ photo.user_uploaded_by|capitalize }}</em></p>
   <div class="row row-cols-1">
     <div class="col">
       <div class="card">
@@ -58,13 +59,19 @@
                   </div>
                 </div>
           {% endif %}
-          <small><em>Uploaded by {{ photo.user_uploaded_by }} on {{ photo.user_added_datetime.date() }}</em></small>
+          <small><em>Uploaded on {{ photo.user_added_datetime.date() }}</em></small>
           <p class="card-text">{{ photo.description }}</p>
           <form method="POST" action="{{ url_for('photos.like_photo', id=photo.id)}}">
             <i class="fas fa-thumbs-up"></i> {{ photo.likes }}
-            <button type="submit" class="btn btn-primary btn-sm">
-              <i class="fas fa-thumbs-up"></i>
-            </button>
+            {% if current_user in photo.liked_by_user %}
+              <button type="submit" class="btn btn-success btn-sm">
+                <i class="fas fa-thumbs-up"></i>
+              </button>
+            {% else %}
+              <button type="submit" class="btn btn-primary btn-sm">
+                <i class="fas fa-thumbs-up"></i>
+              </button>
+            {% endif %}
             <br />
           </form>
           <br />
@@ -86,13 +93,24 @@
             {% for comment in comments %}
               <div class="card w75">
                 <div class="card-body">
-                  <h5 class="card-title">{{ comment.user_comment_by.username }} says:</h5>
+                  <h5 class="card-title">
+                    <span style="color: {{ user.avatar }}">
+                      <i class="fas fa-user-circle"></i>
+                    </span>
+                    {{ comment.user_comment_by.username|capitalize }} says:
+                  </h5>
                   <form method="POST" action="{{ url_for('photos.like_comment', id=comment.id) }}">
                     <small>
                       <i class="fas fa-thumbs-up"></i> {{ comment.likes }}
-                      <button type="submit" class="btn btn-primary btn-sm" name="liked">
-                        <i class="fas fa-thumbs-up"></i>
-                      </button>
+                      {% if current_user in comment.liked_by_user %}
+                        <button type="submit" class="btn btn-success btn-sm" name="liked">
+                          <i class="fas fa-thumbs-up"></i>
+                        </button>
+                      {% else %}
+                        <button type="submit" class="btn btn-primary btn-sm" name="liked">
+                          <i class="fas fa-thumbs-up"></i>
+                        </button>
+                      {% endif %}
                     </small>
                     <br />
                   </form>
@@ -197,19 +215,21 @@
                 {% endif %}
               </div>
             {% endfor %}
+            <!--
           <div class="card-footer">
             <button class="btn btn-primary mb-4" onclick="goBack()">Go Back</button>
           </div>
+          -->
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Returns user to previous page -->
+<!-- Returns user to previous page
 <script>
   function goBack() {
     window.history.back();
   }
-</script>
+</script> -->
 {% endblock %}
