@@ -41,16 +41,30 @@ def register():
     form = RegistrationForm()
     if request.method == "POST" and form.validate_on_submit():
         try:
+            color = None
+            if form.avatar.data == "1":
+                color = "#FF6347"
+            elif form.avatar.data == "2":
+                color = "#88FF47"
+            elif form.avatar.data == "3":
+                color = "#47E3FF"
+            elif form.avatar.data == "4":
+                color = "#BF47FF"
+            else:
+                pass
+
             user = User(
                 username=form.username.data.lower(),
                 email=form.email.data,
                 first_name=form.first_name.data.lower(),
-                last_name=form.last_name.data.lower())
+                last_name=form.last_name.data.lower(),
+                avatar=color)
             user.set_password(form.password.data)
             user.save()
             login_user(user)
             flash("You have registered a new account!")
             return redirect(url_for('main.index'))
+
         except NotUniqueError:
             """
             Handles Mongoengine duplicate key value error

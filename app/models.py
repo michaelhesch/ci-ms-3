@@ -14,7 +14,7 @@ class User(db.Document, UserMixin):
     email = db.EmailField(max_length=50, unique=True, required=True)
     about_me = db.StringField(max_length=180)
     password_hash = db.StringField(required=True)
-    avatar = db.IntField(default=0)
+    avatar = db.StringField(max_length=7)
 
     # Password hashing function
     def set_password(self, password):
@@ -50,7 +50,7 @@ class Photo(db.Document):
 
     # Dunder method to configure how Photo object is returned when printed
     def __repr__(self):
-        return f"Photo('{self.title}', '{self.category_name}', '{self.user_uploaded_by}')"
+        return f"Photo('{self.title}', '{self.user_uploaded_by}')"
 
     # Use cloudinary uploader to delete photo from cloud if user deletes photo in the app
     # Passes in the photo's public_id which is created at upload and stored in the DB.
