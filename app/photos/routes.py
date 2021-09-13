@@ -104,7 +104,7 @@ def edit_photo(id):
 def view_photo(id):
     photo = Photo.objects(pk=id).first_or_404()
     user = User.objects(username=current_user.username).first_or_404()
-    comments = Comment.objects(photo_commented_on=id)
+    comments = Comment.objects(photo_commented_on=id).order_by('-user_comment_datetime')
     form = AddComment()
 
     return render_template('photos/photo.html', title=f"{photo.title}", 

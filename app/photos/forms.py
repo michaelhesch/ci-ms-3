@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField, FileField, SelectField
+from wtforms import StringField, SubmitField, TextAreaField, FileField, SelectField, ValidationError
 from wtforms.validators import DataRequired, Length
 from app.models import Category
 
@@ -50,6 +50,10 @@ class AddComment(FlaskForm):
             DataRequired('Please add text to submit a comment.'), 
             Length(min=2, max=200)])
     submit = SubmitField('Add Comment')
+    
+    def validate_comment(form, comment_text):
+        if len(comment_text.data) > 200:
+            raise ValidationError('Comment must be less than 200 characters')
 
 
 class EditComment(FlaskForm):
@@ -58,3 +62,8 @@ class EditComment(FlaskForm):
             DataRequired('Comment cannot be blank!'), 
             Length(min=2, max=200)])
     submit = SubmitField('Save Changes')
+
+    def validate_comment(form, comment_text):
+        if len(comment_text.data) > 200:
+            raise ValidationError('Comment must be less than 200 characters')
+

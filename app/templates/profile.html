@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<!-- Masonry JS for Masonry layouts -->
+<!-- Masonry JS for Masonry image card layout -->
 <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
 <!-- ImagesLoaded JS for feed image preloading -->
 <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.js"></script>
@@ -46,21 +46,10 @@
               </div>
               <div class="row">
                 <div class="col">
-                  <form method="POST" action="{{ url_for('photos.like_photo', id=photo.id)}}">
-                    <button type="submit" 
-                      class="btn btn-primary" 
-                      name="liked"
-                      autocomplete="off"
-                    >
-                      <i class="fas fa-thumbs-up"></i><span class="badge ms-2">{{ photo.likes }}</span>
-                    </button>
-                  </form>
-                </div>
-                <div class="col">
                   <small><i class="fas fa-thumbs-up"></i>: {{ photo.likes }}</small>
                 </div>
               </div>
-              <small><em>Uploaded by {{ photo.user_uploaded_by }} on {{ photo.user_added_datetime.date() }}</em></small>
+              <small><em>Uploaded on {{ photo.user_added_datetime.date() }}</em></small>
               <p class="card-text">
                 {{ photo.description }}
               </p>
@@ -97,6 +86,8 @@
   {% endif %}
 </div>
 <script>
+  // Javascript functions to pre-load all images before the Masonry layout is applied,
+  // which prevents errors in the Masonry layout when the site loads.
   // Image preloading solution from https://codepen.io/desandro/pen/MwJoZQ
   var grid = document.querySelector('.masonry-grid');
 

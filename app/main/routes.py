@@ -9,8 +9,8 @@ from app.main import bp
 @bp.route('/index')
 def index():
     if current_user.is_authenticated == False:
-        flash("Welcome, please log in to access the site!")
-        return redirect(url_for('auth.login'))
+        flash("Welcome, please log in or register to access the site!")
+        return render_template('index.html')
     else:
         return redirect(url_for('photos.photo_feed'))
 
