@@ -1,28 +1,31 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container-lg">
-  <h3 class="text-center m-2">{{ photo.title }}</h3>
-  <p class="text-center"><em>By {{ photo.user_uploaded_by|capitalize }}</em></p>
-  <div class="row row-cols-1">
-    <div class="col">
-      <div class="card">
+  <div class="row row-cols-1 justify-content-center">
+    <div class="col w-75" id="photo-container">
+      <div class="card border shadow text-center my-4">
+        <h3 class="text-center mt-3 mb-2">{{ photo.title }}</h3>
+        <p class="text-center"><em>By {{ photo.user_uploaded_by|capitalize }}</em></p>
+      </div>
+      <div class="card rounded-5">
         <img src="{{ photo.url }}" class="card-img-top" alt="..." />
         <div class="card-body">
+          <div class="d-grid gap-2 d-md-block">
           {% if current_user.username == photo.user_uploaded_by %}
             <form method="POST" action="{{ url_for('photos.edit_photo', id=photo.id)}}">
               <button type="submit" class="btn btn-primary btn-sm m-1">
                 Edit Photo Details
               </button>
               <br />
+              <button 
+              type="button" 
+              class="btn btn-danger btn-sm m-1"
+              data-mdb-toggle="modal"
+              data-mdb-target="#deletePhotoModal"
+            >
+              Delete Photo
+            </button>
             </form>
-            <button 
-                  type="button" 
-                  class="btn btn-danger btn-sm m-1"
-                  data-mdb-toggle="modal"
-                  data-mdb-target="#deletePhotoModal"
-                >
-                  Delete Photo
-                </button>
                 <!-- Modal for delete button -->
                 <div
                   class="modal fade"
@@ -58,65 +61,51 @@
                     </div>
                   </div>
                 </div>
+            </div>
           {% endif %}
           <small><em>Uploaded on {{ photo.user_added_datetime.date() }}</em></small>
           <p class="card-text">{{ photo.description }}</p>
-          <form method="POST" action="{{ url_for('photos.like_photo', id=photo.id)}}">
-            <i class="fas fa-thumbs-up"></i> {{ photo.likes }}
-            {% if current_user in photo.liked_by_user %}
-              <button type="submit" class="btn btn-success btn-sm">
-                <i class="fas fa-thumbs-up"></i>
-              </button>
-            {% else %}
-              <button type="submit" class="btn btn-primary btn-sm">
-                <i class="fas fa-thumbs-up"></i>
-              </button>
-            {% endif %}
-            <br />
-          </form>
-          <br />
           <form method="POST" action="{{ url_for('photos.add_comment', id=photo.id)}}">
             {{ form.hidden_tag() }}
-            <legend class="border-bottom mb-4">Add a comment</legend>
-              <div class="form-group mb-4">
+            <legend class="border-bottom my-3">Add a comment</legend>
+              <div class="form-group">
               {{ form.comment_text.label(class_="form-control-label") }}<br>
               {{ form.comment_text(class_="form-control", placeholder="Add a comment!") }}
-              {% for error in form.comment_text.errors %}
-                <span style="color: red;">{{ error }}</span>
-              {% endfor %}
-              <br />
-              {{ form.submit(class_="btn btn-primary mb-4")}}
+                {% for error in form.comment_text.errors %}
+                  <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+              {{ form.submit(class_="btn btn-primary my-3")}}
           </form>
           {% if comments %}
           <h4>Comments:</h4>
           {% endif %}
             {% for comment in comments %}
-              <div class="card w75">
+              <div class="card w75 rounded-10 bg-light border" style="margin-bottom: 15px;">
                 <div class="card-body">
                   <h5 class="card-title">
-                    <span style="color: {{ user.avatar }}">
+                    <span class="me-2" style="color: {{ comment.user_comment_by.avatar }}">
                       <i class="fas fa-user-circle"></i>
                     </span>
-                    {{ comment.user_comment_by.username|capitalize }} says:
+                    {{ comment.user_comment_by.username|capitalize }}
                   </h5>
-                  <form method="POST" action="{{ url_for('photos.like_comment', id=comment.id) }}">
-                    <small>
-                      <i class="fas fa-thumbs-up"></i> {{ comment.likes }}
-                      {% if current_user in comment.liked_by_user %}
-                        <button type="submit" class="btn btn-success btn-sm" name="liked">
-                          <i class="fas fa-thumbs-up"></i>
-                        </button>
-                      {% else %}
-                        <button type="submit" class="btn btn-primary btn-sm" name="liked">
-                          <i class="fas fa-thumbs-up"></i>
-                        </button>
-                      {% endif %}
-                    </small>
+                </div>
+                <p class="card-text ms-3">{{ comment.comment_text }}</p>
+                <div class="card-footer text-muted">
+                  <em>Comment added {{ comment.user_comment_datetime.date() }}</em>
+                  <form method="POST" action="{{ url_for('photos.like_photo', id=photo.id)}}">
+                    <i class="fas fa-thumbs-up"></i> {{ photo.likes }}
+                    {% if current_user in photo.liked_by_user %}
+                      <button type="submit" class="btn btn-success btn-sm">
+                        <i class="fas fa-thumbs-up"></i>
+                      </button>
+                    {% else %}
+                      <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="fas fa-thumbs-up"></i>
+                      </button>
+                    {% endif %}
                     <br />
                   </form>
                 </div>
-                <p class="card-text">{{ comment.comment_text }}</p>
-                <div class="card-footer text-muted"><em>Comment added on: {{ comment.user_comment_datetime.date() }}</em></div>
                 {% if comment.user_comment_by == current_user %}
                 <div class="card-body">
                 <!-- MDB Pop-Up Modal Layout below -->
@@ -211,7 +200,7 @@
                     </div>
                   </div>
                 </div>
-                </div>
+              </div>
                 {% endif %}
               </div>
             {% endfor %}
