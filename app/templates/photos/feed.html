@@ -4,7 +4,7 @@
 <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
 <!-- ImagesLoaded JS for feed image preloading -->
 <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.js"></script>
-<div class="row text-center m-2">
+<div class="row text-center my-3">
   <h3>Out of Office</h3>
   <p>Check out all of the great holiday photos below!</p>
   <p>Be sure to leave a "like" and comment on the photos you like most!</p>
@@ -16,12 +16,12 @@
     <div class="card hover-shadow border">
       <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
         {% if current_user.is_authenticated == True %}
-        <a href="{{ url_for('photos.view_photo', id=photo.id )}}">
-          <img src="{{ photo.url }}" class="card-img-top" alt="..." />
-          <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-        </a>
+          <a href="{{ url_for('photos.view_photo', id=photo.id )}}">
+            <img src="{{ photo.url }}" class="card-img-top" alt="..." />
+            <div class="mask" style="background-color: rgba(251, 251, 251, 0.322);"></div>
+          </a>
         {% else %}
-        <img src="{{ photo.url }}" class="card-img-top" alt="..." />
+          <img src="{{ photo.url }}" class="card-img-top" alt="..." />
         {% endif %}
       </div>
       <div class="card-body">

@@ -1,61 +1,42 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="content-section m-2">
-    <form action="" method="POST">
-        <fieldset class="form-group">
-            <legend class="border-bottom mb4">
-                {{ legend }}
-            </legend>
-            {{ form.hidden_tag() }}
-            <div class="form-group">
-                {{ form.about_me.label }}<br />
+    <div class="row row-cols-1 justify-content-center">
+        <div class="col w-50 m-3">
+            <div class="card border shadow p-5">
+                <form action="" method="POST">
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb4">
+                            {{ legend }}
+                        </legend>
+                        {{ form.hidden_tag() }}
+                        <div class="form-group">
+                            {{ form.about_me.label }}<br />
+                        </div>
+                        <div class="form-group">
+                            {{ form.about_me(cols=50, rows=4) }}<br />
+                        </div>
+                        {% if form.about_me.errors %}
+                            <div class="invalid-feedback">                
+                                {% for error in form.about_me.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="form-group">
+                            {{ form.avatar.label }}<br />
+                        </div>
+                        <div class="form-group">
+                            {{ form.avatar }}
+                        </div>
+                    </fieldset>
+                    <div class="form-group">
+                        {{ form.submit(class_="btn btn-primary mb-4") }}
+                        <a href="{{ url_for('main.profile', username=current_user.username) }}" class="btn btn-primary mb-4"">Go Back</a>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                {{ form.about_me(cols=50, rows=4) }}<br />
-            </div>
-            {% if form.about_me.errors %}
-                <div class="invalid-feedback">                
-                    {% for error in form.about_me.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>
-            {% endif %}
-            <div class="form-group">
-                {{ form.avatar.label }}<br />
-            </div>
-            <div class="form-group">
-                {{ form.avatar }}
-            </div>
-            <!--
-                <div class="btn-group">
-                    <input
-                      type="radio"
-                      class="btn-check"
-                      name="options"
-                      id="option1"
-                      autocomplete="off"
-                      checked
-                    />
-                    <label class="btn btn-secondary" for="option1">Checked</label>
-                  
-                    <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off" />
-                    <label class="btn btn-secondary" for="option2">Radio</label>
-                  
-                    <input type="radio" class="btn-check" name="options" id="option3" autocomplete="off" />
-                    <label class="btn btn-secondary" for="option3">Radio</label>
-                  </div>
-                  -->
-        </fieldset>
-        <div class="form-group">
-            {{ form.submit(class_="btn btn-primary mb-4") }}
-            <button class="btn btn-primary mb-4" onclick="goBack()">Go Back</button>
         </div>
-    </form>
+    </div>
 </div>
-<!-- Enables user to return to previous page -->
-<script>
-    function goBack() {
-      window.history.back();
-    }
-</script>
 {% endblock %}

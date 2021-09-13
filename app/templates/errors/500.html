@@ -1,5 +1,10 @@
 {% extends "base.html" %}
-{% block app_content %}
-<h1>An unexpected error has occured</h1>
-<p><a href="{{ url_for('main.index' )}}">Return Home</a></p>
+{% block content %}
+<div class="card my-3 border shadow">
+  <div class="card-body text-center">
+    <h1>Our Apologies! Something Went Wrong</h1>
+    <p>Looks like there is a problem with the page you are trying to reach.  Please go back and try again!</p>
+    <p><a href="{{ url_for('main.index' )}}" class="btn btn-primary">Return Home</a></p>
+  </div>
+</div>
 {% endblock %}

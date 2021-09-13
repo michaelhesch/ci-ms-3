@@ -4,23 +4,25 @@
 <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
 <!-- ImagesLoaded JS for feed image preloading -->
 <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.js"></script>
-<div class="content-section m-2">
-  <div class="media">
+<div class="content-section my-3">
+  <div class="card border shadow">
+  <div class="d-flex justify-content-start ms-3 mt-3">
     <span style="color: {{ user.avatar }}">
       <i class="fas fa-7x fa-user-circle"></i>
     </span>
-  <!--<div class="py-4 text-center">-->
-    <div class="media-body">
+    <span class="ms-3">
       <h3>{{ user.username|capitalize }}'s Profile</h3>
       <p>E-Mail Address: {{ user.email }}</p>
       <p>About Me: {{ user.about_me }}</p>
-</div>
-    <div>
+    </span>
+  </div>
+    <div class="ms-3 mb-3">
       <a class="btn btn-outline-primary m-1" href="{{ url_for('main.edit_profile', id=user.id) }}">Edit About Me</a>
       <a class="btn btn-outline-primary m-1" href="{{ url_for('photos.upload_photo') }}">Add A Photo!</a>
     </div>
-    <hr>
-    <h3 class="text-center">{{ user.username|capitalize }}'s Photos</h3>
+  </div>
+  <div class="my-4">
+    <h3 class="text-center">{{ user.username|capitalize }}'s Photo Library</h3>
     {% if photos.items %}
       <p class="text-center">Below are all of the photos you have added to the platform!</p>
     {% else %}
@@ -32,7 +34,7 @@
     {% for photo in photos.items %}
       {% if photo.user_uploaded_by == user.username %}
         <div class="grid-item">
-          <div class="card hover-shadow">
+          <div class="card hover-shadow border">
             <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
               <a href="{{ url_for('photos.view_photo', id=photo.id )}}">
                 <img src="{{ photo.url }}" class="card-img-top" alt="{{ photo.title }}" />

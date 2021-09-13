@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Fix favicon.ico 404 error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <!-- Fix favicon.ico 404 error 
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">-->
     <!-- Font Awesome stylesheet -->
     <link
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
@@ -30,6 +30,11 @@
         rel="stylesheet"
         type="text/css"
     />
+    <!-- Custom Favicon links by device -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/favicon-16x16.png') }}"> 
+    <link rel="manifest" href="{{ url_for('static', filename='img/site.webmanifest') }}">
     {% if title %}
     <title>Out of Office | {{ title }}</title>
     {% else %}
@@ -45,11 +50,11 @@
                 <!-- Navbar branding -->
                 {% if current_user.is_anonymous %}
                     <a class="navbar-brand" href="{{ url_for('auth.login') }}">
-                        <i class="fas fa-umbrella-beach"></i>
+                        <p class="nav-item mb-0"><img src="{{ url_for('static', filename='img/favicon-32x32.png') }}"> Out Of Office</p>
                     </a>
                 {% else %}
                     <a class="navbar-brand" href="{{ url_for('photos.photo_feed') }}">
-                        <i class="fas fa-umbrella-beach"></i>
+                        <p class="nav-item mb-0 "><img src="{{ url_for('static', filename='img/favicon-32x32.png') }}"> Out Of Office</p>
                     </a>
                 {% endif %}
                 <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" 

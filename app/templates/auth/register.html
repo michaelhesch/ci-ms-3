@@ -1,92 +1,91 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="content-section">
-  <form action="" method="POST">
-      {{ form.hidden_tag() }}
-      <fieldset class="form-group">
-        <legend class="border-bottom mb-4">Register a new account</legend>
-        <!-- Username input -->
-        <div class="form-group mb-4">
-          {{ form.username.label(class_="form-control-label") }}<br>
-          {% if form.username.errors %}
-            {{ form.username(class_="form-control is-invalid") }}
-            <div class="invalid-feedback">
-              {% for error in form.username.errors %}
-                <span style="color: red;">{{ error }}</span>
-              {% endfor %}
-            </div>
-          {% else %}
-            {{ form.username(class_="form-control") }}
-          {% endif %}
-        </div>
-        <!-- Email address input -->
-        <div class="form-group mb-4">
-          {{ form.email.label(class_="form-control-label") }}<br>
-          {% if form.email.errors %}
-            {{ form.email(class_="form-control is-invalid") }}
-            <div class="invalid-feedback">
-              {% for error in form.email.errors %}
-              <span style="color: red;">{{ error }}</span>
-              {% endfor %}
-            </div>
-          {% else %}
-            {{ form.email(size=32, class_="form-control") }}<br>
-          {% endif %}
-        </div>
-        <!-- First name input -->
-        <div class="form-group mb-4">
-          {{ form.first_name.label(class_="form-control-label") }}<br>
-          {{ form.first_name(size=32, class_="form-control") }}<br>
-          {% for error in form.first_name.errors %}
-            <span style="color: red;">{{ error }}</span>
-          {% endfor %}
-        </div>
-        <!-- Surname input -->
-        <div class="form-group mb-4">
-          {{ form.last_name.label(class_="form-control-label") }}<br>
-          {{ form.last_name(class_="form-control") }}<br>
-          {% for error in form.last_name.errors %}
-            <span style="color: red;">{{ error }}</span>
-          {% endfor %}
-        </div>
-        <!-- Password input -->
-        <div class="form-group mb-4">
-          {{ form.password.label(class_="form-control-label") }}<br>
-          {{ form.password(class_="form-control") }}<br>
-          {% for error in form.password.errors %}
-            <span style="color: red;">{{ error }}</span>
-          {% endfor %}
-        </div>
-        <!-- Repeat/confirm password input -->
-        <div class="form-group mb-4">
-          {{ form.password2.label(class_="form-control-label") }}<br>
-          {{ form.password2(size=32, class_="form-control") }}<br>
-          {% for error in form.password2.errors %}
-            <span style="color: red;">{{ error }}</span>
-          {% endfor %}
-        </div>
-        <div class="form-group">
-          {{ form.avatar.label }}<br />
-        </div>
-        <div class="form-group">
-            {{ form.avatar }}
-        </div>
-        <!--
-        <div>Select avatar
-          <i class="fas fa-user fa-3x" style=" color: orange"></i>
-          <i class="fas fa-user fa-3x" style=" color: blue"></i>
-          <i class="fas fa-user fa-3x" style=" color: green"></i>
-          <i class="fas fa-user fa-3x" style=" color: pink"></i>
-        </div>-->
-      </fieldset>
-        <div class="form-group mb-4">
-          {{ form.submit(class_="btn btn-primary btn-block mb-4") }}
-        </div>
-  </form>
-</div>
-  <div class="border-top pt-2">
-    <p class="text-center text-muted">
-      Already have an account? <a href="{{ url_for('auth.login') }}">Log In Here!</a>
-    </p>
+  <div class="row row-cols-1 justify-content-center">
+    <div class="col w-50 m-3">
+      <div class="card border shadow p-4">
+        <form action="" method="POST">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+              <legend class="border-bottom mb-4">Register a new account</legend>
+              <!-- Username input -->
+              <div class="form-group mb-4">
+                {{ form.username.label(class_="form-control-label") }}<br>
+                {% if form.username.errors %}
+                  {{ form.username(class_="form-control is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.username.errors %}
+                      <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  {{ form.username(class_="form-control") }}
+                {% endif %}
+              </div>
+              <!-- Email address input -->
+              <div class="form-group mb-4">
+                {{ form.email.label(class_="form-control-label") }}<br>
+                {% if form.email.errors %}
+                  {{ form.email(class_="form-control is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  {{ form.email(size=32, class_="form-control") }}<br>
+                {% endif %}
+              </div>
+              <!-- First name input -->
+              <div class="form-group mb-4">
+                {{ form.first_name.label(class_="form-control-label") }}<br>
+                {{ form.first_name(size=32, class_="form-control") }}<br>
+                {% for error in form.first_name.errors %}
+                  <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+              </div>
+              <!-- Surname input -->
+              <div class="form-group mb-4">
+                {{ form.last_name.label(class_="form-control-label") }}<br>
+                {{ form.last_name(class_="form-control") }}<br>
+                {% for error in form.last_name.errors %}
+                  <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+              </div>
+              <!-- Password input -->
+              <div class="form-group mb-4">
+                {{ form.password.label(class_="form-control-label") }}<br>
+                {{ form.password(class_="form-control") }}<br>
+                {% for error in form.password.errors %}
+                  <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+              </div>
+              <!-- Repeat/confirm password input -->
+              <div class="form-group mb-4">
+                {{ form.password2.label(class_="form-control-label") }}<br>
+                {{ form.password2(size=32, class_="form-control") }}<br>
+                {% for error in form.password2.errors %}
+                  <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+              </div>
+              <div class="row">
+                <div class="form-group col">
+                  {{ form.avatar.label }}<br />
+                </div>
+                <div class="form-group col">
+                    {{ form.avatar }}
+                </div>
+              </div>
+            </fieldset>
+              <div class="form-group mb-4">
+                {{ form.submit(class_="btn btn-primary btn-block mb-4") }}
+              </div>
+        </form>
+        <p class="text-center text-muted">
+          Already have an account? <a href="{{ url_for('auth.login') }}">Log In Here.</a>
+        </p>
+      </div>
+    </div>
   </div>
+</div>
 {% endblock %}
