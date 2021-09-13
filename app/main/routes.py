@@ -41,15 +41,15 @@ def edit_profile(id):
         if user.about_me == form.about_me.data and user.avatar == form.avatar.data:
             return redirect(url_for('main.profile', username=user.username))
         else:
-            color = ""
+            color = None
             if form.avatar.data == "1":
-                color = "#FF6347"
+                color = "#E60023"
             elif form.avatar.data == "2":
-                color = "#88FF47"
+                color = "#E6C300"
             elif form.avatar.data == "3":
-                color = "#47E3FF"
+                color = "#00E6C3"
             elif form.avatar.data == "4":
-                color = "#BF47FF"
+                color = "#0022E6"
             else:
                 pass
             user.about_me = form.about_me.data

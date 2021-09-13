@@ -17,7 +17,7 @@ class LoginForm(FlaskForm):
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[
         DataRequired(message="Please enter your desired username.")])
-    email = StringField('Email', validators=[
+    email = StringField('Email Address', validators=[
         DataRequired(message="Please enter your email address."), 
         Email(message="Please enter a vaild email address.")])
     first_name = StringField('First Name', validators=[
@@ -34,10 +34,10 @@ class RegistrationForm(FlaskForm):
         EqualTo('password', message="Your passwords do not match!")])
     avatar = RadioField('Choose Your Avatar Color', 
         choices=[
-            ('1', 'Orange'), 
-            ('2', 'Green'), 
-            ('3', 'Blue'),
-            ('4', 'Purple')])
+            ('1', 'Red'), 
+            ('2', 'Orange'), 
+            ('3', 'Teal'),
+            ('4', 'Navy')])
     submit = SubmitField('Register')
 
     """
