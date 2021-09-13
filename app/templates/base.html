@@ -123,7 +123,7 @@
     </header>
     <!-- Main content block -->
     <main class="container" role="main">
-        <div class="row">
+        <div class="row mt-4 mb-0">
         <!-- Flash messages container -->
             <div class="col">
             {% with messages = get_flashed_messages() %}
@@ -139,7 +139,6 @@
         </div>
         <!-- Main content container -->
         {% block content %}{% endblock %}
-        <br />
     </main>
     <!--Footer-->
     <div class="container">

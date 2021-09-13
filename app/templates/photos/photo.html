@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container-lg">
-  <div class="row row-cols-1 justify-content-center">
+  <div class="row row-cols-1 justify-content-center mb-4">
     <div class="col w-75" id="photo-container">
       <div class="card border shadow text-center my-4">
         <h3 class="text-center mt-3 mb-2">{{ photo.title }}</h3>
@@ -82,19 +82,18 @@
             {% for comment in comments %}
               <div class="card w75 rounded-10 bg-light border" style="margin-bottom: 15px;">
                 <div class="card-body">
-                  <h5 class="card-title">
+                  <p class="h5">
                     <span class="me-2" style="color: {{ comment.user_comment_by.avatar }}">
                       <i class="fas fa-user-circle"></i>
                     </span>
-                    {{ comment.user_comment_by.username|capitalize }}
-                  </h5>
+                    {{ comment.user_comment_by.username|capitalize }} <p class="small">{{ comment.user_comment_datetime.date() }}</p>
+                  </p>
                 </div>
                 <p class="card-text ms-3">{{ comment.comment_text }}</p>
                 <div class="card-footer text-muted">
-                  <em>Comment added {{ comment.user_comment_datetime.date() }}</em>
-                  <form method="POST" action="{{ url_for('photos.like_photo', id=photo.id)}}">
-                    <i class="fas fa-thumbs-up"></i> {{ photo.likes }}
-                    {% if current_user in photo.liked_by_user %}
+                  <form method="POST" action="{{ url_for('photos.like_comment', id=comment.id)}}">
+                    <i class="fas fa-thumbs-up"></i> {{ comment.likes }}
+                    {% if current_user in comment.liked_by_user %}
                       <button type="submit" class="btn btn-success btn-sm">
                         <i class="fas fa-thumbs-up"></i>
                       </button>
@@ -144,6 +143,9 @@
                           {{ form.comment_text.process_data(value=comment.comment_text) }}
                           {{ form.comment_text.label(class_="form-control-label") }}
                           {{ form.comment_text(class_="form-control") }}
+                            {% for error in form.comment_text.errors %}
+                              <span style="color: red;">{{ error }}</span>
+                            {% endfor %}
                           {{ form.submit(class_="btn btn-primary", value="Save Changes") }}
                         </form>
                       </div>
@@ -204,21 +206,9 @@
                 {% endif %}
               </div>
             {% endfor %}
-            <!--
-          <div class="card-footer">
-            <button class="btn btn-primary mb-4" onclick="goBack()">Go Back</button>
-          </div>
-          -->
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<!-- Returns user to previous page
-<script>
-  function goBack() {
-    window.history.back();
-  }
-</script> -->
 {% endblock %}
