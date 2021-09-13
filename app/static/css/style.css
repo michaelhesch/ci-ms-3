@@ -12,7 +12,7 @@
   list-style-type: none;
 }
 
-/* ---- .grid-item ---- */
+/* --- Masonry grid classes .grid-item --- */
 
 .grid-sizer,
 .grid-item {
@@ -29,16 +29,47 @@
   max-width: 100%;
 }
 
+/* --- tablet media queries --- */
 @media screen and (max-width: 768px) {
   .grid-sizer,
   .grid-item {
   width: 50%;
   }
+
+  #photo-container {
+    width:95%!important;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 1px;
+    padding-right: 1px;
+  }
 }
 
+/* --- small device media queries --- */
 @media screen and (max-width: 575px) {
   .grid-sizer,
   .grid-item {
   width: 100%;
+  }
+
+  #photo-container {
+    width:95%!important;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 1px;
+    padding-right: 1px;
+  }
+}
+
+/* --- Very large resolution media queries --- */
+
+@media screen and (min-width: 1080px, max-width: 2160px) {
+  .grid-sizer,
+  .grid-item {
+  width: 100%;
+  }
+
+  #photo-container {
+    width:100%!important;
   }
 }
