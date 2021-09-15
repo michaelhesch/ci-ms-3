@@ -9,8 +9,8 @@ from datetime import timedelta
 class Config(object):
     # Import flask secret key environment variable
     SECRET_KEY = os.environ.get("SECRET_KEY")
-    # Configure LoginManager to invalidate sessions after 15 min
-    PERMANENT_SESSION_LIFETIME = timedelta(minutes=15)
+    # Configure LoginManager to invalidate sessions after 12 hours
+    PERMANENT_SESSION_LIFETIME = timedelta(hours=12)
     # Import cloudinary configuration environment variables
     cloudinary.config(
         cloud_name = os.getenv('CLOUD_NAME'), 
