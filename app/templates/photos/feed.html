@@ -6,7 +6,7 @@
 <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.js"></script>
 <div class="row text-center my-3">
   <h2>Explore</h2>
-  <p>Check out all of the great holiday photos below!</p>
+  <p>Check out all of the great holiday photos shared by users below!</p>
   <p>Be sure to leave a "like" and comment on the photos you like most!</p>
 </div>
 <div class="row masonry-grid">
@@ -17,11 +17,11 @@
       <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
         {% if current_user.is_authenticated == True %}
           <a href="{{ url_for('photos.view_photo', id=photo.id )}}">
-            <img src="{{ photo.url }}" class="card-img-top" alt="..." />
+            <img src="{{ photo.url }}" class="card-img-top" alt="{{ photo.category }} photo" />
             <div class="mask" style="background-color: rgba(251, 251, 251, 0.322);"></div>
           </a>
         {% else %}
-          <img src="{{ photo.url }}" class="card-img-top" alt="..." />
+          <img src="{{ photo.url }}" class="card-img-top" alt="{{ photo.category }} photo" />
         {% endif %}
       </div>
       <div class="card-body">
@@ -31,9 +31,9 @@
           </div>
           <div class="col" style="text-align: right;">
             {% if current_user in photo.liked_by_user %}
-              <small><span style="color: blue"><i class="fas fa-thumbs-up"></i>: {{ photo.likes }}</span></small>
+              <small><span style="color: #1266F1"><i class="fas fa-thumbs-up"></i> {{ photo.likes }}</span></small>
             {% else %}
-              <small><span><i class="fas fa-thumbs-up"></i>: {{ photo.likes }}</span></small>
+              <small><span><i class="fas fa-thumbs-up"></i> {{ photo.likes }}</span></small>
             {% endif %}
           </div>
         </div>
