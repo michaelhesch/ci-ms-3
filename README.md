@@ -1,22 +1,43 @@
-# Milestone Project Three - TBD
+<a id="top"></a>
 
-## THIS PROJECT IS A WORK IN PROGRESS
-### Expected completion: 16 Septebmer, 2021
-    Please check back for the fully functional "production" version of the project, including the detailed Readme documentation.
-
-    The current work-in-progress version of the live application can be viewed [here.](https://ci-ms-3-mh.herokuapp.com/auth/login)
-
-    This is a full stack web application featuring a back-end developed using Python and the Flask micro framework, featuring additional technologies such as Cloudinary, and a responsive design built with Material Design Bootstrap.
----
+# Milestone Project Three - "Out of Office"
 
 ![Am I Responsive Image - Placeholder](#)
 
-## TBU
- The purpose of #### is to provide users with a custom generated map of cities to visit in Ireland, along with selected points of interest for each city.  The tool will generate a randomized list of cities including two, three or four primary destinations as results, based on the user's selection.  The user can then drill down into each destination to view a list of selected points of interest, which they can then filter by 'cateogry' to further refine their trip.
+## Project Overview
 
-[View the live project here.](#)
+ The purpose of Out of Office is to provide users with a platform for sharing their favourite photos from their holidays, and interacting with other user's holiday photos.  The site provides users with the ability to create an account, log in, and then easily share their photos, view other photos, as well as manage the photos they have uploaded to the platform.  The user can also leave "likes" and comments on any photo uploaded to the platform.
+
+- This is a full-stack web application built with Material Design Bootstrap, a Python back-end utilizing the Flask micro-framework, a MongoDB NoSQL database, 
+
+[View the live project here.](https://ci-ms-3-mh.herokuapp.com/)
 
 ---
+
+## Table of Contents
+
+1. [User Experience](#test1)
+    1. [User Stories](#test1a)
+    2. [Design](#test)
+2. [Data Models](#test2)
+    1. [Database Models](#test)
+    2. [MongoDB Database Setup](#test)
+3. [Features](#test3)
+    1. [Test](#test)
+4. [Technologies Used](#test)
+    1. [Programming Languages](#test)
+    2. [Frameworks, Libraries & Programs](#test)
+5. [Testing](#test3)
+    1. [Test](#test)
+6. [Deployment](#test3)
+    1. [Requirements](#test)
+    2. [Making a Local Clone](#test)
+    3. [Heroku Deployment](#test)
+7. [Credits](#test3)
+    1. [Code](#test)
+    2. [Content](#test)
+    3. [Media](#test)
+    4. [Acknowledgements](#test)
 
 ## User Experience (UX) - TBU
 
@@ -26,74 +47,62 @@
 
 - As a first time visitor
 
-  - I want to x.
+  - I want to understand the service the website provides before registering.
 
-  - I want to x.
+  - I want to create a new user account and be able to log in.
 
-  - I want to x.
+  - I want to easily interact with content posted by other users on the site by adding 'likes' or comments.
+
+  - I want to easily add my own photos to the platform for other users to interact with.
 
 #### Returning Visitor Goals
 
 - As a returning visitor
 
-  - I want to x.
+  - I want to easily log in to my account and access my profile.
 
-  - I want to x.
+  - I want to be able to quickly access and explore the main photo feed content.
 
-  - I want to x.
-
-#### Administrator Goals
-
-- As the site administrator
-
-  - I want to x.
-
-  - I want to x.
-
-  - I want to x.
+  - I want to be able to manage the content I add to the platform - including editing or deleting my photos, comments and likes.
 
 #### Site Owner Goals
 
 - As the site owner
 
-  - I want to x.
+  - I want to provide a streamlined registration and login experience.
+  
+  - I want to provide a fun and interactive experience for the user.
 
-  - I want to x.
+  - I want to encourage the user to return back to the platform to see and interact with new content.
 
-  - I want to x.
-
-  - I want the x.
+  - I want to allow users to manage their content - adding, editing and deleting as they desire.
 
 ### Design - TBU
 
 #### Colour Scheme
 
-- The page color scheme is based on subdued green, gray-green and orange tones.  The theme is meant to reference variatiosn of the colors of the Irish flag.
+- The page color scheme is based on x.
 
-- A light neutral gray-green background color [#F6F5F3] was selected to create a clean and simple backdrop which would not distract from the content of the page.  
+- Background color  .  
 
-- Orange [#B55224] was used as the highlight color only to clearly draw the user's attention to a hover over or click on a clickable selection.  
+- Highlight color .  
 
-- Shades of green were employed for the navigation bar [#3C503D], the footer [#3C503D], button backgrounds [#BACBBB] and content containers [#E2E9E2].
+- Button call to action color.
 
-- Primary colour palette selected for the site from [Coolors](https://coolors.co/):
-
-    ![Colour Palette](#)
-
-- The full palette containing all colors used in the site can be found [here.](documentation/MappyPalette.pdf)
+- The full palette containing all colors used in the site can be found [here.](#)
 
 #### Typography
 
-- The font used throughout the site is the Google Font 'Open Sans' which is a clean and simple font style that is easy to read across font sizes.  This font was selected to further build a clean and simple aesthetic across the content on the site.  Sans-serif serves as the backup to Open Sans if it fails to load.
+- The font used throughout the site is the Google Font 'x'.
 
-- A sample of the Open Sans typography from [Google Fonts](#):
+- A sample of the X typography from [Google Fonts](#):
 
-  ![OpenSans](#)
+  ![TBU](#)
 
 #### Imagery
 
-- The landing page is largely text based, but features a distinct image carousel which displays a series of images of cities included in the Mappy generation database.  This aims draw the user's attention and create excitement for visiting cities included when using the tool.
-- The map generation page utilizes a stacked arrangement for the primary map and secondary map, which is not displayed until the user engages with the top map.  A plain map of Ireland is displayed upon loading the map page to draw the user's attention and encourage them to engage with the tool.
+- x.
+- x.
 
 ### Wireframes
 
@@ -107,75 +116,152 @@
 
 - During development some small changes were made to the final design that is deployed vs. the wireframes above:
 
-  - Removal of the "Print Map" button & associated feature.  This was removed to reduce complexity for the initial release of the page, this may be added in through a future update.
+  - TBU.
 
-  - Addition of coloured "tile" background to hold the map output and map drilldown output content.  This was added to give some additional visual focus to the main content a user will interact with on the page, and to distinguish the maps and associated details from the background of the site.
+## Data Models
 
-  - Added headings to the top map section and the details map below, which is updated dynamically to show the name of the city a user has selected.
+### Database Models
+
+- The database for the site contains four collections: User, Photo, Comment and Category.
+
+- User
+
+  - Contains details of the user and their account, including username, first name, last name, email address, password hash, about me text, avatar color and avatar color ID value for each user.
+  - Contains an automatically generated unique ObjectId value which is used to interact with user data and serves as a reference field.
+
+- Photo
+
+  - Contains the identifying details for each photo including it's category name, title, description, user who uploaded the photo, the time and date it was added, the secure Cloudinary URL for the photo, the Cloudinary public ID of the photo, number of likes, and the users who have liked the photo.
+  - Contains an automatically generated unique ObjectId value used to interact with the photo and serves as a reference field.
+  - Category name is a reference field tied to the Category collection and set when a user uploads a photo.
+  - Users who have liked a photo are stored as an array of ObjectIds, allowing for easy mapping between Photos and Users.
+
+- Comment
+
+  - Contains the identifying details for each comment, including the user who added the comment, the date and time the comment was added, the photo the comment was added to, the text content of the comment, number of likes, and the users who liked the comment.
+  - Contains an automatically generated unique ObjectId value used to interact with the comment and serves as a reference field.
+  - The user who added the comment is caputred using their user ObjectId, and is a reference field tied to the User collection.
+  - The photo which the comment was added to is captured using its ObjectId, and is a reference field tied to the Photo collection.
+  - Users who have liked the comment are stoerd as an array of ObjectIds, allowing for easy mapping between Comments and Users.
+
+- Category
+
+  - Contains the names of categories which can be selected from when a user adds a new photo to the platform.
+  - Contains an automatically generated unique ObjectId value used to interact with the category and serves as a reference field.
+
+### Database Schema Diagram
+
+![database schema diagram]()
+
+### MongoDB Database Setup
+
+- This project uses MongoDB as it's database solution.  The setup process for creating the database follows the general guidelines provided by the Code Institute Full-Stack program's Task Manager mini-project.  An outline of the steps needed to re-create the database from the beginning are as follows:
+
+  - Log in to MongoDB (or create a free account if needed)
+  - Create new shared cluster with Amazon AWS as the cloud provider
+  - Select region closest to you (in this project, region is Ireland)
+  - Under cluster tier, select M0 free cluster tier
+  - Additional Settings can be left as default
+  - Select desired cluster name
+  - Wait for cluster to be provisioned, then click 'Connect'
+  - Select 'Python 3.6 or later' and copy the connection string provided
+  - Set necessary environment variables in Python environment, both local git-ignored configuration and Heroku deployment environment
 
 ## Features
 
-- All Pages
+### All Pages
 
-  - Clear and concise page design, including a simple and responsive navigation bar.
+- Clear and concise page design, including a simple and responsive navigation bar and a subdued colour scheme.
 
-  - A sticky footer with easy to identify social media links.
+- Social media links on the navbar as well as easily identifiable social media link buttons on the footer.
 
-- Landing Page
+### Landing Page (Logged Out)
 
-  - Easy to read overview of the functionality provided by Mappy.
+- Tbu.
 
-  - Image carousel with enticing images of different cities in Ireland.
+### Login Page
 
-  - Distinct button on the landing page to launch the map creation tool.
+- Tbu.
 
-- Map Creation Tool Page
+### Registration Page
 
-  - Clear and uncluttered layout with simple to use controls.
+- Tbu.
 
-  - Easy to read maps and clearly identifiable details on points of interest.
+### Explore Page
 
-  - Randomized results which display new data each time a map is generated.
+- Tbu.
 
-  - Easy to filter points of interest data to show only a specific type of attraction to the user.
+### Add Photo Page
 
-## Technologies Used - TBU
+- Tbu.
+
+### Profile Page
+
+- Tbu.
+
+### Edit Content Views
+
+- Edit Profile
+- Edit Photo
+- Edit Comment
+
+### Delete Conntent Views
+
+- Delete Photo
+- Delete Comment
+
+### Future Improvements
+
+- Future release features
+
+## Technologies Used
 
 ### Programming Languages Used
 
 - [HTML5](https://en.wikipedia.org/wiki/HTML5)
 - [CSS3](https://en.wikipedia.org/wiki/Cascading_Style_Sheets)
 - [JavaScript](https://en.wikipedia.org/wiki/JavaScript)
-- [Python](#)
+- [Python 3.9.6](https://en.wikipedia.org/wiki/Python_(programming_language))
 
 ### Frameworks, Libraries & Programs Used
 
-1. [Flask](#)
-    - x.
-1. [MongoDB](#)
-    - x
-1. [Bootstrap 5.0.1](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
-    - Bootstrap was used to add responsiveness and provide a simplified grid construction method.  In addition I utilized Bootstrap to create a sticky footer bar and image carousel for the site's landing page.
+1. [Flask](https://flask.palletsprojects.com/en/2.0.x/)
+    - The Flask micro-framework for Python was used to build the back-end for the site.  In addition to the main Flask framework, several Flask extensions were used as well, including:
+        - [MongoEngine](https://docs.mongoengine.org/): Mongoengine is an Object-Document Mapper for Python and MongoDB and was used to interact with the databse in this project.
+        - [Login](https://flask-login.readthedocs.io/en/latest/): The LoginManager class was used to handle permissions and manage sessions for users.
+        - [Werkzeug](https://werkzeug.palletsprojects.com/en/2.0.x/): Werkzeug was used to generate and check user password hash values used during registration and login.
+        - [WTForms](https://flask-wtf.readthedocs.io/en/0.15.x/): WTForms was used to provide forms for the various user input components of the page, as well as providing CSRF protection.
+        - [Gunicorn](https://docs.gunicorn.org/en/stable/): Gunicorn "Green Unicorn" was used as the web server for the production deployment on Heroku and is more robust than the Flask development server.
+1. [Jinja](https://jinja.palletsprojects.com/en/3.0.x/)
+    - The Jinja templating engine was used throughout the site to enable template-based delivery of the front end content.
+1. [MongoDB](https://www.mongodb.com/)
+    - MongoDB was used as the database provider, providing a fast and efficient NoSQL database solution for this project.
+1. [Cloudinary](https://cloudinary.com/)
+    - Cloudinary proivdes the image upload, transformation and cloud hosting services needed for the site to function properly.  In addition, I have enabled a Cloudinary add-on called Rekognition AI Moderation by Amazon which provides automatic content moderation and protection against inappropriate content using deep learning algorithms.
+1. [Material Design Bootstrap (MDB)](https://mdbootstrap.com/)
+    - Material Design for Bootstrap v5 was used to add responsiveness and provide a simplified grid construction method.  MDB also provided access to many standardized components with a clean design which served as building blocks for many elements of the site.
+1. [Masonry](https://masonry.desandro.com/)
+    - Masonry layout was used to render the photo cards to create a unique visual style in the 'Explore' and 'Profile' pages.  This is achieved using a combination of JavaScript and CSS properties applied to the container for the photo sections.
 1. [Google Fonts:](https://fonts.google.com/)
-    - Google fonts were used to import the 'Open Sans' font into the style.css file which is used as the default on all pages throughout the project.
+    - Google fonts are included with MBD, and this project uses the Roboto font family throughout the site.
 1. [Font Awesome:](https://fontawesome.com/)
-    - Font Awesome was used to add a visual identifier icon for the type of point of interest for the maps page, and for the social media links found in the footer of all pages.
-1. [Coolors:](https://coolors.co/)
-    - Used Coolors to select the color palette for the page.  Selected color palette can be viewed [here](https://github.com/michaelhesch/ci-ms-2/tree/master/documentation/MappyPalette.pdf).
-1. [Code Institute Full-Stack Developer Course](https://www.codeinstitute.net/)
-    - Code snippets were referenced for styling various elements of the site, and organization of the social media links footer section.
+    - Font Awesome icons are included with MDB, and this project uses the provided icons to provide simple, user-friendly ways to interact with different aspects of the site's functionality.
 1. [Balsamiq:](https://balsamiq.com/)
     - Balsamiq was used to create the design wireframes used to outline the webpage before development.
+1. [dbdiagram.io](https://dbdiagram.io/home)
+    - This tool was used to create the database schema visualization found in the Database Model & Schema section above.
 1. [GIMP:](https://www.gimp.org/)
     - GIMP (GNU Image Manipulation Program) is a free and open source image editor, used to resize and adjust the images used on the site for better performance.
 1. [Visual Stuido Code:](https://code.visualstudio.com/)
     - Visual Stuido code was used as the desktop development IDE for the project, managing the code and assets for the page during development.
-1. [JSHint / JSHint Plugin:](https://jshint.com/about/)
-    - The JSHint website was used to validate the JavaScript code.  In addition, the JSHint VS Code plugin was utilized throughout the development process to help catch typographic errors and other potential issues as code was being written.
 1. [Git:](https://git-scm.com/)
     - Git was used for version control by utilizing the Windows command prompt/terminal interface to commit and push to GitHub.
 1. [GitHub:](https://github.com/)
-    - GitHub is used to store the project's code after being pushed from the local development machine using Git, as well as host the page using GitHub Pages.
+    - GitHub is used to store the project's code after being pushed from the local development machine using Git.
+1. [Heroku](https://id.heroku.com/login)
+    - Heroku was used to deploy the site and provides hosting for the live version of the site.
+1. [Code Institute Full-Stack Developer Course](https://www.codeinstitute.net/)
+    - Code snippets were referenced for styling various elements of the site, and organization of the social media links footer section.
 
 ## Testing - TBU
 
@@ -184,33 +270,25 @@
 The W3C Markup Validator and W3C CSS Validator Services were used to validate every page of the project to ensure there were no syntax errors in the project.  Results of those checks are documented in PDFs included in the project repository and can be accessed by following the links below.
 
 - [W3C Markup Validator](https://validator.w3.org/nu/)
-  - [Index.html Results](#)
+  - [x Results](#)
     - No warnings or errors returned.
-  - [Map.html Results](#)
+  - [x Results](#)
     - No warnings or errors returned.
 
 - [W3C CSS Validator - Jigsaw](https://jigsaw.w3.org/css-validator/)
   - [Style.css Results](#)
     - No warnings or errors returned.
 
-- [JSHint JavaScript Validator](https://jshint.com/) - JSHint web version produces warnings when validating the code, while the IDE plug-in version of JSHint used during development returns no outstanding warnings.  This difference is due to the web version lacking the full context of references to outside files, functions called from HTML, etc.  During testing no unexpected behavior or bugs have been detected related to these warnings.  Descriptions of the outstanding warnings can be found below:
+- [Pycharm](https://jshint.com/) - Pycharm was used to check Python code for PEP8 compliance.
   
 #### JSHint Warning: Three undefined variables
 
 1. X
 
-2. X
-3. X
 
 #### JSHint Warning: Four Unused variables
 
 1. X
-
-2. X
-
-3. X
-
-4. X
 
 ### Function Testing
 
@@ -277,11 +355,11 @@ After deploying the site, additional checks were performed to ensure all functio
 - The Lighthouse tool within Chrome Developer tools was used to generate performance scores and identify areas for improvement in both mobile and desktop views of the page.  Results of this scoring can be viewed via the links below:
 
 1. Mobile Scores:
-    1. [Home Page](#)
-    1. [Map Generation Page](#)
+    1. [x](#)
+    1. [x](#)
 1. Desktop Scores:
-    1. [Home Page](#)
-    1. [Map Generation Page](#)
+    1. [x](#)
+    1. [x](#)
 
 - Please note that while efforts to coprrect some defects indicated in these results are due to issues found in external dependencies, such as Bootstrap's CSS, the Mapbox library, the HTTP version configured in the GitHub Pages server that the site is deployed on, etc. or other faults that are beyond the scope of this project to remedy.
 
@@ -306,16 +384,12 @@ After deploying the site, additional checks were performed to ensure all functio
 
 ## Deployment - TBU
 
-### Heroku 
+### Deployment Requirements
 
-The project was deployed to Heroku using the following steps:
-
-1. Log in to GitHub and locate the [GitHub Repository](https://github.com/michaelhesch/ci-ms-3/)
-2. From the Repository menu, select "Settings" at the far right of the menu bar.
-3. Scroll down the Settings page and select the "Pages" option.
-4. Under "Source", click the dropdown and select "Main" to select the main branch of the project.  Press "save".
-5. The page will automatically refresh.
-6. The site has now been published and GitHub will display the [link](https://michaelhesch.github.io/ci-ms-3/) in a green box.
+1. GitHub Account
+2. MongoDB Account
+3. Heroku Account
+4. Python 3.9.6
 
 ### Making a Local Clone
 
@@ -346,37 +420,52 @@ The project was deployed to Heroku using the following steps:
 
 [Click Here](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository#cloning-a-repository-to-github-desktop) to visit GitHub Help for more detailed explanations of the cloning process.
 
+### Heroku Deployment
+
+The project was deployed to Heroku using the following steps:
+
+1. Log in to GitHub and locate the [GitHub Repository](https://github.com/michaelhesch/ci-ms-3/)
+2. From the Repository menu, select "Settings" at the far right of the menu bar.
+3. Scroll down the Settings page and select the "Pages" option.
+4. Under "Source", click the dropdown and select "Main" to select the main branch of the project.  Press "save".
+5. The page will automatically refresh.
+6. The site has now been published and GitHub will display the [link](https://michaelhesch.github.io/ci-ms-3/) in a green box.
+
 ## Credits - TBU
 
 ### Code
 
-- [Code Institute Full-Stack Developer Course](https://www.codeinstitute.net/) : Code snippets were referenced for styling various elements of the site, and organization of the social media links footer section.
+- [Material Design Bootstrap Documentation](https://mdbootstrap.com/) : Code snippets taken from the offical MDBootstrap reference materials were used to create the layout of the site, including various text and image cards, the navigation bar, as well as utilizing the styling from MDB including the colour palette and Google Font family.
+
+- [Python Flask Tutorial: Full-Featured Web App](https://www.youtube.com/watch?v=MwZwr5Tvyxo&list=PL-osiE80TeTs4UjLw5MM6OjgkjFeUxCYH) : A multi-part YouTube coding tutorial which was referenced extensively for guidance on package structure, blueprints, object model creation and other key features of the application.  Code in this project may follow similar logical flow or format but all efforts were taken to create unique versions of these concepts.
+
+- [The Flask Mega-Tutorial](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world) : A multi-part tutorial on Flask which was also referenced extensively for guidance on web form creation, pagination, user profiles and avatars, as well as deployment to Heroku with Gunicorn.  Again code in this project may follow similar logical flow or format but all efforts were taken to create unique solutions based on these concepts.
+
+- [MongoEngine User Guide](https://docs.mongoengine.org/guide/index.html) : The MongoEngine guide document was referenced extensively to create the correct data queries for the MongoDB database used in this project, as the tutorials above both use SQL databases.  
+
+- [Flask-Login User Guide](https://flask-login.readthedocs.io/en/latest/) : The Flask Login documentation was used to configure the LoginManager class used to manage user sessions in the project.  In particular, settings used for this project such setting session_protection to strong for enhanced local cookie security and reducing the default sesion timeout via PERMANENT_SESSION_LIFETIME to 12 hours (from c.31 days) were identified in this documentation.
+
+- [WTForms Crash Course](https://wtforms.readthedocs.io/en/2.3.x/crash_course/) : The WTForms crash course was used (in addition to the general WTForms documentation) to create the object models for Users, Photos, Comments and Categories, generate the corresponding forms (in each packages respective forms.py file), valdiate form data, configure forms for enhanced security and finally generate the form element HTML in template files.
+
+- [Code Institute Full-Stack Developer Course](https://www.codeinstitute.net/) : Code snippets were referenced from the Task Manager mini-project, as well as the guide for configuring the MongoDB database.
 
 - [README Template](https://github.com/Code-Institute-Solutions/SampleREADME) : Template for the README.md file for this project was sourced from Code Institute.
-
-- [Bootstrap Documentation](https://getbootstrap.com/docs/5.0/components/carousel/) : Code snippets taken from the offical Bootstrap reference materials to create the image carousel featured on the landing page for the site.
-
-- [w3schools.com - Bootstrap:](https://www.w3schools.com/bootstrap4/default.asp) : Referenced w3schools materials on JavaScript to review & learn more about certain JavaScript function methods (array filtering, for example).  Also utilized to review additional documentation on CSS as well as Bootstrap features, in addition to the Bootstrap documentation.
-
-- [X](#) : x
 
 
 ### Content
 
-- All text content excluding city and location information was written by the developer.  
+- All static text content (such as landing page text and page descritiptions) was written by the developer.  In addition, demonstration user accounts were created to populate image and comment data to the site for demo purposes, written by the developer.
 
-- City and points of interest descriptions were sourced from Wikipedia or Google Maps location descriptions.
-
-- Map locations and points of interest were selected by the developer for demonstration purposes.  In a real-world scenario this data would be returned in a JSON response from a data service.
+- All other user content, such as photos, photo descriptions, user profile details, and photo comments added are created by the respective user who added them.
 
 ### Media
 
-- All Images were sourced externally, from Wikipedia or are royalty free images from Pixabay.  Specific image credits below:
+- Images uploaded by the developer for demonstration purposes were sourced externally from searching for 'travel' on royalty free images sites [Pexels](https://www.pexels.com/) and [Pixabay](https://pixabay.com/).
 
-- Landing page carousel image credits:
-
-    1. x
+- Additional images may be provided by users from their own image libraries, no copyright or ownership is implied by displaying these images.
 
 ### Acknowledgements
 
 - My Code Institute Mentor Aaron for helpful feedback on my ideas prior to development and guidance throughout the project.
+
+[Return to the Top](#top)
