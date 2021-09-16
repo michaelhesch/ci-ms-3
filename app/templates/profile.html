@@ -46,7 +46,11 @@
               </div>
               <div class="row">
                 <div class="col">
-                  <small><i class="fas fa-thumbs-up"></i>: {{ photo.likes }}</small>
+                  {% if current_user in photo.liked_by_user %}
+                    <small><span style="color: #1266F1"><i class="fas fa-thumbs-up"></i> {{ photo.likes }}</span></small>
+                  {% else %}
+                    <small><span><i class="fas fa-thumbs-up"></i> {{ photo.likes }}</span></small>
+                  {% endif %}
                 </div>
               </div>
               <small><em>Uploaded on {{ photo.user_added_datetime.date() }}</em></small>

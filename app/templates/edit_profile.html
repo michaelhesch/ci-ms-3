@@ -2,11 +2,11 @@
 {% block content %}
 <div class="content-section m-2">
     <div class="row row-cols-1 justify-content-center">
-        <div class="col w-50 m-3">
+        <div class="col w-50 m-3" id="edit-profile-card">
             <div class="card border shadow p-5">
                 <form method="POST">
                     <fieldset class="form-group">
-                        <legend class="border-bottom mb4">
+                        <legend class="border-bottom mb-2">
                             {{ legend }}
                         </legend>
                         {{ form.hidden_tag() }}
@@ -37,8 +37,10 @@
                         </div>
                     </fieldset>
                     <div class="form-group">
-                        {{ form.submit(class_="btn btn-primary mb-4") }}
-                        <a href="{{ url_for('main.profile', username=current_user.username) }}" class="btn btn-primary mb-4">Go Back</a>
+                        <div class="d-flex justify-content-end align-items-center">
+                            <a href="{{ url_for('main.profile', username=current_user.username) }}" class="btn btn-md btn-light mb-2 me-2">Go Back</a>
+                            {{ form.submit(class_="btn btn-primary mb-2") }}
+                        </div>
                     </div>
                 </form>
             </div>
