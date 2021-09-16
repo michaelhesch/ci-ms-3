@@ -2,7 +2,7 @@
 {% block content %}
 <div class="content-section mb-3">
     <div class="row row-cols-1 justify-content-center">
-        <div class="col w-75 m-3">
+        <div class="col w-75 m-3" id="index-card">
             <div class="card border shadow p-5">
                 <div class="card-title">
                     <h3>Welcome to Out of Office</h3>
@@ -15,7 +15,7 @@
                 <div class="card-footer text-center">
                     <div class="my-3">
                         <a class="btn btn-primary m-1" href="{{ url_for('auth.login') }}">Log In</a>
-                        <a class="btn btn-primary m-1" href="{{ url_for('auth.register') }}">Create Account</a>
+                        <a class="btn btn-primary m-1" href="{{ url_for('auth.register') }}">Register</a>
                     </div>
                 </div>
             </div>

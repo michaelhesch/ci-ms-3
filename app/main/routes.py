@@ -23,7 +23,7 @@ def profile(username):
     photos = Photo.objects(user_uploaded_by=user.username).paginate(page=page, per_page=9) #order by
     # photos = Photo.objects.order_by('-user_added_datetime')
 
-    return render_template('profile.html', title=f"{user.username}", user=user, photos=photos)
+    return render_template('profile.html', title=f"{user.username}'s Profile", user=user, photos=photos)
 
 
 @bp.route('/edit_profile/<id>', methods=["GET", "POST"])

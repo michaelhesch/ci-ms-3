@@ -11,3 +11,4 @@ env/
 .vscode/*
 .vscode/settings.json
 .flaskenv
+venv/

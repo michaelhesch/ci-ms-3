@@ -1,9 +1,9 @@
 import datetime
 from mongoengine import CASCADE
-from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from cloudinary import uploader
+from app import db, login
 
 # User class setup
 class User(db.Document, UserMixin):

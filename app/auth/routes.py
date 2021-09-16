@@ -1,10 +1,11 @@
 from flask import render_template, flash, redirect, url_for, request, session
 from flask_login import current_user, login_user, logout_user
 from werkzeug.urls import url_parse
+from mongoengine.errors import NotUniqueError
 from app.auth.forms import LoginForm, RegistrationForm
 from app.models import User
 from app.auth import bp
-from mongoengine.errors import NotUniqueError
+
 
 @bp.route('/login', methods=["GET", "POST"])
 def login():
