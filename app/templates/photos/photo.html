@@ -7,7 +7,7 @@
         <div class="card-header">
           <img src="{{ photo.url }}" class="card-img-top rounded shadow" alt="{{ photo.category }} photo" />
           <!-- Photo interactions buttons -->
-          <div class="d-flex justify-content-start align-items-center mt-3 mb-2">
+          <div class="d-flex justify-content-start align-items-center mt-3 mb-2" id="photo-info-card">
             <form method="POST" action="{{ url_for('photos.like_photo', id=photo.id)}}">
               {% if current_user in photo.liked_by_user %}
               <button type="submit" class="btn btn-md btn-primary me-1">
@@ -43,7 +43,6 @@
                       <fieldset class="form-group">
                         <div class="form-group my-3">
                           {{ editphotoform.title.label(class_="form-control-label") }}
-                          {{ editphotoform.title.process_data(value=photo.title) }}
                           {% if editphotoform.title.errors %}
                             {{ editphotoform.title(class_="form-control is-invalid") }}
                             <div class="invalid-feedback">
@@ -57,7 +56,6 @@
                         </div>
                         <div class="form-group my-3">
                           {{ editphotoform.description.label(class_="form-control-label") }}
-                          {{ editphotoform.description.process_data(value=photo.description) }}
                             {% if editphotoform.description.errors %}
                             {{ editphotoform.description(class_="form-control is-invalid") }}
                             <div class="invalid-feedback">

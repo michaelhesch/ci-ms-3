@@ -43,6 +43,20 @@
     padding-left: 1px;
     padding-right: 1px;
   }
+
+  #login-card, #register-card {
+    width: 100%!important;
+  }
+
+  #upload-card, #edit-profile-card {
+    width: 75%!important;
+  }
+
+  #feed-top-text {
+    margin-top: 0!important;
+  }
+
+
 }
 
 /* --- small device media queries --- */
@@ -52,13 +66,82 @@
   width: 100%;
   }
 
+  .card-body {
+    padding: 5px!important;
+    margin-top: 2px!important;
+    margin-left: 2px!important;
+    margin-right: 2px!important;
+  }
+
+  .card-body p {
+    padding: 5px!important;
+    margin: 2px!important;
+  }
+
+  .card-header {
+    padding-left: 5px!important;
+    padding-right: 5px!important;
+  }
+
+  .card-footer button {
+    font-size: 0.5rem!important;
+    padding: 0.5rem 1rem 0.5rem;
+  }
+
+  footer .btn {
+    font-size: 0.5rem!important;
+    padding: 0.5rem 1rem 0.5rem;
+  }
+
   #photo-container {
-    width:95%!important;
+    width:100%!important;
     margin-left: 0px;
     margin-right: 0px;
     padding-left: 1px;
     padding-right: 1px;
   }
+
+  #login-card, #register-card, 
+  #upload-card, #edit-profile-card {
+    width: 100%!important;
+    padding-left: 5px!important;
+    padding-right: 5px!important;
+    margin-right: 0px!important;
+    margin-left: 0px!important;
+  }
+
+  #edit-profile-card div {
+    padding-left: 5px!important;
+    padding-right: 5px!important;
+    padding-top: 10px!important;
+    padding-bottom: 10px!important;
+    margin-right: 0px!important;
+    margin-left: 0px!important;
+  }
+
+  #feed-top-text {
+    margin-top: 0!important;
+  }
+
+  #photo-info-card {
+    font-size: 12px!important;
+  }
+  
+  #photo-info-card h3 {
+    line-height: 1.25!important;
+    font-size: 1.25rem!important;
+  }
+
+  #photo-info-card .card-text {
+    font-size: 12px!important;
+    padding-left: 5px!important;
+  }
+
+  #photo-info-card button {
+    font-size: 0.5rem!important;
+    padding: 0.5rem 1rem 0.5rem;
+  }
+
 }
 
 /* --- Very large resolution media queries --- */
