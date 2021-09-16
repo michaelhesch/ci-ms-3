@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request, session
 from flask_login import current_user, login_user, logout_user
 from werkzeug.urls import url_parse
-from mongoengine.errors import NotUniqueError
+from mongoengine.errors import NotUniqueError, DoesNotExist
 from app.auth.forms import LoginForm, RegistrationForm
 from app.models import User
 from app.auth import bp
@@ -14,10 +14,16 @@ def login():
         return redirect(url_for('main.index'))
     # Login form handling if not logged in
     form = LoginForm()
+
+    # Catch mongoengine error for username not found in DB
+    if request.method == "POST" and DoesNotExist:
+        flash('Incorrect login details, please try again.')
+        return redirect(request.referrer)
+
     if form.validate_on_submit():
         user = User.objects.get(username=form.username.data.lower())
         # Check for incorrect credentials
-        if user is None or not user.check_password(form.password.data):
+        if user is None or not user.check_password(form.password.data) or DoesNotExist:
             flash('Incorrect login details, please try again.')
             return redirect(url_for('auth.login'))
         login_user(user, remember=form.remember_me.data)
