@@ -182,7 +182,7 @@
                             <form method="POST" action="{{ url_for('photos.edit_comment', id=comment.id) }}">
                               {{ editcommentform.hidden_tag() }}
                               {{ editcommentform.comment_text.label(class_="form-control-label") }}
-                              {{ editcommentform.comment_text.process_data(value=comment.comment_text) }}
+                              <!-- Explain why textarea is added here vs WTForms if that works -->
                               {{ editcommentform.comment_text(class_="form-control") }}
                               {% for error in editcommentform.comment_text.errors %}
                                 <span style="color: red;">{{ error }}</span>
