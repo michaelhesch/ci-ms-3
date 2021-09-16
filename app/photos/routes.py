@@ -64,39 +64,30 @@ def upload_photo():
 
     return render_template('photos/upload.html', title='Upload Photo', form=form)
 
-
+# TODO: Include username as well and photo ID, no way to know another user's objectid eg. /edit/<user>/<photo>
+# or one variable with a concatenated value and then split? 
 @bp.route('/edit/<id>', methods=["GET", "POST"])
 @login_required
 def edit_photo(id):
     photo = Photo.objects(pk=id).first_or_404()
-    user = User.objects(username=current_user.username).first_or_404()
+
+    form = EditPhotoForm()
 
     if photo.user_uploaded_by != current_user.username:
         flash('You can only edit your own photos!')
-        return redirect(request.referrer)
-
-    form = EditPhotoForm()
-    # Pre-populate the form fields with the existing data
-    form.title.data = photo.title
-    form.description.data = photo.description
-    #form.category.data = photo.category_name
-
-    # TODO: Confirm if category should be editable?
-    # Dropdown causes issues with validator
-    if form.validate_on_submit() and photo.user_uploaded_by == current_user.username:
+        return redirect(url_for('main.index'))
+    if request.method == "POST":
         photo.update(title = form.title.data)
         photo.update(description = form.description.data)
-        # photo.category_name = form.category.data
         photo.save()
         flash("Your photo has been updated!")
-        return redirect(request.referrer)
+        return redirect(url_for('photos.view_photo', id=photo.id))
     elif request.method == "GET":
         form.title.data = photo.title
         form.description.data = photo.description
-        #form.category.data = photo.category_name
+        form.process()
 
-    return render_template('photos/edit_photo.html', title='Edit Photo', 
-        legend='Edit Photo', user=user, form=form, photo=photo)
+    return redirect(url_for('photos.view_photo', id=photo.id))
 
 
 @bp.route('/<id>')
@@ -105,10 +96,13 @@ def view_photo(id):
     photo = Photo.objects(pk=id).first_or_404()
     user = User.objects(username=current_user.username).first_or_404()
     comments = Comment.objects(photo_commented_on=id).order_by('-user_comment_datetime')
-    form = AddComment()
+    commentform = AddComment()
+    editphotoform = EditPhotoForm()
+    editcommentform = EditComment()
 
     return render_template('photos/photo.html', title=f"{photo.title}", 
-        user=user, photo=photo, form=form, comments=comments)
+        user=user, photo=photo, commentform=commentform, editphotoform=editphotoform,
+        editcommentform=editcommentform, comments=comments)
 
 
 @bp.route('/like/<id>', methods=["GET", "POST"])
@@ -153,7 +147,7 @@ def add_comment(id):
         new_comment.save()
         flash("Thanks for the comment!")
     
-    return redirect(request.referrer)
+    return redirect( url_for('photos.view_photo', id=photo.id))
 
 
 @bp.route('/like_comment/<id>', methods=["GET", "POST"])
@@ -186,8 +180,6 @@ def edit_comment(id):
     
     # Confirm current user is the comment creator
     if current_user.id != comment.user_comment_by.id:
-        # TODO: Should this route back to where they came from or
-        # return the forbidden error response?
         flash('You can only edit your own comments!')
         abort(403)
     
@@ -209,17 +201,16 @@ def edit_comment(id):
 @login_required
 def delete_comment(id):
     comment = Comment.objects(pk=id).first_or_404()
+    photo = comment.photo_commented_on
 
     # Confirm current user is the comment creator
     if current_user.id != comment.user_comment_by.id:
-        # TODO: Should this route back to where they came from or
-        # return the forbidden error response?
         flash('You can only delete your own comments!')
         abort(403)
     if request.method == "POST":
         comment.delete()
         flash('Your comment has been deleted.')
-        return redirect(request.referrer)
+        return redirect(url_for('photos.view_photo', id=photo.id))
 
 
 @bp.route('/delete_photo/<id>', methods=["POST"])
@@ -229,8 +220,6 @@ def delete_photo(id):
     user = User.objects(username=current_user.username).first_or_404()
     # Confirm current user is the comment creator
     if user.username != photo.user_uploaded_by:
-        # TODO: Should this route back to where they came from or
-        # return the forbidden error response?
         flash('You can only delete your own photos!')
         abort(403)
     if request.method == "POST":
