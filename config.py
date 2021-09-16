@@ -1,10 +1,7 @@
 import os
-import cloudinary
 from datetime import timedelta
-#from dotenv import load_dotenv
+import cloudinary
 
-#basedir = os.path.abspath(os.path.dirname(__file__))
-#load_dotenv(os.path.join(basedir, '.env'))
 
 class Config(object):
     # Import flask secret key environment variable

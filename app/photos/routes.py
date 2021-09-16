@@ -1,12 +1,11 @@
-from app import db
+import datetime
 from flask import render_template, flash, redirect, url_for, request, abort
 from flask_login import current_user, login_required
+from cloudinary import uploader
+from mongoengine.errors import NotUniqueError
 from app.models import User, Photo, Comment
 from app.photos import bp
 from app.photos.forms import UploadPhoto, AddComment, EditPhotoForm, EditComment
-import datetime
-from cloudinary import uploader
-from mongoengine.errors import NotUniqueError
 
 
 @bp.route('/feed')
@@ -14,8 +13,8 @@ def photo_feed():
     # Gets page parameter, sets default page to 1, type=int allows only ints to be passed
     page = request.args.get("page", 1, type=int)
     # Query db for all photo documents, order by likes, pass in current page value
-    # Paginate at 9 items per page
-    photos = Photo.objects.order_by('-likes', '-user_added_datetime').paginate(page=page, per_page=9)
+    photos = Photo.objects.order_by(
+        '-likes', '-user_added_datetime').paginate(page=page, per_page=10)
 
     return render_template("photos/feed.html", photos=photos)
 
@@ -71,7 +70,10 @@ def upload_photo():
 def edit_photo(id):
     photo = Photo.objects(pk=id).first_or_404()
 
-    form = EditPhotoForm()
+    form = EditPhotoForm(title=photo.title, description=photo.description)
+    #form.title.data = photo.title
+    #form.description.data = photo.description
+    #form.process()
 
     if photo.user_uploaded_by != current_user.username:
         flash('You can only edit your own photos!')
@@ -85,7 +87,7 @@ def edit_photo(id):
     elif request.method == "GET":
         form.title.data = photo.title
         form.description.data = photo.description
-        form.process()
+        #form.process()
 
     return redirect(url_for('photos.view_photo', id=photo.id))
 
