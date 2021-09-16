@@ -28,17 +28,9 @@ class User(db.Document, UserMixin):
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"
 
-# Photo category class setup
-class Category(db.Document):
-    category_name = db.StringField(required=True) 
-
-    # Dunder method to configure how Category object is returned when printed
-    def __repr__(self):
-        return f"Category('{self.category_name}')"
 
 # Photo class setup
 class Photo(db.Document):
-    category_name = db.ReferenceField(Category)
     title = db.StringField(max_length=30, required=True)
     description = db.StringField(max_length=180)
     user_uploaded_by = db.StringField(max_length=14, required=True)

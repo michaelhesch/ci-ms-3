@@ -5,7 +5,7 @@
     <div class="col w-75" id="photo-container">
       <div class="card rounded-5">
         <div class="card-header">
-          <img src="{{ photo.url }}" class="card-img-top rounded shadow" alt="{{ photo.category }} photo" />
+          <img src="{{ photo.url }}" class="card-img-top rounded shadow" alt="{{ photo.title }} photo" />
           <!-- Photo interactions buttons -->
           <div class="d-flex justify-content-start align-items-center mt-3 mb-2" id="photo-info-card">
             <form method="POST" action="{{ url_for('photos.like_photo', id=photo.id)}}">

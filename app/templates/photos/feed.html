@@ -17,11 +17,11 @@
       <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
         {% if current_user.is_authenticated == True %}
           <a href="{{ url_for('photos.view_photo', id=photo.id )}}">
-            <img src="{{ photo.url }}" class="card-img-top" alt="{{ photo.category }} photo" />
+            <img src="{{ photo.url }}" class="card-img-top" alt="{{ photo.title }} photo" />
             <div class="mask" style="background-color: rgba(251, 251, 251, 0.322);"></div>
           </a>
         {% else %}
-          <img src="{{ photo.url }}" class="card-img-top" alt="{{ photo.category }} photo" />
+          <img src="{{ photo.url }}" class="card-img-top" alt="{{ photo.title }} photo" />
         {% endif %}
       </div>
       <div class="card-body">

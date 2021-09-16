@@ -27,14 +27,6 @@
                     <span style="color: red;">{{ error }}</span>
                   {% endfor %}
                 </div>
-                <!-- Photo category selection -->
-                <div class="form-group my-2">
-                  {{ form.category_name.label(class_="form-control-label") }}
-                  {{ form.category_name(class_="form-control") }}
-                  {% for error in form.description.errors %}
-                    <span style="color: red;">{{ error }}</span>
-                  {% endfor %}
-                </div>
                 <!-- Photo file picker -->
                 <div class="form-group">
                   <p class="form-control-label my-2">Select Photo File:</p>
