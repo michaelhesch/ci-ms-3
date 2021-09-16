@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <a id="top"></a>
 
 # Milestone Project Three - "Out of Office"
