@@ -20,16 +20,68 @@
               {% endif %}
             </form>
             {% if current_user.username == photo.user_uploaded_by %}
-            <form method="POST" action="{{ url_for('photos.edit_photo', id=photo.id)}}">
-              <button type="submit" class="btn btn-md ms-1">
-                <i class="far fa-edit fa-lg"></i>
-              </button>
-              <button type="button" class="btn btn-md ms-1" data-mdb-toggle="modal"
-                data-mdb-target="#deletePhotoModal">
-                <i class="fas fa-trash-alt fa-lg"></i>
-              </button>
-            </form>
-            <!-- MDB Modal for delete button -->
+            <button type="button" class="btn btn-md ms-1" data-mdb-toggle="modal" data-mdb-target="#editPhotoModal">
+              <i class="far fa-edit fa-lg"></i>
+            </button>
+            <button type="button" class="btn btn-md ms-1" data-mdb-toggle="modal" data-mdb-target="#deletePhotoModal">
+              <i class="fas fa-trash-alt fa-lg"></i>
+            </button>
+            <!-- MDB Modal for edit photo button -->
+            <div class="modal fade" id="editPhotoModal" tabindex="-1" aria-labelledby="editPhotoModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="editPhotoModalLabel">
+                      Edit Photo Details
+                    </h5>
+                    <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <!-- Edit form for photo -->
+                    <form method="POST" action="{{ url_for('photos.edit_photo', id=photo.id) }}">
+                      {{ editphotoform.hidden_tag() }}
+                      <fieldset class="form-group">
+                        <div class="form-group my-3">
+                          {{ editphotoform.title.label(class_="form-control-label") }}
+                          {{ editphotoform.title.process_data(value=photo.title) }}
+                          {% if editphotoform.title.errors %}
+                            {{ editphotoform.title(class_="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                              {% for error in editphotoform.title.errors %}
+                              <span style="color: red;">{{ error }}</span>
+                              {% endfor %}
+                            </div>
+                          {% else %}
+                            {{ editphotoform.title(class_="form-control") }}
+                          {% endif %}
+                        </div>
+                        <div class="form-group my-3">
+                          {{ editphotoform.description.label(class_="form-control-label") }}
+                          {{ editphotoform.description.process_data(value=photo.description) }}
+                            {% if editphotoform.description.errors %}
+                            {{ editphotoform.description(class_="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                              {% for error in editphotoform.description.errors %}
+                              <span style="color: red;">{{ error }}</span>
+                              {% endfor %}
+                            </div>
+                          {% else %}
+                            {{ editphotoform.description(class_="form-control") }}
+                          {% endif %}
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-light" data-mdb-dismiss="modal">
+                            Cancel
+                          </button>
+                          <input class="btn btn-primary" type="submit" value="Edit Photo">
+                        </div>
+                      </fieldset>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- MDB Modal for delete photo button -->
             <div class="modal fade" id="deletePhotoModal" tabindex="-1" aria-labelledby="deletePhotoModalLabel"
               aria-hidden="true">
               <div class="modal-dialog">
@@ -47,7 +99,10 @@
                     <button type="button" class="btn btn-light" data-mdb-dismiss="modal">
                       Cancel
                     </button>
-                    <form method="POST" action="{{ url_for('photos.delete_photo', id=photo.id) }}">
+                    <!-- Onsubmit attribute will prevent duplicate delete requests by user clicking multiple times -->
+                    <form method="POST" 
+                      action="{{ url_for('photos.delete_photo', id=photo.id) }}" 
+                      onsubmit="submit.disabled = true; return true">
                       <input class="btn btn-primary" type="submit" value="Delete Photo">
                     </form>
                   </div>
@@ -69,14 +124,14 @@
           <!-- Add a new comment section -->
           <h4 class="mt-2">Comments:</h4>
           <form method="POST" action="{{ url_for('photos.add_comment', id=photo.id)}}">
-            {{ form.hidden_tag() }}
+            {{ commentform.hidden_tag() }}
             <div class="form-group">
-              {{ form.comment_text.label(class_="form-control-label") }}
-              {{ form.comment_text(class_="form-control", placeholder="Add a comment!") }}
-              {% for error in form.comment_text.errors %}
+              {{ commentform.comment_text.label(class_="form-control-label") }}
+              {{ commentform.comment_text(class_="form-control", placeholder="Add a comment!") }}
+              {% for error in commentform.comment_text.errors %}
               <span style="color: red;">{{ error }}</span>
               {% endfor %}
-              {{ form.submit(class_="btn btn-primary my-3")}}
+              {{ commentform.submit(class_="btn btn-primary my-3")}}
             </div>
           </form>
           <!-- Render existing comments if comments are present for given photo -->
@@ -85,12 +140,12 @@
             <div class="card w75 rounded-10 bg-light border" style="margin-bottom: 15px;">
               <div class="card-body">
                 <p class="h5">
+                  <!-- Sets avatar color of user who posted the comment  -->
                   <span class="me-2" style="color: {{ comment.user_comment_by.avatar }}">
                     <i class="fas fa-user-circle"></i>
                   </span>
                   {{ comment.user_comment_by.username|capitalize }}
                 <p class="small">{{ comment.user_comment_datetime.date() }}</p>
-                </p>
               </div>
               <p class="card-text ms-3">{{ comment.comment_text }}</p>
               <!-- Comment interaction controls -->
@@ -127,17 +182,18 @@
                           </div>
                           <div class="modal-body">
                             <form method="POST" action="{{ url_for('photos.edit_comment', id=comment.id) }}">
-                              {{ form.comment_text.process_data(value=comment.comment_text) }}
-                              {{ form.comment_text.label(class_="form-control-label") }}
-                              {{ form.comment_text(class_="form-control") }}
-                              {% for error in form.comment_text.errors %}
-                              <span style="color: red;">{{ error }}</span>
+                              {{ editcommentform.hidden_tag() }}
+                              {{ editcommentform.comment_text.label(class_="form-control-label") }}
+                              {{ editcommentform.comment_text.process_data(value=comment.comment_text) }}
+                              {{ editcommentform.comment_text(class_="form-control") }}
+                              {% for error in editcommentform.comment_text.errors %}
+                                <span style="color: red;">{{ error }}</span>
                               {% endfor %}
                               <div class="d-flex justify-content-end align-items-center">
-                                <button type="button" class="btn btn-md btn-light mt-2 me-2" data-mdb-dismiss="modal">
+                                <button type="button" class="btn btn-md btn-light mt-2 me-2 " data-mdb-dismiss="modal">
                                   Cancel
                                 </button>
-                                {{ form.submit(class_="btn btn-md btn-primary mt-2", value="Save Changes") }}
+                                {{ editcommentform.submit(class_="btn btn-md btn-primary mt-2", value="Save Changes") }}
                               </div>
                             </form>
                           </div>
@@ -166,7 +222,10 @@
                             <button type="button" class="btn btn-light" data-mdb-dismiss="modal">
                               Cancel
                             </button>
-                            <form method="POST" action="{{ url_for('photos.delete_comment', id=comment.id) }}">
+                            <!-- Onsubmit prevents user from submitting multiple delete requests -->
+                            <form method="POST" 
+                              action="{{ url_for('photos.delete_comment', id=comment.id) }}" 
+                              onsubmit="submit.disabled = true; return true">
                               <input class="btn btn-danger" type="submit" value="Delete Comment">
                             </form>
                           </div>

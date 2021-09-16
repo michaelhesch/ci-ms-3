@@ -10,15 +10,15 @@
     <span style="color: {{ user.avatar }}">
       <i class="fas fa-7x fa-user-circle"></i>
     </span>
-    <span class="ms-3">
+    <div class="ms-3">
       <h3>{{ user.username|capitalize }}'s Profile</h3>
       <p>E-Mail Address: {{ user.email }}</p>
       <p>About Me: {{ user.about_me }}</p>
-    </span>
+    </div>
   </div>
     <div class="ms-3 mb-3">
-      <a class="btn btn-outline-primary m-1" href="{{ url_for('main.edit_profile', id=user.id) }}">Edit About Me</a>
-      <a class="btn btn-outline-primary m-1" href="{{ url_for('photos.upload_photo') }}">Add A Photo!</a>
+      <a class="btn btn-md btn-light m-1" href="{{ url_for('main.edit_profile', id=user.id) }}">Edit Profile</a>
+      <a class="btn btn-md btn-light m-1" href="{{ url_for('photos.upload_photo') }}">Add A Photo!</a>
     </div>
   </div>
   <div class="my-4">

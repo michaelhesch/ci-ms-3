@@ -50,11 +50,11 @@
                 <!-- Navbar branding -->
                 {% if current_user.is_anonymous %}
                     <a class="navbar-brand" href="{{ url_for('auth.login') }}">
-                        <p class="nav-item mb-0"><img src="{{ url_for('static', filename='img/favicon-32x32.png') }}"> Out Of Office</p>
+                        <p class="nav-item mb-0"><img src="{{ url_for('static', filename='img/favicon-32x32.png') }}" alt="Site brand favicon"> Out Of Office</p>
                     </a>
                 {% else %}
                     <a class="navbar-brand" href="{{ url_for('photos.photo_feed') }}">
-                        <p class="nav-item mb-0 "><img src="{{ url_for('static', filename='img/favicon-32x32.png') }}"> Out Of Office</p>
+                        <p class="nav-item mb-0 "><img src="{{ url_for('static', filename='img/favicon-32x32.png') }}" alt="Site brand favicon"> Out Of Office</p>
                     </a>
                 {% endif %}
                 <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" 
@@ -122,9 +122,9 @@
         </nav>
     </header>
     <!-- Main content block -->
-    <main class="container" role="main">
+    <main class="container">
         <div class="d-flex align-items-center justify-content-center">
-            <div class="row mt-4 mb-0 w-75">
+            <div class="row mt-4 mb-0 w-100">
             <!-- Flash messages container -->
                 <div class="col">
                 {% with messages = get_flashed_messages() %}
@@ -168,14 +168,8 @@
     </footer>
     </div>
     <!-- MDB JS -->
-    <script
-        type="text/javascript"
-        src="{{ url_for('static', filename='js/mdb.min.js') }}"
-    ></script>
+    <script src="{{ url_for('static', filename='js/mdb.min.js') }}"></script>
     <!-- Internal JS -->
-    <script
-        type="text/javascript"
-        src="{{ url_for('static', filename='js/script.js') }}"
-    ></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
