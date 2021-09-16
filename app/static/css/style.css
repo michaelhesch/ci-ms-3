@@ -37,7 +37,7 @@
   }
 
   #photo-container {
-    width:95%!important;
+    width:100%!important;
     margin-left: 0px;
     margin-right: 0px;
     padding-left: 1px;
@@ -102,7 +102,8 @@
   }
 
   #login-card, #register-card, 
-  #upload-card, #edit-profile-card {
+  #upload-card, #edit-profile-card,
+  #index-card {
     width: 100%!important;
     padding-left: 5px!important;
     padding-right: 5px!important;
