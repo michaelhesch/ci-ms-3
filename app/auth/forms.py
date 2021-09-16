@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, RadioField
-from wtforms.validators import DataRequired, Email, EqualTo, Length
+from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp
 
 # Define login form structure & validation
 class LoginForm(FlaskForm):
@@ -15,7 +15,9 @@ class LoginForm(FlaskForm):
 # Define registration form structure & validation
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[
-        DataRequired(message="Please enter your desired username.")])
+        DataRequired(message="Please enter your desired username."),
+        Regexp("^[a-zA-Z0-9]+$", 
+            message="Username must contain letters and numbers only, with no spaces.")])
     email = StringField('Email Address', validators=[
         DataRequired(message="Please enter your email address."), 
         Email(message="Please enter a vaild email address.")])
@@ -36,7 +38,9 @@ class RegistrationForm(FlaskForm):
             ('1', 'Red'), 
             ('2', 'Orange'), 
             ('3', 'Teal'),
-            ('4', 'Navy')])
+            ('4', 'Navy')],
+        default="1",
+        validators=[DataRequired()])
     submit = SubmitField('Register')
 
     """
