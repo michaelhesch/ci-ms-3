@@ -20,10 +20,10 @@
               {% endif %}
             </form>
             {% if current_user.username == photo.user_uploaded_by %}
-            <button type="button" class="btn btn-md ms-1" data-mdb-toggle="modal" data-mdb-target="#editPhotoModal">
+            <button type="button" class="btn btn-md mx-2" data-mdb-toggle="modal" data-mdb-target="#editPhotoModal">
               <i class="far fa-edit fa-lg"></i>
             </button>
-            <button type="button" class="btn btn-md ms-1" data-mdb-toggle="modal" data-mdb-target="#deletePhotoModal">
+            <button type="button" class="btn btn-md mx-2" data-mdb-toggle="modal" data-mdb-target="#deletePhotoModal">
               <i class="fas fa-trash-alt fa-lg"></i>
             </button>
             <!-- MDB Modal for edit photo button -->
@@ -127,7 +127,7 @@
         <div class="card-body pt-2">
           <!-- Add a new comment section -->
           <h4 class="mt-2">Comments:</h4>
-          <form method="POST" action="{{ url_for('photos.add_comment', id=photo.id)}}">
+          <form method="POST" action="{{ url_for('photos.add_comment', id=photo.id)}}" novalidate>
             {{ commentform.hidden_tag() }}
             <div class="form-group">
               {{ commentform.comment_text.label(class_="form-control-label") }}
@@ -142,7 +142,7 @@
           {% if comments %}
             {% for comment in comments %}
             <div class="card w75 rounded-10 bg-light border" style="margin-bottom: 15px;">
-              <div class="card-body">
+              <div class="card-body pb-1">
                 <p class="h5">
                   <!-- Sets avatar color of user who posted the comment  -->
                   <span class="me-2" style="color: {{ comment.user_comment_by.avatar }}">

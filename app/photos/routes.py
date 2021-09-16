@@ -62,8 +62,7 @@ def upload_photo():
 
     return render_template('photos/upload.html', title='Upload Photo', form=form)
 
-# TODO: Include username as well and photo ID, no way to know another user's objectid eg. /edit/<user>/<photo>
-# or one variable with a concatenated value and then split? 
+
 @bp.route('/edit/<id>', methods=["GET", "POST"])
 @login_required
 def edit_photo(id):
@@ -86,7 +85,6 @@ def edit_photo(id):
     elif request.method == "GET":
         form.title.data = photo.title
         form.description.data = photo.description
-        #form.process()
 
     return redirect(url_for('photos.view_photo', id=photo.id))
 
@@ -136,7 +134,7 @@ def add_comment(id):
     photo = Photo.objects(pk=id).first_or_404()
 
     form = AddComment()
-    if form.validate_on_submit():
+    if request.method == "POST" and form.validate_on_submit():
         # Add new comment to DB
         new_comment = Comment(
             user_comment_by = user,
