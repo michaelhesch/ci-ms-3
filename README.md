@@ -171,17 +171,23 @@
 
 ### All Pages
 
-- Clear and concise page design, including a simple and responsive navigation bar and a subdued colour scheme.
+- Clear and concise page design, including an easy to use and responsive navigation bar and a subdued colour scheme.
+
+- Highly contrasting logo icon on the menu bar and site favicon to draw user's attention.
 
 - Social media links on the navbar as well as easily identifiable social media link buttons on the footer.
 
 ### Landing Page (Logged Out)
 
-- Tbu.
+- Clear and centrally located information card describing what the site is and who it is for.
+
+- Strongly styled call to action buttons for Login and Register to draw user's attention.
 
 ### Login Page
 
-- Tbu.
+- Straightforward Log In card free of clutter and a strong call to action button for logging in.
+
+- Additional link to registration page for a new user who could potentially land on the log in page without an account.
 
 ### Registration Page
 
@@ -212,7 +218,8 @@
 
 ### Future Improvements
 
-- Future release features
+- There are several features that I would like to incorporate to enhance the site in the future that unfortunately could not be added for this version:
+  - Photo Category & Location - in the future I would like to incorporate a category and location attribute for the photos, which would allow users to specify the type of photo they are adding as well as where it was taken.  This would also allow for additional enhancements such as filtering to be performed on the Explore feed page.
 
 ## Technologies Used
 
