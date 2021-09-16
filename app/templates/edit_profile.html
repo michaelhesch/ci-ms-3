@@ -10,6 +10,10 @@
                             {{ legend }}
                         </legend>
                         {{ form.hidden_tag() }}
+                        <!-- 
+                            About Me field will be intentionally empty by default on first 
+                            login after registering. User can update from profile page.
+                        -->
                         <div class="form-group">
                             {{ form.about_me.label(class_="form-control-label") }}
                             {{ form.about_me(class_="form-control", cols=50, rows=4) }}

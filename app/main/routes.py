@@ -20,8 +20,7 @@ def index():
 def profile(username):
     page = request.args.get("page", 1, type=int)
     user = User.objects(username=username).first_or_404()
-    photos = Photo.objects(user_uploaded_by=user.username).paginate(page=page, per_page=9) #order by
-    # photos = Photo.objects.order_by('-user_added_datetime')
+    photos = Photo.objects(user_uploaded_by=user.username).paginate(page=page, per_page=9)
 
     return render_template('profile.html', title=f"{user.username}'s Profile", user=user, photos=photos)
 

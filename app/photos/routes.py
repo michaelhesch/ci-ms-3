@@ -10,11 +10,13 @@ from app.photos.forms import UploadPhoto, AddComment, EditPhotoForm, EditComment
 
 @bp.route('/feed')
 def photo_feed():
-    # Gets page parameter, sets default page to 1, type=int allows only ints to be passed
+    # Gets page parameter, sets default page to 1,
+    # type=int allows only ints to be passed
     page = request.args.get("page", 1, type=int)
-    # Query db for all photo documents, order by likes, pass in current page value
+    # Query db for all photo documents,
+    # order by likes, pass in current page value
     photos = Photo.objects.order_by(
-        '-likes', '-user_added_datetime').paginate(page=page, per_page=10)
+        '-likes', '-user_added_datetime').paginate(page=page, per_page=9)
 
     return render_template("photos/feed.html", photos=photos)
 
@@ -34,14 +36,14 @@ def upload_photo():
                 # Set Cloudinary parameters for image upload
                 upload_result = uploader.upload(
                     file_to_upload,
-                    quality = "auto",
-                    fetch_format = "auto",
-                    allowed_formats = ['png', 'jpg', 'jpeg'],
-                    overwrite = True,
+                    quality="auto",
+                    fetch_format="auto",
+                    allowed_formats=['png', 'jpg', 'jpeg'],
+                    overwrite=True,
                     height=1920,
                     width=1080,
                     crop="fit",
-                    moderation = "aws_rek"
+                    moderation="aws_rek"
                     )
                 # Populate Photo object with form inputs and save to mongoDB
                 new_photo = Photo(
@@ -83,8 +85,8 @@ def edit_photo(id):
         flash("Your photo has been updated!")
         return redirect(url_for('photos.view_photo', id=photo.id))
     elif request.method == "GET":
-        form.title.data = photo.title
-        form.description.data = photo.description
+        form.title.data=photo.title
+        form.description.data=photo.description
 
     return redirect(url_for('photos.view_photo', id=photo.id))
 
@@ -92,12 +94,12 @@ def edit_photo(id):
 @bp.route('/<id>')
 @login_required
 def view_photo(id):
-    photo = Photo.objects(pk=id).first_or_404()
-    user = User.objects(username=current_user.username).first_or_404()
-    comments = Comment.objects(photo_commented_on=id).order_by('-user_comment_datetime')
-    commentform = AddComment()
-    editphotoform = EditPhotoForm()
-    editcommentform = EditComment()
+    photo=Photo.objects(pk=id).first_or_404()
+    user=User.objects(username=current_user.username).first_or_404()
+    comments=Comment.objects(photo_commented_on=id).order_by('-user_comment_datetime')
+    commentform=AddComment()
+    editphotoform=EditPhotoForm()
+    editcommentform=EditComment()
 
     return render_template('photos/photo.html', title=f"{photo.title}", 
         user=user, photo=photo, commentform=commentform, editphotoform=editphotoform,
@@ -137,11 +139,11 @@ def add_comment(id):
     if request.method == "POST" and form.validate_on_submit():
         # Add new comment to DB
         new_comment = Comment(
-            user_comment_by = user,
-            user_comment_datetime = datetime.datetime.utcnow,
-            photo_commented_on = photo,
-            comment_text = form.comment_text.data,
-            likes = 0
+            user_comment_by=user,
+            user_comment_datetime=datetime.datetime.utcnow,
+            photo_commented_on=photo,
+            comment_text=form.comment_text.data,
+            likes=0
         )
         new_comment.save()
         flash("Thanks for the comment!")
@@ -156,13 +158,14 @@ def like_comment(id):
     user = User.objects(username=current_user.username).first_or_404()
 
     if request.method =="POST":
-        # Check for existing like by current user, 
+        # Check for existing like by current user,
         # remove if already liked, then update db
         if current_user in comment.liked_by_user:
             comment.update(dec__likes=1)
             comment.update(pull__liked_by_user=user.id)
             comment.save()
-        # If user has not liked the comment, add a like and user liked by value, 
+        # If user has not liked the comment,
+        # add a like and user liked by value,
         # then update db
         else:
             comment.update(inc__likes=1)
@@ -185,13 +188,13 @@ def edit_comment(id):
     form = EditComment()
     if request.method == "POST":
         # Edit comment and save changes to DB
-        comment.update(comment_text = form.comment_text.data)
-        comment.update(user_comment_datetime = datetime.datetime.utcnow)
+        comment.update(comment_text=form.comment_text.data)
+        comment.update(user_comment_datetime=datetime.datetime.utcnow)
         comment.save()
         flash('Your comment has been updated!')
         return redirect(request.referrer)
     elif request.method == "GET":
-        form.comment_text.data = comment.comment_text
+        form.comment_text.data=comment.comment_text
 
     return redirect(request.referrer)
 
