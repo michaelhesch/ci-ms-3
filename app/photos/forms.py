@@ -12,7 +12,7 @@ class UploadPhoto(FlaskForm):
     description = TextAreaField(
         'Description of your photo', 
         validators=[DataRequired(
-            message="Please enter a description."),
+            message="Please enter a description 180 characters or less."),
             Length(min=0, max=180)])
     submit = SubmitField('Add Photo')
 
@@ -21,21 +21,20 @@ class EditPhotoForm(FlaskForm):
     title = StringField(
         'Photo Title', 
         validators=[DataRequired(
-            message="Please enter a valid title."),
+            message="Please enter a title 25 characters or less."),
             Length(max=25)])
     description = TextAreaField(
         'Description of your photo', 
         validators=[DataRequired(
-            message="Please enter a description."),
+            message="Please enter a description 180 characters or less."),
             Length(min=0, max=180)])
     submit = SubmitField('Submit')
 
 # Photo comment form
 class AddComment(FlaskForm):
-    comment_text = TextAreaField(
-        validators=[
-            DataRequired('Please add text to submit a comment.'), 
-            Length(min=2, max=200)])
+    comment_text = TextAreaField(validators=[
+        DataRequired('Please add text to submit a comment.'), 
+        Length(min=2, max=200)])
     submit = SubmitField('Add Comment')
     
     def validate_comment(form, comment_text):

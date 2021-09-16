@@ -112,7 +112,7 @@
 
 #### Deviations from wireframe designs
 
-- During development some small changes were made to the final design that is deployed vs. the wireframes above:
+- During development some changes were made to the final design that is deployed vs. the wireframes above:
 
   - TBU.
 
@@ -120,7 +120,7 @@
 
 ### Database Models
 
-- The database for the site contains four collections: User, Photo, Comment and Category.
+- The database for the site contains three collections: User, Photo and Comment.
 
 - User
 
@@ -129,9 +129,8 @@
 
 - Photo
 
-  - Contains the identifying details for each photo including it's category name, title, description, user who uploaded the photo, the time and date it was added, the secure Cloudinary URL for the photo, the Cloudinary public ID of the photo, number of likes, and the users who have liked the photo.
+  - Contains the identifying details for each photo including it's title, description, user who uploaded the photo, the time and date it was added, the secure Cloudinary URL for the photo, the Cloudinary public ID of the photo, number of likes, and the users who have liked the photo.
   - Contains an automatically generated unique ObjectId value used to interact with the photo and serves as a reference field.
-  - Category name is a reference field tied to the Category collection and set when a user uploads a photo.
   - Users who have liked a photo are stored as an array of ObjectIds, allowing for easy mapping between Photos and Users.
 
 - Comment
@@ -141,11 +140,6 @@
   - The user who added the comment is caputred using their user ObjectId, and is a reference field tied to the User collection.
   - The photo which the comment was added to is captured using its ObjectId, and is a reference field tied to the Photo collection.
   - Users who have liked the comment are stoerd as an array of ObjectIds, allowing for easy mapping between Comments and Users.
-
-- Category
-
-  - Contains the names of categories which can be selected from when a user adds a new photo to the platform.
-  - Contains an automatically generated unique ObjectId value used to interact with the category and serves as a reference field.
 
 ### Database Schema Diagram
 
@@ -218,6 +212,11 @@
 
 - There are several features that I would like to incorporate to enhance the site in the future that unfortunately could not be added for this version:
   - Photo Category & Location - in the future I would like to incorporate a category and location attribute for the photos, which would allow users to specify the type of photo they are adding as well as where it was taken.  This would also allow for additional enhancements such as filtering to be performed on the Explore feed page.
+  - User account password reset - secure password resets for users who forget their password, or need to reset it for any reason, would be useful.
+  - User account deletion - the ability for a user to entirely delete their account (not just the content they have added) would be beneficial to include.
+  - Admin view - inclusion of a super user account which will allow for direct intervention if manual content moderation is required.
+  - User follows / account views - allow users to follow each other's accounts directly and view another user's account and photos.
+  - User profile photo feed enhancements - allow sorting and/or filtering of user's own photo feed to over-ride the default sort of oldest to newest.
 
 ## Technologies Used
 
@@ -286,68 +285,130 @@ The W3C Markup Validator and W3C CSS Validator Services were used to validate ev
 
 - [Pycharm](https://jshint.com/) - Pycharm was used to check Python code for PEP8 compliance.
   
-#### JSHint Warning: Three undefined variables
+#### Functional Testing
 
-1. X
+- Below are descriptions of tests undertaken on the deployed project to ensure expected behaviors of functionality.
 
+- Registration
+  - PASSING: E-Mail Address Validation - description
+  - PASSING: Password Match Validation - description
+  - PASSING: Empty Form Submission Validation - Form does not proceed with posting if required fields are blank.  Tested fields username, first name, last name, and password fields.  Avatar color is pre-selected by default and cannot be de-selected before submitting.
+  - PASSING: Duplicate Email Cannot Register - description
+  - PASSING: Default Avatar Selected - By default the form is populated with an avatar colour selected, which can be changed by the user but cannot be de-selected entirely, which is the intended behavior.
+  - PASSING: Username Regex Validation - Usernames cannot contain spaces or special characters, only upper or lower case letters and numbers.  Confirmed multiple combinations of special characters and spaces in username field are returned as invalid by the form.
 
-#### JSHint Warning: Four Unused variables
+- Login
+  - PASSING: Username Does Not Exist Validation - Form endpoint will catch mongoengine error response for a username that does not exist in the database and return a flash message to the user indicating the credentials are incorrect, but intentionally does not specify between the username or password being incorrect.  Correct login credentials are validated and result in a successful login.
+  - PASSING: Incorrect Password Validation - Password validation functionality works correctly resulting in an incorrect login details flash message to the user.  This intentionally does not specify if the username or password is incorrect.
 
-1. X
+- Add Photo
+  - OPEN: Description max length validation - 
+  - OPEN: Title max length validation
+  - PASSING: Title, Description, Photo file are required fields - 
+  - PASSING: File picker works on mobile devices - Apple iPhone 11, iPad Pro 10.5 - take new photo and upload from library
 
-### Function Testing
+- Edit Photo
+  - OPEN: Description max length validation
+  - OPEN: Title max length validation
+  - PASSING: Edit Title - Can edit title 
+  - PASSING: Edit Description - Can edit description
 
-The site contains X functions which are used to implement the dynamic functionality of the page in various ways.  During development and upon completion of the project, testing was undertaken to ensure these functions are behaving as designed.
+- Delete Photo
+  - PASSING: Delete photo - Delete photo button removes photo from profile and feed
+  - PASSING: Delete photo - Delete photo removes photo from Cloudinary library
+  - PASSING: Delete photo - Delete photo removes photo entry from MongoDB photos collection
 
-Each function was tested with the extensive use of ```console.log()```, often in multiple places within the same function, to confirm that the expected behavior was happening through each step of the function as well as at the end result.  This testing was essential to the development of this site, as several functions take in parameters from others, so confirming the output of each function was correct was All ```console.log()```s have been removed from the deployed project.
+- Like / Unlike Photo
+  - PASSING: Like photo updates correctly - Pressing 'like' button on another user's photo increases the like count by one and correctly changes the like button fill color to a solid blue background.
+  - PASSING: Un-like photo updates correctly - Pressing 'like' button on another user's photo which has been liked by the current user correctly decreases the like count by one and changes the like button fill color back to the original off-white background.
+  - PASSING: Like any user's photo - Pressing 'like' results in the expected behavior on any other user's photo.
+  - PASSING: Like/Un-Like own photo -
 
-During the development process when functions were not working as expected or intended, the debugger in the Chrome Developer Tools was used to set break points and step through functions to troubleshoot and resolve issues.  This was very helpful in identifying where an issue was being created.
+- Add Comment
+  - OPEN: Comment max length validation - Currently known bug exists where form validation is not working as expected.  Max length validation is working on the back-end, preventing comments exceeding the specified maximum length from being submitted to the database, however no warning is displayed to the user on the UI.  When a comment exceeding the maximum length is submitted, the page reloads however no flash message or form validation message is displayed, and no entry is made to the database.
+  - PASSING: Empty Comment form submission - Comment form validation for empty comment text field prevents an empty comment from being submitted.
+  - PASSING: Add comment on another user's photo - Able to post a new comment on a photo uploaded by another user without any errors.
+  - PASSING: Comment sorting on photo - Newly posted comment is displayed at the top of the list of comments, as intended by design.
+  - PASSING: Comment displays correct details - Username, date added and comment text are displayed correctly for newly added comment.
+  - PASSING: Comment displays correct buttons - Like, Edit and Delete buttons are displayed for a newly added comment posted and owned by the logged in user.
+  - PASSING: Comment on own photo - 
 
-After deploying the site, additional checks were performed to ensure all functions are behaving as expected by selecting every option and clicking every button on the site, particularly on the map generation page.  This included selecting options and clicking items out of the normal logical order to make sure that no bugs exist in the deployed version of the site.
+- Edit Comment
+  - OPEN: Comment max length validation
+  - PASSING: Edit button modal - Pressing the 'edit' button on a comment owned by the logged in user opens the edit comment modal, with the existing text populated in the edit field.
+  - PASSING: Cancel edit button on modal - Pressing the 'cancel' button closes the modal with no changes applied to the comment.  Same behavior demonstrated for pressing 'X' button to close modal.
+  - PASSING: Save changes to comment - Pressing 'save' closes the edit modal and displays the correct flash message to the user, updated text is displayed in the comment matching the text entered during editing.
+  - PASSING: Updating comment on another user's photo - Update functions tested above performed without error on a comment added by the current user to another user's photo.
+  - PASSING: Edited comment details correct - Edited comment displays the correct username, date added, and newly edited text value.
+  - PASSING: Edited comment displays correct buttons - Edited comment displays the Like, Edit, and Delete buttons.
+  - PASSING: Edit comment on own photo - 
+
+- Delete Comment:
+  - PASSING: Delete modal opens - Pressing the 'delete' button on a comment owned by the logged in user opens the delete comment modal, asking the user to confirm they wish to delete the comment.
+  - PASSING: Cancel delete button on modal - Pressing the 'cancel' button closes the delete modal with no change made to the comment.  Same behavior demonstrated for pressing 'X' button to close modal.
+  - PASSING: Delete comment - Pressing the 'delete' button on the modal results in the correct flash message being displayed to the user and the comment being deleted.
+  - PASSING: Delete comment on own photo - 
+
+- Like / Unlike Comment:
+  - PASSING: Liking comment updates correctly - Pressing 'like' on a comment correctly updates the like count by increasing by one and changes the like button fill color to a solid blue background.
+  - PASSING: Un-liking comment updates correctly - Pressing 'like' on a comment that the current user has already liked updates the like count by decreasing by one and changes the like button fill color back to the original off-white background.
+  - PASSING: Ability to like any comment - Pressing 'like' results in the expected behavior on any other user's comment.
+  - PASSING: Can like/un-like own comments on own photo - 
+
+- Edit User Profile
+  - OPEN: About me max length validation
+  - PASSING: About Me displays correct text - After adding text to the About Me field, this correctly displays existing data
+  - PASSING: Avatar Color displays correct selection - Avatar will display the correct color based on setting captured at registration or after editing.
+  - PASSING: Edit Profile Go Back button works - Clicking 'go back' button returns user to the profile page
+  - PASSING: Edit Profile Save Changes button updates profile - Clicking 'save changes' returns user to the profile page with updates applied
+
+- Explore Feed
+  - PASSING: Like icon display - Like icon on photo feed correctly displays blue icon if photo has been liked by the current user, and gray icon if it has not been liked.
+  - PASSING: Photo card details correct - Photo cards in feed correctly display photo, photo title and total likes count.
+  - PASSING: Clicking photo opens correct details page - Clicking on a photo in the feed redirects the user to the correct photo's details page.
+
+- User Profile & Feed
+  - PASSING: Add Photo button redirects correctly - Pressing the 'add photo' button redirects user to the upload photo page.
+  - PASSING: Edit Profile button redirects correctly - Pressing the 'edit profile' button redirects the user to the correct profile edit page.
+  - PASSING: Like Icon displays correctly - Like icon in the profile photo feed correctly displays a blue icon if the photo was liked by the photo owner, and a gray icon if it has not.
+  - PASSING: Photo details correctly displayed on card - The photo, title, description, likes count and date added are all correctly displayed on the photo feed card.
+  - PASSING: Clicking photo opens correct details page - Clicking on a photo in the profile photo feed redirects the user to the correct photo's details page.
 
 ### Testing User Stories from User Experience (UX) Section
 
 #### First Time Visitor Story Testing
 
-1. I want to learn about the service offered by Mappy and how it can help plan my trip.
-    1. The landing page provides a clear description of what is offered by the service centered in the page upon loading. [View Screenshot](#)
+1. I want to understand the service the website provides before registering.
 
-2. I want to easily access the map making tool without any confusing steps.
-    1. The "Build your map" button is presented in the the middle of the page and is clearly defined from the background and surrounding content. [View Screenshot](#g)
+2. I want to create a new user account and be able to log in.
 
-3. I want to learn valuable information about potential destinations from the map making tool.
-    1. The map making tool allows quick and easy access to city information by displaying it immediately when a map is generated.  Details about each city are easy to access by clicking one button. [View Screenshot](#)
+3. I want to easily interact with content posted by other users on the site by adding 'likes' or comments.
+
+4. I want to easily add my own photos to the platform for other users to interact with.
 
 #### Returning Visitor Story Testing
 
-1. I want to be able to quickly return to the map making tool.
-    1. The "Build your map" button launches the map creation tool in one click from the landing page, allowing a returning user to very easily access the tool.  Alternatively this page can be bookmarked and accessed directly by a returning user. [View Screenshot](#)
+1. I want to easily log in to my account and access my profile.
 
-2. I want to easily generate new maps to meet my needs.
-    1. Once on the map creation page, new maps can be generated with one click of the "create your travel map" button at the top of the page.  This can be done until the user obtains a combination they are satisfied with. [View Screenshot](#)
+2. I want to be able to quickly access and explore the main photo feed content.
 
-3. I want to see different results each time I generate a new map.
-    1. Results are randomized each time a new map is generated, so new results will be returned each time a user generates a map. [View Screenshot](#)
+3. I want to be able to manage the content I add to the platform - including editing or deleting my photos, comments and likes.
 
 #### Site Owner Story Testing
 
-1. I want to create incentive for user's to interact with the map making tool.
-    1. The free, easy to use service provided by Mappy to help users improve their travel experiences creates incentive to use the site.
+1. I want to provide a streamlined registration and login experience.
+  
+2. I want to provide a fun and interactive experience for the user.
 
-1. I want to provide a pleasant and easy to use to the user experience.
-    1. The subdued color palette, clean design aesthetic and easy to use navigation controls provide this to the user.
+3. I want to encourage the user to return back to the platform to see and interact with new content.
 
-1. I want to provide value to the user through the information provided in the service.
-    1. Details about each city included as well as points of interest across multiple categories for each city provide users with valuable insights into new cities.
-
-1. I want the user to want to come back to use the map making tool in the future.
-    1. The ability to get new results quickly and easily with the map generation tool provides users with incentive to return to plan their future travel around Ireland.
+4. I want to allow users to manage their content - adding, editing and deleting as they desire.
 
 ### Further Testing
 
 #### Responsiveness
 
-- All pages were tested for responsiveness and any visible bugs using Google Chrome developer tools to emulate the viewing size across all standard device sizes offered.  Media queries have been implemented in the CSS of the site to adjust various attributes as necessary to improve the viewing experience on small screen sizes, such as scaling social media icon sizes and adjusting button styling to remain easily usable.
+- All pages were tested for responsiveness and any visible bugs using Google Chrome developer tools to emulate the viewing size across all standard device sizes offered.  Media queries have been implemented in the CSS of the site to adjust various attributes as necessary to improve the viewing experience on small screen sizes, such as scaling social media icon sizes and adjusting button styling to remain easily usable.  In addition site rendering on very high resolutions (such as "4K" or 2160p) were checked to ensure consistent performance as expected.
   
   Device Screen Sizes Tested
 
@@ -366,30 +427,31 @@ After deploying the site, additional checks were performed to ensure all functio
     1. [x](#)
     1. [x](#)
 
-- Please note that while efforts to coprrect some defects indicated in these results are due to issues found in external dependencies, such as Bootstrap's CSS, the Mapbox library, the HTTP version configured in the GitHub Pages server that the site is deployed on, etc. or other faults that are beyond the scope of this project to remedy.
+- Please note that while efforts to coprrect some defects indicated in these results are due to issues found in external dependencies, such as MDBootstrap's CSS for example, or other faults that are beyond the scope of this project to remedy.
 
 ### Issues Encountered in Development
 
-- [Resolved] x
+- [Resolved] "None" response from WTForms process_data()
+- An important component of the user experience for the site is pre-populating edit fields with the existing data, so that when a user clicks 'edit', they are able to see the values they have already entered.  This applies to photo descriptions and comments in particular.
+  - When attempting to render the edit modal for these features, WTForms would not return any existing value, despite multiple approaches to apply the existing database values to the form fields.  
+  - A solution was found using a WTForms method called process_data(), which is passed a data object as its only argument, that resulted in existing form data rendering in the form correctly.  This method was applied in the Jinja template code for the form fields - both a StringField input field a TextAreaField textarea.
+  - When using this appraoch, for reasons still unknown, process_data() returned an additional value of " None ", which was injected in-between the label field and the input field below.  Hours of troubleshooting and discussion with my mentor did not result in a solution, so a work-around was crafted.
+  - This problem was solved by setting up the necessary input fields in HTML directly, and setting the default values using Jinja to access the existing data values.
 
-- x
-  - x
-  - x
+- [Resolved] Masonry layout rendering
+
+- When implementing the Masonry layout, using the Masonry JS plugin compatible with MDB / Bootstrap v5, a serious rendering issue was encountered on initial loading of a photo page.
+- Due to the Masonry layout being applied to the div structure before the image files were fully loaded, the image cards would render stacked to the top of the viewable area, and overlapping each other.  Refreshing the page would result in the correct layout rendering, as Masonry could correctly set the size attributes of the divs with the image files loaded.
+- After extensive investigation, a solution was found using JavaScript to initialize Masonry after all page content was loaded, so that the layout will be applied correctly every time the page is viewed.
+- This solution is credited to [this codepen example](https://codepen.io/desandro/pen/MwJoZQ) and was adapted for use in this project.
 
 - [Open] x
-
-    -[Partial Solution] x
-
-    ```javascript
-
-    ```
-
-- [Open] x
-
 
 ## Deployment - TBU
 
 ### Deployment Requirements
+
+- The following accounts and software packages are required to deploy a clone of this project.  All can be obtained free of charge from the respective providers.
 
 1. GitHub Account
 2. MongoDB Account
@@ -425,7 +487,7 @@ After deploying the site, additional checks were performed to ensure all functio
 
 [Click Here](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository#cloning-a-repository-to-github-desktop) to visit GitHub Help for more detailed explanations of the cloning process.
 
-### Heroku Deployment
+### Heroku Deployment - TBU
 
 The project was deployed to Heroku using the following steps:
 
@@ -455,7 +517,6 @@ The project was deployed to Heroku using the following steps:
 - [Code Institute Full-Stack Developer Course](https://www.codeinstitute.net/) : Code snippets were referenced from the Task Manager mini-project, as well as the guide for configuring the MongoDB database.
 
 - [README Template](https://github.com/Code-Institute-Solutions/SampleREADME) : Template for the README.md file for this project was sourced from Code Institute.
-
 
 ### Content
 

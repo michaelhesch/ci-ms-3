@@ -127,7 +127,7 @@
         <div class="card-body pt-2">
           <!-- Add a new comment section -->
           <h4 class="mt-2">Comments:</h4>
-          <form method="POST" action="{{ url_for('photos.add_comment', id=photo.id)}}" novalidate>
+          <form method="POST" action="{{ url_for('photos.add_comment', id=photo.id)}}">
             {{ commentform.hidden_tag() }}
             <div class="form-group">
               {{ commentform.comment_text.label(class_="form-control-label") }}
