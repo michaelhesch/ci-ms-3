@@ -1,7 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField, SelectField, ValidationError
 from wtforms.validators import DataRequired, Length
-from app.models import Category
 
 # Photo upload form
 class UploadPhoto(FlaskForm):
@@ -15,10 +14,6 @@ class UploadPhoto(FlaskForm):
         validators=[DataRequired(
             message="Please enter a description."),
             Length(min=0, max=180)])
-    category_name = SelectField('Choose Category',
-        choices=[
-            (category.category_name) 
-            for category in Category.objects])
     submit = SubmitField('Add Photo')
 
 # Photo editing form
@@ -33,12 +28,6 @@ class EditPhotoForm(FlaskForm):
         validators=[DataRequired(
             message="Please enter a description."),
             Length(min=0, max=180)])
-    category = SelectField('Choose Category',
-        choices=[
-            (category.category_name) 
-            for category in Category.objects],
-        validators=[DataRequired(
-            message="Please choose a category.")])
     submit = SubmitField('Submit')
 
 # Photo comment form

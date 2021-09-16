@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <a id="top"></a>
 
 # Milestone Project Three - "Out of Office"
@@ -82,23 +81,21 @@
 
 #### Colour Scheme
 
-- The page color scheme is based on x.
+- The page color scheme is based on the [Material Design Bootstrap colour theme](https://mdbootstrap.com/docs/standard/content-styles/colors/).
 
-- Background color  .  
+- Background color is "bg-light" (#FBFBFB), a soft off-white.  
 
-- Highlight color .  
+- Highlight color is "crimson" (#E60023) found on the site logo and favicon.  
 
-- Button call to action color.
+- Button call to action color is MDB "Primary" (#1266F1), used for important buttons and icons.
 
-- The full palette containing all colors used in the site can be found [here.](#)
+- The full palette containing all colors used in the site can be found [here.](https://mdbootstrap.com/docs/standard/content-styles/colors/#section-full-palette)
 
 #### Typography
 
-- The font used throughout the site is the Google Font 'x'.
+- The font used throughout the site is the Google Font 'Roboto'.  This font is included with MDB and font weights are assigned by MDB, more information on typography can be found [here.](https://mdbootstrap.com/docs/standard/content-styles/typography/#section-introduction)
 
-- A sample of the X typography from [Google Fonts](#):
-
-  ![TBU](#)
+- A sample of the Roboto typography from [Google Fonts](https://fonts.google.com/specimen/Roboto)
 
 #### Imagery
 

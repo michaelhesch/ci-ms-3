@@ -47,7 +47,6 @@ def upload_photo():
                 new_photo = Photo(
                     title=form.title.data,
                     description=form.description.data,
-                    category_name=form.category_name.data,
                     user_uploaded_by=current_user.username,
                     user_added_datetime=datetime.datetime.utcnow,
                     url=upload_result["secure_url"],
