@@ -13,7 +13,7 @@ def index():
         return render_template('index.html')
     else:
         return redirect(url_for('photos.photo_feed'))
-
+ 
 
 @bp.route('/profile/<username>')
 @login_required
@@ -37,29 +37,33 @@ def edit_profile(id):
     form = EditProfileForm()
     # Update form logic on post request
     if form.validate_on_submit():
-        # If there is no change in about me data, return to profile page
-        if user.about_me == form.about_me.data and user.avatar == form.avatar.data:
-            return redirect(url_for('main.profile', username=user.username))
+        color = user.avatar
+        avatar_num = user.avatar_num
+        if form.avatar.data == "1":
+            color = "#E60023"
+            avatar_num = "1"
+        elif form.avatar.data == "2":
+            color = "#E6C300"
+            avatar_num = "2"
+        elif form.avatar.data == "3":
+            color = "#00E6C3"
+            avatar_num = "3"
+        elif form.avatar.data == "4":
+            color = "#0022E6"
+            avatar_num = "4"
         else:
-            color = None
-            if form.avatar.data == "1":
-                color = "#E60023"
-            elif form.avatar.data == "2":
-                color = "#E6C300"
-            elif form.avatar.data == "3":
-                color = "#00E6C3"
-            elif form.avatar.data == "4":
-                color = "#0022E6"
-            else:
-                pass
-            user.about_me = form.about_me.data
-            user.avatar = color
-            user.save()
-            flash("Your account has been updated!")
-            return redirect(url_for('main.profile', username=user.username))
+            pass
+        user.about_me = form.about_me.data
+        user.avatar = color
+        user.avatar_num = avatar_num
+        user.save()
+        flash("Your account has been updated!")
+        return redirect(url_for('main.profile', username=user.username))
     # Populate form with existing data on get request
     elif request.method == "GET":
-        form.about_me.data = user.about_me
-        form.avatar.data = user.avatar
+        form.about_me.default = user.about_me
+        form.avatar.default = user.avatar_num
+        form.process()
+
     return render_template('edit_profile.html', title='Edit Profile', 
         legend='Edit Profile', user=user, form=form)
