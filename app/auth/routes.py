@@ -16,27 +16,29 @@ def login():
     form = LoginForm()
 
     # Catch mongoengine error for username not found in DB
-    if request.method == "POST" and DoesNotExist:
-        flash('Incorrect login details, please try again.')
-        return redirect(request.referrer)
-
-    if form.validate_on_submit():
-        user = User.objects.get(username=form.username.data.lower())
-        # Check for incorrect credentials
-        if user is None or not user.check_password(form.password.data) or DoesNotExist:
+    if request.method == "POST" and form.validate_on_submit():
+        try:
+            user = User.objects.get(username=form.username.data.lower())
+            # Check for incorrect credentials
+            if user is None or not user.check_password(form.password.data):
+                flash('Incorrect login details, please try again.')
+                return redirect(url_for('auth.login'))
+            login_user(user, remember=form.remember_me.data)
+            # Set session to permanent to enable automatic timeout
+            session.permanent = True
+            # Check for next argument from login_required action
+            next_page = request.args.get('next')
+            # If next argument not passed, redirect to index
+            if not next_page or url_parse(next_page).netloc != '':
+                next_page = url_for('main.index')
+            # Else if next is found, redirects to user's desired page 
+            # once logged in
+            return redirect(next_page)
+            
+        except DoesNotExist:
             flash('Incorrect login details, please try again.')
-            return redirect(url_for('auth.login'))
-        login_user(user, remember=form.remember_me.data)
-        # Set session to permanent to enable automatic timeout
-        session.permanent = True
-        # Check for next argument from login_required action
-        next_page = request.args.get('next')
-        # If next argument not passed, redirect to index
-        if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('main.index')
-        # Else if next is found, redirects to user's desired page 
-        # once logged in
-        return redirect(next_page)
+            return redirect(request.referrer)
+
     return render_template('auth/login.html', title='Sign In', form=form)
 
 
