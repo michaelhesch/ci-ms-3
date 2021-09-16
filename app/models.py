@@ -1,6 +1,5 @@
 import datetime
 from mongoengine import CASCADE
-from mongoengine.errors import ValidationError
 from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
@@ -15,6 +14,7 @@ class User(db.Document, UserMixin):
     about_me = db.StringField(max_length=180)
     password_hash = db.StringField(required=True)
     avatar = db.StringField(max_length=7)
+    avatar_num = db.StringField(max_length=1)
 
     # Password hashing function
     def set_password(self, password):
@@ -39,7 +39,7 @@ class Category(db.Document):
 # Photo class setup
 class Photo(db.Document):
     category_name = db.ReferenceField(Category)
-    title = db.StringField(max_length=30, unique=True, required=True)
+    title = db.StringField(max_length=30, required=True)
     description = db.StringField(max_length=180)
     user_uploaded_by = db.StringField(max_length=14, required=True)
     user_added_datetime = db.DateTimeField(default=datetime.datetime.utcnow)
@@ -77,7 +77,7 @@ class Comment(db.Document):
 # validation attributes & methods to login manager
 @login.user_loader
 def load_user(id):
-    return User.objects.get(pk=id) # TODO: Confirm why only pk=id works as this argument?
+    return User.objects.get(pk=id)
     """
     If pk=id not passed in, this is the error returned by mongoengine:
     This prevents the application from running
