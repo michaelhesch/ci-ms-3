@@ -14,7 +14,7 @@
                 <!-- Photo title input -->
                 <div class="form-group my-2">
                   {{ form.title.label(class_="form-control-label") }}
-                  {{ form.title(default="Enter a title for your photo", class_="form-control") }}
+                  {{ form.title(placeholder="Enter a title for your photo", class_="form-control") }}
                   {% for error in form.title.errors %}
                     <span style="color: red;">{{ error }}</span>
                   {% endfor %}
@@ -22,7 +22,7 @@
                 <!-- Photo description input -->
                 <div class="form-group my-2">
                   {{ form.description.label(class_="form-control-label") }}
-                  {{ form.description(size=32, class_="form-control") }}
+                  {{ form.description(placeholder="Enter a description of your photo", class_="form-control") }}
                   {% for error in form.description.errors %}
                     <span style="color: red;">{{ error }}</span>
                   {% endfor %}

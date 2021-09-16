@@ -1,62 +1,56 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="content-section">
-  <h3 class="border-bottom">Editing: {{ photo.title }}</h3>
-  <div class="card">
-    <img src="{{ photo.url }}" class="card-img-top" alt="..." />
-    <form action="" method="POST">
-      <fieldset class="form-group">
-        <legend>{{ legend }}</legend>
-        <div class="form-group mb4">
-          {{ form.title.label(class_="form-control-label") }}
-          {% if form.title.errors %}
-            {{ form.title(class_="form-control is-invalid") }}
-            <div class="invalid-feedback">
-              {% for error in form.title.errors %}
-                <span style="color: red;">{{ error }}</span>
-              {% endfor %}
-            </div>
-          {% else %}
-            {{ form.title(class_="form-control") }}
-          {% endif %}
+  <div class="row row-cols-1 justify-content-center mb-4">
+    <div class="col w-75" id="photo-container">
+      <div class="card rounded-5">
+        <div class="card-header">
+          <h3 class="border-bottom">Editing: {{ photo.title }}</h3>
+          <img src="{{ photo.url }}" class="card-img-top rounded shadow mb-3" alt="{{ photo.category }} photo" />
         </div>
-        <div class="form-group mb4">
-          {{ form.description.label(class_="form-control-label") }}
-          {% if form.description.errors %}
-            {{ form.description(class_="form-control is-invalid") }}
-            <div class="invalid-feedback">
-              {% for error in form.description.errors %}
+        <div class="card-body">
+        <form action="" method="POST">
+          <fieldset class="form-group">
+            <legend>{{ legend }}</legend>
+            <div class="form-group my-3">
+              {{ form.title.label(class_="form-control-label") }}
+              {% if form.title.errors %}
+              {{ form.title(class_="form-control is-invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.title.errors %}
                 <span style="color: red;">{{ error }}</span>
-              {% endfor %}
+                {% endfor %}
+              </div>
+              {% else %}
+              {{ form.title(class_="form-control") }}
+              {% endif %}
             </div>
-          {% else %}
-            {{ form.description(class_="form-control") }}
-          {% endif %}
+            <div class="form-group my-3">
+              {{ form.description.label(class_="form-control-label") }}
+              {% if form.description.errors %}
+              {{ form.description(class_="form-control is-invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.description.errors %}
+                <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+              </div>
+              {% else %}
+              {{ form.description(class_="form-control") }}
+              {% endif %}
+            </div>
+              <div class="form-gorup">
+                <div class="d-flex justify-content-start align-items-center mt-3">
+                  <a href="" class="btn btn-md btn-light me-2">Cancel</a>
+                  {{ form.submit(class_="btn btn-md btn-primary", value="Save Changes") }}
+                </div>
+              </div>
+          </fieldset>
+        </form>
         </div>
-        <!-- Temporarily remove category selection from edit form -->
-        <!--<div class="form-group mb4">
-          {{ form.category.label(class_="form-control-label") }}
-          {% if form.category.errors %}
-            {{ form.category(class_="form-control is-invalid") }}
-            <div class="invalid-feedback">
-              {% for error in form.category.errors %}
-                <span style="color: red;">{{ error }}</span>
-              {% endfor %}
-            </div>
-          {% else %}
-            {{ form.category(class_="form-control") }}
-          {% endif %}
-        </div>-->
-      </fieldset>
-    </form>
-    <br />
-    <div class="form-group">
-      <a href="" class="btn btn-primary mb-4">Save Changes</a>
-      <button class="btn btn-primary mb-4" onclick="goBack()">Go Back</button>
+      </div>
     </div>
   </div>
 </div>
-
 <!-- Enables user to return to previous page -->
 <script>
   function goBack() {

@@ -58,7 +58,8 @@ def register():
                 email=form.email.data,
                 first_name=form.first_name.data.lower(),
                 last_name=form.last_name.data.lower(),
-                avatar=color)
+                avatar=color,
+                avatar_num=form.avatar.data)
             user.set_password(form.password.data)
             user.save()
             login_user(user)

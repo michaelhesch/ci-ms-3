@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField, FileField, SelectField, ValidationError
+from wtforms import StringField, SubmitField, TextAreaField, SelectField, ValidationError
 from wtforms.validators import DataRequired, Length
 from app.models import Category
 
-# Photo upload form setup
+# Photo upload form
 class UploadPhoto(FlaskForm):
     title = StringField(
         'Photo Title', 
@@ -18,12 +18,10 @@ class UploadPhoto(FlaskForm):
     category_name = SelectField('Choose Category',
         choices=[
             (category.category_name) 
-            for category in Category.objects],
-        validators=[DataRequired(
-            message="Please choose a category.")])
+            for category in Category.objects])
     submit = SubmitField('Add Photo')
 
-
+# Photo editing form
 class EditPhotoForm(FlaskForm):
     title = StringField(
         'Photo Title', 
@@ -43,7 +41,7 @@ class EditPhotoForm(FlaskForm):
             message="Please choose a category.")])
     submit = SubmitField('Submit')
 
-
+# Photo comment form
 class AddComment(FlaskForm):
     comment_text = TextAreaField(
         validators=[
@@ -55,7 +53,7 @@ class AddComment(FlaskForm):
         if len(comment_text.data) > 200:
             raise ValidationError('Comment must be less than 200 characters')
 
-
+# Photo edit comment form
 class EditComment(FlaskForm):
     comment_text = TextAreaField('Edit Comment', 
         validators=[
