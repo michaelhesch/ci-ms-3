@@ -55,8 +55,6 @@
   #feed-top-text {
     margin-top: 0!important;
   }
-
-
 }
 
 /* --- small device media queries --- */
@@ -142,18 +140,12 @@
     font-size: 0.5rem!important;
     padding: 0.5rem 1rem 0.5rem;
   }
-
 }
 
 /* --- Very large resolution media queries --- */
 
-@media screen and (min-width: 1080px, max-width: 2160px) {
-  .grid-sizer,
-  .grid-item {
-  width: 100%;
-  }
-
+@media screen and (min-width: 1440px) and (max-width: 2160px) {
   #photo-container {
-    width:100%!important;
+    width:75%!important;
   }
 }
