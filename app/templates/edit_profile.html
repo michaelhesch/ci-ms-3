@@ -19,11 +19,11 @@
                             {{ form.about_me(class_="form-control", cols=50, rows=4) }}
                         </div>
                         {% if form.about_me.errors %}
-                            <div class="invalid-feedback">                
-                                {% for error in form.about_me.errors %}
-                                <span style="color: red;">[{{ error }}]</span>
-                                {% endfor %}
-                            </div>
+                        <div class="invalid-feedback">
+                            {% for error in form.about_me.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
                         {% endif %}
                         <div class="form-group">
                             {{ form.avatar.label(class_="form-control-label") }}
@@ -36,13 +36,14 @@
                             {% elif current_user.avatar_num == "4" %}
                                 {{ form.avatar(class_="form-control", default="4") }}
                             {% else %}
-                             <p>test</p>
+                                <p>test</p>
                             {% endif %}
                         </div>
                     </fieldset>
                     <div class="form-group">
                         <div class="d-flex justify-content-end align-items-center">
-                            <a href="{{ url_for('main.profile', username=current_user.username) }}" class="btn btn-md btn-light mb-2 me-2">Go Back</a>
+                            <a href="{{ url_for('main.profile', username=current_user.username) }}"
+                                class="btn btn-md btn-light mb-2 me-2">Go Back</a>
                             {{ form.submit(class_="btn btn-primary mb-2") }}
                         </div>
                     </div>

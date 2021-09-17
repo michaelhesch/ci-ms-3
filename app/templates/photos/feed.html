@@ -49,17 +49,17 @@
     <ul class="pagination justify-content-center">
       {% for page_num in photos.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
       {% if page_num %}
-      {% if photos.page == page_num %}
-      <li class="page-item active">
-        <a class="page-link" href="{{ url_for('photos.photo_feed', page=page_num)}}">{{ page_num }}</a>
-      </li>
+        {% if photos.page == page_num %}
+          <li class="page-item active">
+            <a class="page-link" href="{{ url_for('photos.photo_feed', page=page_num)}}">{{ page_num }}</a>
+          </li>
+        {% else %}
+          <li class="page-item">
+            <a class="page-link" href="{{ url_for('photos.photo_feed', page=page_num)}}">{{ page_num }}</a>
+          </li>
+        {% endif %}
       {% else %}
-      <li class="page-item">
-        <a class="page-link" href="{{ url_for('photos.photo_feed', page=page_num)}}">{{ page_num }}</a>
-      </li>
-      {% endif %}
-      {% else %}
-      <li class="ellipsis">...</li>
+        <li class="ellipsis">...</li>
       {% endif %}
       {% endfor %}
     </ul>
@@ -67,16 +67,18 @@
 </div>
 
 <script>
+  // Javascript functions to pre-load all images before the Masonry layout is applied,
+  // which prevents errors in the Masonry layout when the site loads.
   // Image preloading solution from https://codepen.io/desandro/pen/MwJoZQ
   var grid = document.querySelector('.masonry-grid');
 
-  var msnry = new Masonry( grid, {
+  var msnry = new Masonry(grid, {
     itemSelector: '.grid-item',
     columnWidth: '.grid-sizer',
     percentPosition: true
   });
 
-  imagesLoaded( grid ).on( 'progress', function() {
+  imagesLoaded(grid).on('progress', function () {
     // layout Masonry after each image loads
     msnry.layout();
   });

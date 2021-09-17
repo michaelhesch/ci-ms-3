@@ -6,16 +6,16 @@
 <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.js"></script>
 <div class="content-section my-3">
   <div class="card border shadow">
-  <div class="d-flex justify-content-start ms-3 mt-3">
-    <span style="color: {{ user.avatar }}">
-      <i class="fas fa-7x fa-user-circle"></i>
-    </span>
-    <div class="ms-3">
-      <h3>{{ user.username|capitalize }}'s Profile</h3>
-      <p>E-Mail Address: {{ user.email }}</p>
-      <p>About Me: {{ user.about_me }}</p>
+    <div class="d-flex justify-content-start ms-3 mt-3">
+      <span style="color: {{ user.avatar }}">
+        <i class="fas fa-7x fa-user-circle"></i>
+      </span>
+      <div class="ms-3">
+        <h3>{{ user.username|capitalize }}'s Profile</h3>
+        <p>E-Mail Address: {{ user.email }}</p>
+        <p>About Me: {{ user.about_me }}</p>
+      </div>
     </div>
-  </div>
     <div class="ms-3 mb-3">
       <a class="btn btn-md btn-light m-1" href="{{ url_for('main.edit_profile', id=user.id) }}">Edit Profile</a>
       <a class="btn btn-md btn-light m-1" href="{{ url_for('photos.upload_photo') }}">Add A Photo!</a>
@@ -32,35 +32,35 @@
   <div class="row masonry-grid">
     <div class="grid-sizer"></div>
     {% for photo in photos.items %}
-      {% if photo.user_uploaded_by == user.username %}
-        <div class="grid-item">
-          <div class="card hover-shadow border">
-            <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-              <a href="{{ url_for('photos.view_photo', id=photo.id )}}">
-                <img src="{{ photo.url }}" class="card-img-top" alt="{{ photo.title }}" />
-              </a>
-            </div>
-            <div class="card-body">
-              <div class="col">
-                <h5 class="card-title">{{ photo.title }}</h5>
-              </div>
-              <div class="row">
-                <div class="col">
-                  {% if current_user in photo.liked_by_user %}
-                    <small><span style="color: #1266F1"><i class="fas fa-thumbs-up"></i> {{ photo.likes }}</span></small>
-                  {% else %}
-                    <small><span><i class="fas fa-thumbs-up"></i> {{ photo.likes }}</span></small>
-                  {% endif %}
-                </div>
-              </div>
-              <small><em>Uploaded on {{ photo.user_added_datetime.date() }}</em></small>
-              <p class="card-text">
-                {{ photo.description }}
-              </p>
+    {% if photo.user_uploaded_by == user.username %}
+    <div class="grid-item">
+      <div class="card hover-shadow border">
+        <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+          <a href="{{ url_for('photos.view_photo', id=photo.id )}}">
+            <img src="{{ photo.url }}" class="card-img-top" alt="{{ photo.title }}" />
+          </a>
+        </div>
+        <div class="card-body">
+          <div class="col">
+            <h5 class="card-title">{{ photo.title }}</h5>
+          </div>
+          <div class="row">
+            <div class="col">
+              {% if current_user in photo.liked_by_user %}
+              <small><span style="color: #1266F1"><i class="fas fa-thumbs-up"></i> {{ photo.likes }}</span></small>
+              {% else %}
+              <small><span><i class="fas fa-thumbs-up"></i> {{ photo.likes }}</span></small>
+              {% endif %}
             </div>
           </div>
+          <small><em>Uploaded on {{ photo.user_added_datetime.date() }}</em></small>
+          <p class="card-text">
+            {{ photo.description }}
+          </p>
         </div>
-      {% endif %}
+      </div>
+    </div>
+    {% endif %}
     {% endfor %}
   </div>
   {% if photos.items|length > 9 %}
@@ -69,21 +69,23 @@
     <!-- Please see readme for full crediting details -->
     <nav aria-label="Page navigation">
       <ul class="pagination justify-content-center">
-      {% for page_num in photos.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% for page_num in photos.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
         {% if page_num %}
           {% if photos.page == page_num %}
           <li class="page-item active">
-            <a class="page-link" href="{{ url_for('main.profile', username=current_user.username, page=page_num)}}">{{ page_num }}</a>
+            <a class="page-link" href="{{ url_for('main.profile', username=current_user.username, page=page_num)}}">{{
+              page_num }}</a>
           </li>
           {% else %}
           <li class="page-item">
-            <a class="page-link" href="{{ url_for('main.profile', username=current_user.username, page=page_num)}}">{{ page_num }}</a>
+            <a class="page-link" href="{{ url_for('main.profile', username=current_user.username, page=page_num)}}">{{
+              page_num }}</a>
           </li>
           {% endif %}
         {% else %}
           <li class="ellipsis">...</li>
         {% endif %}
-      {% endfor %}
+        {% endfor %}
       </ul>
     </nav>
   </div>
@@ -95,13 +97,13 @@
   // Image preloading solution from https://codepen.io/desandro/pen/MwJoZQ
   var grid = document.querySelector('.masonry-grid');
 
-  var msnry = new Masonry( grid, {
+  var msnry = new Masonry(grid, {
     itemSelector: '.grid-item',
     columnWidth: '.grid-sizer',
     percentPosition: true
   });
 
-  imagesLoaded( grid ).on( 'progress', function() {
+  imagesLoaded(grid).on('progress', function () {
     // layout Masonry after each image loads
     msnry.layout();
   });
