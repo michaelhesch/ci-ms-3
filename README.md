@@ -2,7 +2,7 @@
 
 # Milestone Project Three - "Out of Office"<!-- omit in toc -->
 
-![Am I Responsive Image - Placeholder](documentation/screenshots/Responsive.png)
+![Am I Responsive Image - Placeholder](documentation/screenshots/Responsive.PNG)
 
 ## Project Overview<!-- omit in toc -->
 
