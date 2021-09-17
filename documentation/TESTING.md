@@ -28,7 +28,7 @@ The W3C Markup Validator, W3C CSS Validator, PEP8 Online and PyCharm were used t
   - Upon review of each page, no outside errors remain in the project that are not due to Jinja templating syntax.
 
 - [W3C CSS Validator - Jigsaw](https://jigsaw.w3.org/css-validator/)
-  - [Style.css Results](documentation/validation/MS3-CSS-Validation.pdf)
+  - [Style.css Results](validation/MS3-CSS-Validation.pdf)
     - No warnings or errors returned when validating style.css content directly.
     - Note: multiple warnings are returned if validation is run on the deployed app due to dependencies such as Bootstrap.
 
@@ -197,11 +197,11 @@ The W3C Markup Validator, W3C CSS Validator, PEP8 Online and PyCharm were used t
 
 - The Lighthouse tool within Chrome Developer tools was used to generate performance scores and identify areas for improvement in both mobile and desktop views of the page.  Lighthouse scoring was performed on the photo Explore page, as this is the most resource intensive page in the app.  Results of this scoring can be viewed via the links below:
   
-  1. [Mobile Score & Summary](documentation/lighthouse/Explore-Mobile.pdf)
+  1. [Mobile Score & Summary](lighthouse/Explore-Mobile.pdf)
 
     ![Mobile Lighthouse Results](screenshots/Mobile-LH.PNG)
   
-  2. [Desktop Score & Summary](documentation/lighthouse/Explore-Desktop.pdf)
+  2. [Desktop Score & Summary](lighthouse/Explore-Desktop.pdf)
 
     ![Desktop Lighthouse Results](screenshots/Desktop-LH.PNG)
 
