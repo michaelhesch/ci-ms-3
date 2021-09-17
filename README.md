@@ -1,49 +1,51 @@
 <a id="top"></a>
 
-# Milestone Project Three - "Out of Office"
+# Milestone Project Three - "Out of Office"<!-- omit in toc -->
 
-![Am I Responsive Image - Placeholder](#)
+![Am I Responsive Image - Placeholder](documentation/screenshots/Responsive.png)
 
-## Project Overview
+## Project Overview<!-- omit in toc -->
 
- The purpose of Out of Office is to provide users with a platform for sharing their favourite photos from their holidays, and interacting with other user's holiday photos.  The site provides users with the ability to create an account, log in, and then easily share their photos, view other photos, as well as manage the photos they have uploaded to the platform.  The user can also leave "likes" and comments on any photo uploaded to the platform.
+- The purpose of Out of Office is to provide users with a platform for sharing their favourite photos from their holidays, and interacting with other user's holiday photos.  The site provides users with the ability to create an account, log in, and then easily share their photos, view other photos, as well as manage the photos they have uploaded to the platform.  The user can also leave "likes" and comments on any photo uploaded to the platform.
 
-- This is a full-stack web application built with Material Design Bootstrap, a Python back-end utilizing the Flask micro-framework, a MongoDB NoSQL database, Cloudinary 
+- This is a full-stack web application built with Material Design Bootstrap, a Python back-end utilizing the Flask micro-framework, a MongoDB NoSQL database and Cloudinary.
 
 [View the live project here.](https://ci-ms-3-mh.herokuapp.com/)
 
----
+----
 
-## Table of Contents
+- [User Experience (UX)](#user-experience-ux)
+  - [User stories](#user-stories)
+  - [Design](#design)
+  - [Wireframes](#wireframes)
+- [Data Models](#data-models)
+  - [Database Models](#database-models)
+  - [Database Schema Diagram](#database-schema-diagram)
+  - [MongoDB Database Setup](#mongodb-database-setup)
+  - [Cloudinary Implementation](#cloudinary-implementation)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+  - [Programming Languages Used](#programming-languages-used)
+  - [Frameworks, Libraries & Programs Used](#frameworks-libraries--programs-used)
+- [Testing](#testing)
+- [Deployment](#deployment)
+  - [Deployment Requirements](#deployment-requirements)
+  - [Making a Local Clone](#making-a-local-clone)
+  - [Working With A Local Clone](#working-with-a-local-clone)
+  - [Heroku Deployment](#heroku-deployment)
+- [Credits](#credits)
+  - [Code](#code)
+  - [Content](#content)
+  - [Media](#media)
+  - [Acknowledgments](#acknowledgments)
 
-1. [User Experience](#test1)
-    1. [User Stories](#test1a)
-    2. [Design](#test)
-2. [Data Models](#test2)
-    1. [Database Models](#test)
-    2. [MongoDB Database Setup](#test)
-3. [Features](#test3)
-    1. [Test](#test)
-4. [Technologies Used](#test)
-    1. [Programming Languages](#test)
-    2. [Frameworks, Libraries & Programs](#test)
-5. [Testing](#test3)
-    1. [Test](#test)
-6. [Deployment](#test3)
-    1. [Requirements](#test)
-    2. [Making a Local Clone](#test)
-    3. [Heroku Deployment](#test)
-7. [Credits](#test3)
-    1. [Code](#test)
-    2. [Content](#test)
-    3. [Media](#test)
-    4. [Acknowledgements](#test)
+----
 
-## User Experience (UX) - TBU
+## User Experience (UX)
 
 ### User stories
 
-#### First Time Visitor Goals
+#### First Time Visitor Goals<!-- omit in toc -->
 
 - As a first time visitor
 
@@ -55,7 +57,7 @@
 
   - I want to easily add my own photos to the platform for other users to interact with.
 
-#### Returning Visitor Goals
+#### Returning Visitor Goals<!-- omit in toc -->
 
 - As a returning visitor
 
@@ -65,7 +67,7 @@
 
   - I want to be able to manage the content I add to the platform - including editing or deleting my photos, comments and likes.
 
-#### Site Owner Goals
+#### Site Owner Goals<!-- omit in toc -->
 
 - As the site owner
 
@@ -77,9 +79,9 @@
 
   - I want to allow users to manage their content - adding, editing and deleting as they desire.
 
-### Design - TBU
+### Design
 
-#### Colour Scheme
+#### Colour Scheme<!-- omit in toc -->
 
 - The page color scheme is based on the [Material Design Bootstrap colour theme](https://mdbootstrap.com/docs/standard/content-styles/colors/).
 
@@ -91,30 +93,28 @@
 
 - The full palette containing all colors used in the site can be found [here.](https://mdbootstrap.com/docs/standard/content-styles/colors/#section-full-palette)
 
-#### Typography
+#### Typography<!-- omit in toc -->
 
 - The font used throughout the site is the Google Font 'Roboto'.  This font is included with MDB and font weights are assigned by MDB, more information on typography can be found [here.](https://mdbootstrap.com/docs/standard/content-styles/typography/#section-introduction)
 
 - A sample of the Roboto typography from [Google Fonts](https://fonts.google.com/specimen/Roboto)
 
-#### Imagery
-
-- x.
-- x.
-
 ### Wireframes
 
-- Mobile Wireframes - [View](#)
+- Mobile Wireframes - [View](documentation/wireframes/mobile-wireframes.pdf)
 
-- Tablet Wireframes - [View](#)
+- Tablet Wireframes - [View](documentation/wireframes/tablet-wireframes.pdf)
 
-- Desktop Wireframes - [View](#)
+- Desktop Wireframes - [View](documentation/wireframes/desktop-wireframes.pdf)
 
-#### Deviations from wireframe designs
+#### Deviations from wireframe designs<!-- omit in toc -->
 
-- During development some changes were made to the final design that is deployed vs. the wireframes above:
-
-  - TBU.
+- During development some changes were made to the final design that is deployed vs. the wireframes above, to improve the look and feel as well as user experience, including:
+  - Adding a surrounding background card component to the landing page text and buttons, login form, registration form and new photo form to add depth.
+  - Reconfigure user avatar summary section to include an upload photo button in-line with the edit button and moved below the user avatar and description.  In addition the user's email address is displayed in the details section.
+  - Added like count, upload date and photo description to the photo cards in the user profile view.
+  - Changed comment button alignment on photo drill down to be left justified consistent with the other buttons on the page.
+  - Display the number of likes in addition to the like symbol on the Explore feed and user profile views.
 
 ## Data Models
 
@@ -137,13 +137,13 @@
 
   - Contains the identifying details for each comment, including the user who added the comment, the date and time the comment was added, the photo the comment was added to, the text content of the comment, number of likes, and the users who liked the comment.
   - Contains an automatically generated unique ObjectId value used to interact with the comment and serves as a reference field.
-  - The user who added the comment is caputred using their user ObjectId, and is a reference field tied to the User collection.
+  - The user who added the comment is captured using their user ObjectId, and is a reference field tied to the User collection.
   - The photo which the comment was added to is captured using its ObjectId, and is a reference field tied to the Photo collection.
-  - Users who have liked the comment are stoerd as an array of ObjectIds, allowing for easy mapping between Comments and Users.
+  - Users who have liked the comment are stored as an array of ObjectIds, allowing for easy mapping between Comments and Users.
 
 ### Database Schema Diagram
 
-![database schema diagram]()
+![database schema diagram](documentation/screenshots/CI-MS-3-DM.png)
 
 ### MongoDB Database Setup
 
@@ -162,9 +162,9 @@
 ### Cloudinary Implementation
 
 - This project uses Cloudinary to both manage user photo file uploads but also as a cloud hosting provider for the images displayed on the app.  Cloudinary's API also provides several very useful features that improve performance of the deployed site.
-- Cloudinary also offers a range of third party add-ons that further enhance the functionality provided by Cloudinary itself.  For this project, I have enabled the Amazon Rekognition AI Moderation add-on, which provides automatic artificial intelligence-based content moderation limiting a range of inapproprite content from being posted to the deployed site.  You can read moreabout this add-on [here.](https://cloudinary.com/documentation/aws_rekognition_ai_moderation_addon)
+- Cloudinary also offers a range of third party add-ons that further enhance the functionality provided by Cloudinary itself.  For this project, I have enabled the Amazon Rekognition AI Moderation add-on, which provides automatic artificial intelligence-based content moderation limiting a range of inappropriate content from being posted to the deployed site.  You can read more about this add-on [here.](https://cloudinary.com/documentation/aws_rekognition_ai_moderation_addon)
 
-#### Cloudinary Upload and Transformation Configuration
+#### Cloudinary Upload and Transformation Configuration<!-- omit in toc -->
 
 - Each image uploaded to the site undergoes a series of transformations to improve site performance and optimize storage space used.  These settings include:
   - Allowing Cloudinary to automatically determine the best quality settings to optimize file size while maintaining viewability.
@@ -175,7 +175,7 @@
 
 ## Features
 
-### All Pages
+### All Pages<!-- omit in toc -->
 
 - Clear and concise page design, including an easy to use and responsive navigation bar and a subdued colour scheme.
 
@@ -183,46 +183,57 @@
 
 - Social media links on the navbar as well as easily identifiable social media link buttons on the footer.
 
-### Landing Page (Logged Out)
+### Landing Page (Logged Out)<!-- omit in toc -->
 
 - Clear and centrally located information card describing what the site is and who it is for.
 
 - Strongly styled call to action buttons for Login and Register to draw user's attention.
 
-### Login Page
+### Login Page<!-- omit in toc -->
 
-- Straightforward Log In card free of clutter and a strong call to action button for logging in.
+- Straightforward Log-In card free of clutter and a strong call to action button for logging in.
 
 - Additional link to registration page for a new user who could potentially land on the log in page without an account.
 
-### Registration Page
+### Registration Page<!-- omit in toc -->
 
-- Tbu.
+- Easy to use registration form with validation features to aid the registration process.
 
-### Explore Page
+- Additional link to log-in page for an existing user who could potentially land on the registration page.
 
-- Tbu.
+### Explore Page<!-- omit in toc -->
 
-### Add Photo Page
+- Dynamic collection of photos for users to browse and interact with, including pagination to ensure speedy loading.
 
-- Tbu.
+### Add Photo Page<!-- omit in toc -->
 
-### Profile Page
+- Easy to use form to add a new photo to the platform with details such as a title and description.
 
-- Tbu.
+### Profile Page<!-- omit in toc -->
 
-### Edit Content Views
+- A basic user profile page where a user can customize their avatar color and a brief "about me" section.
 
-- Edit Profile
-- Edit Photo
-- Edit Comment
+- A place where the user can easily view all of the photos they have added to the platform in one place.
 
-### Delete Conntent Views
+### Edit Content Views<!-- omit in toc -->
 
-- Delete Photo
-- Delete Comment
+- Edit Profile - ability to edit profile content such as avatar color and about me after it has been set.
 
-### Future Improvements
+- Edit Photo - ability to edit a photo's title and/or description after it has been set.
+
+- Edit Comment - ability to edit the text content of a comment after it has been posted.
+
+### Delete Conntent Views<!-- omit in toc -->
+
+- Delete Photo - ability to remove a photo from the site (including deleting from Cloudinary).
+  
+- Delete Comment - ability to delete a comment from the site.
+
+### User Friendly Error Handling<!-- omit in toc -->
+
+- Provide user-friendly pages to mask 403, 404 and 500 responses to improve user experience and confidence in the app.
+
+### Future Improvements<!-- omit in toc -->
 
 - There are several features that I would like to incorporate to enhance the site in the future that unfortunately could not be added for this version:
   - Photo Category & Location - in the future I would like to incorporate a category and location attribute for the photos, which would allow users to specify the type of photo they are adding as well as where it was taken.  This would also allow for additional enhancements such as filtering to be performed on the Explore feed page.
@@ -230,7 +241,7 @@
   - User account deletion - the ability for a user to entirely delete their account (not just the content they have added) would be beneficial to include.
   - Admin view - inclusion of a super user account which will allow for direct intervention if manual content moderation is required.
   - User follows / account views - allow users to follow each other's accounts directly and view another user's account and photos.
-  - User profile photo feed enhancements - allow sorting and/or filtering of user's own photo feed to over-ride the default sort of oldest to newest.
+  - User profile & profile photo feed enhancements - allow users to upload a profile photo, add sorting and/or filtering of user's own photo feed to over-ride the default sort of oldest to newest.
   - Comment pagination - add in vertical collapsing/pagination of comments once many comments are added to a photo to prevent unweidly scrolling in an image details page.
 
 ## Technologies Used
@@ -246,7 +257,7 @@
 
 1. [Flask](https://flask.palletsprojects.com/en/2.0.x/)
     - The Flask micro-framework for Python was used to build the back-end for the site.  In addition to the main Flask framework, several Flask extensions were used as well, including:
-        - [MongoEngine](https://docs.mongoengine.org/): Mongoengine is an Object-Document Mapper for Python and MongoDB and was used to interact with the databse in this project.
+        - [MongoEngine](https://docs.mongoengine.org/): Mongoengine is an Object-Document Mapper for Python and MongoDB and was used to interact with the database in this project.
         - [Login](https://flask-login.readthedocs.io/en/latest/): The LoginManager class was used to handle permissions and manage sessions for users.
         - [Werkzeug](https://werkzeug.palletsprojects.com/en/2.0.x/): Werkzeug was used to generate and check user password hash values used during registration and login.
         - [WTForms](https://flask-wtf.readthedocs.io/en/0.15.x/): WTForms was used to provide forms for the various user input components of the page, as well as providing CSRF protection.
@@ -256,7 +267,7 @@
 1. [MongoDB](https://www.mongodb.com/)
     - MongoDB was used as the database provider, providing a fast and efficient NoSQL database solution for this project.
 1. [Cloudinary](https://cloudinary.com/)
-    - Cloudinary proivdes the image upload, transformation and cloud hosting services needed for the site to function properly.  In addition, I have enabled a Cloudinary add-on called Rekognition AI Moderation by Amazon which provides automatic content moderation and protection against inappropriate content using deep learning algorithms.
+    - Cloudinary provides the image upload, transformation and cloud hosting services needed for the site to function properly.  In addition, I have enabled a Cloudinary add-on called Rekognition AI Moderation by Amazon which provides automatic content moderation and protection against inappropriate content using deep learning algorithms.
 1. [Material Design Bootstrap (MDB)](https://mdbootstrap.com/)
     - Material Design for Bootstrap v5 was used to add responsiveness and provide a simplified grid construction method.  MDB also provided access to many standardized components with a clean design which served as building blocks for many elements of the site.
 1. [Masonry](https://masonry.desandro.com/)
@@ -284,11 +295,11 @@
 1. [Code Institute Full-Stack Developer Course](https://www.codeinstitute.net/)
     - Code snippets were referenced for styling various elements of the site, and organization of the social media links footer section.
 
-## Testing - TBU
+## Testing
 
-### Detailed testing information can be found in the testing file, [located here.](documentation/TESTING.md)
+### Detailed testing information can be found in the testing file, [located here.](documentation/TESTING.md)<!-- omit in toc -->
 
-## Deployment - TBU
+## Deployment
 
 ### Deployment Requirements
 
@@ -339,24 +350,18 @@
 2. Ensure you have a MongoDB database set up (see MongoDB Database Setup section above).
    1. Create the following collections: comment, user, and photo.
 
-3. Configure local enviornment variables
-   1. There are multiple ways to achieve this, however for this project I used an env.py file added to .gitignore - this is critically important to avoid exposing sensitive configuration data!
-   2. Configure your env.py file as follows:
+3. Configure local environment variables
+   1. Set up your .flaskenv file and ensure that it is included in .gitignore - this is critically important to avoid exposing sensitive configuration data!
+   2. Configure your .flaskenv file as follows:
 
         ```python
-            import os
-
-            # Flask environment variables
-            os.environ.setdefault("IP", "0.0.0.0")
-            os.environ.setdefault("PORT", "5000")
-            os.environ.setdefault("SECRET_KEY", "[your_secret_key]")
-            # MongoDB environment variables
-            os.environ.setdefault("MONGO_URI", "[your_mongo_uri]")
-            os.environ.setdefault("MONGO_DB", "[your_db_name]")
-            # Cloudinary environment variables
-            os.environ.setdefault("CLOUD_NAME", "[your_cloud_name]")
-            os.environ.setdefault("API_KEY", "[your_api_key]")
-            os.environ.setdefault("API_SECRET", "[your_api_secretkey]")
+            FLASK_APP=run.py
+            SECRET_KEY=[your_secret_key]
+            MONGO_URI=[your_mongo_uri]
+            MONGO_DB=[your_db_name]
+            CLOUD_NAME=[your_cloud_name]
+            API_KEY=[your_api_key]
+            API_SECRET=[your_api_secretkey]
         ```
 
 ### Heroku Deployment
@@ -371,15 +376,15 @@ The project was deployed to Heroku using the following steps, which can be follo
 2. For the deployment method, select GitHub, then select "Connect to GitHub".
 3. After you have connected to the repository for the cloned app, you need to configure the Heroku environment variables.
 4. Open the "Settings" menu and click the "Reveal Config Vars" button to view the environment variables.
-5. Add all necessary variable and value pairs exactly as used in the locan environment variables file.
+5. Add all necessary variable and value pairs exactly as used in the local environment variables file.
 6. Return to the "Deploy" tab and click "Deploy Branch" (unless you opted to enable automatic deployments)
 7. After the deployment process has completed, you can view your live application by clicking "View App", or navigating to the name of your app with .herokuapp.com added.
 
-## Credits - TBU
+## Credits
 
 ### Code
 
-- [Material Design Bootstrap Documentation](https://mdbootstrap.com/) : Code snippets taken from the offical MDBootstrap reference materials were used to create the layout of the site, including various text and image cards, the navigation bar, as well as utilizing the styling from MDB including the colour palette and Google Font family.
+- [Material Design Bootstrap Documentation](https://mdbootstrap.com/) : Code snippets taken from the official MDBootstrap reference materials were used to create the layout of the site, including various text and image cards, the navigation bar, as well as utilizing the styling from MDB including the colour palette and Google Font family.
 
 - [Python Flask Tutorial: Full-Featured Web App](https://www.youtube.com/watch?v=MwZwr5Tvyxo&list=PL-osiE80TeTs4UjLw5MM6OjgkjFeUxCYH) : A multi-part YouTube coding tutorial which was referenced extensively for guidance on package structure, blueprints, object model creation and other key features of the application.  Code in this project may follow similar logical flow or format but all efforts were taken to create unique versions of these concepts.
 
@@ -387,17 +392,19 @@ The project was deployed to Heroku using the following steps, which can be follo
 
 - [MongoEngine User Guide](https://docs.mongoengine.org/guide/index.html) : The MongoEngine guide document was referenced extensively to create the correct data queries for the MongoDB database used in this project, as the tutorials above both use SQL databases.  
 
-- [Flask-Login User Guide](https://flask-login.readthedocs.io/en/latest/) : The Flask Login documentation was used to configure the LoginManager class used to manage user sessions in the project.  In particular, settings used for this project such setting session_protection to strong for enhanced local cookie security and reducing the default sesion timeout via PERMANENT_SESSION_LIFETIME to 12 hours (from c.31 days) were identified in this documentation.
+- [Flask-Login User Guide](https://flask-login.readthedocs.io/en/latest/) : The Flask Login documentation was used to configure the LoginManager class used to manage user sessions in the project.  In particular, settings used for this project such setting session_protection to strong for enhanced local cookie security and reducing the default session timeout via PERMANENT_SESSION_LIFETIME to 12 hours (from c.31 days) were identified in this documentation.
 
-- [WTForms Crash Course](https://wtforms.readthedocs.io/en/2.3.x/crash_course/) : The WTForms crash course was used (in addition to the general WTForms documentation) to create the object models for Users, Photos, Comments and Categories, generate the corresponding forms (in each packages respective forms.py file), valdiate form data, configure forms for enhanced security and finally generate the form element HTML in template files.
+- [WTForms Crash Course](https://wtforms.readthedocs.io/en/2.3.x/crash_course/) : The WTForms crash course was used (in addition to the general WTForms documentation) to create the object models for Users, Photos, Comments and Categories, generate the corresponding forms (in each packages respective forms.py file), validate form data, configure forms for enhanced security and finally generate the form element HTML in template files.
 
 - [Code Institute Full-Stack Developer Course](https://www.codeinstitute.net/) : Code snippets were referenced from the Task Manager mini-project, as well as the guide for configuring the MongoDB database and Heroku deployment.
 
 - [README Template](https://github.com/Code-Institute-Solutions/SampleREADME) : Template for the README.md file for this project was sourced from Code Institute.
 
+- Additional credits for code snippets or solutions can be found inline in the project code where applicable.
+
 ### Content
 
-- All static text content (such as landing page text and page descritiptions) was written by the developer.  In addition, demonstration user accounts were created to populate image and comment data to the site for demo purposes, written by the developer.
+- All static text content (such as landing page text and page descriptions) was written by the developer.  In addition, demonstration user accounts were created to populate image and comment data to the site for demo purposes, written by the developer.
 
 - All other user content, such as photos, photo descriptions, user profile details, and photo comments added are created by the respective user who added them.
 
@@ -407,7 +414,7 @@ The project was deployed to Heroku using the following steps, which can be follo
 
 - Additional images may be provided by users from their own image libraries, no copyright or ownership is implied by displaying these images.
 
-### Acknowledgements
+### Acknowledgments
 
 - My Code Institute Mentor Aaron for helpful feedback on my ideas prior to development and guidance throughout the project.
 
