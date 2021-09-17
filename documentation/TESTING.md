@@ -23,8 +23,8 @@
 The W3C Markup Validator, W3C CSS Validator, PEP8 Online and PyCharm were used to validate every page of the project to ensure there were no outstanding syntax errors in the project.  Results of those checks are documented in PDFs included in the project repository and can be accessed by following the links below.
 
 - [W3C Markup Validator](https://validator.w3.org/nu/)
-  - As the majority of the functionality of the site requires a user to be logged in, testing HTML via the deployed site was not possible, outside of the index page, login page and register page.  All return no errors except for Register, which contains an error due to Flask WTForms rendering a label with a "for" attribute for a radio button field, which is not understood to be a valid input field by the validator.  There is no way to change this rendering configuration that I am aware of after investigation and review of the WTForms documentation.
-  - When validating directly via HTML code, due to the use of the Jinja templating language each HTML file will produce warnings and errors in the W3C Markup validator.  However, every page on the site was checked by inserting its respective code into the base.html template directly in the W3C validator, and the warnings/errors returned for each page were reviewed to ensure only Jinja related errors were returned.
+  - All pages validate without errors when validated from the deployed Heroku hosted site, except for one issue on the registration form page.
+  - 
   - Upon review of each page, no outside errors remain in the project that are not due to Jinja templating syntax.
 
 - [W3C CSS Validator - Jigsaw](https://jigsaw.w3.org/css-validator/)
