@@ -5,6 +5,7 @@ from flask_login import UserMixin
 from cloudinary import uploader
 from app import db, login
 
+
 # User class setup
 class User(db.Document, UserMixin):
     username = db.StringField(max_length=14, unique=True, required=True)
@@ -44,11 +45,14 @@ class Photo(db.Document):
     def __repr__(self):
         return f"Photo('{self.title}', '{self.user_uploaded_by}')"
 
-    # Use cloudinary uploader to delete photo from cloud if user deletes photo in the app
-    # Passes in the photo's public_id which is created at upload and stored in the DB.
+    # Use cloudinary uploader to delete photo
+    # from cloud if user deletes photo in the app
+    # Passes in the photo's public_id which
+    # is created at upload and stored in the DB.
     def delete_photo_db(self):
         public_id = self.public_id
         uploader.destroy(public_id)
+
 
 # Comment class setup
 class Comment(db.Document):
@@ -61,11 +65,11 @@ class Comment(db.Document):
 
     # Dunder method to configure how Comment object is returned when printed
     def __repr__(self):
-        return f"Comment('{self.user_comment_by}', '{self.photo_commented_on}', '{self.comment_text}')"
+        return f"Comment('{self.user_comment_by}', '{self.comment_text}')"
 
 
 # Flask login manager user loader - gets current user ID from DB
-# User model above inherits from UserMixin class to provide required 
+# User model above inherits from UserMixin class to provide required
 # validation attributes & methods to login manager
 @login.user_loader
 def load_user(id):
@@ -73,5 +77,7 @@ def load_user(id):
     """
     If pk=id not passed in, this is the error returned by mongoengine:
     This prevents the application from running
-    mongoengine.errors.InvalidQueryError: Not a query object: 6133f4f96f1e2846d63bf052. Did you intend to use key=value?
+    mongoengine.errors.InvalidQueryError:
+    Not a query object: 6133f4f96f1e2846d63bf052.
+    Did you intend to use key=value?
     """

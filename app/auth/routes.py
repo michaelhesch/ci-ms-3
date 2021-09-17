@@ -31,10 +31,10 @@ def login():
             # If next argument not passed, redirect to index
             if not next_page or url_parse(next_page).netloc != '':
                 next_page = url_for('main.index')
-            # Else if next is found, redirects to user's desired page 
+            # Else if next is found, redirects to user's desired page
             # once logged in
             return redirect(next_page)
-            
+
         except DoesNotExist:
             flash('Incorrect login details, please try again.')
             return redirect(request.referrer)
@@ -81,7 +81,7 @@ def register():
             returned when a user provides a username or email
             that already exists in the db.
             """
-            flash("The username or email address provided already exists, please try again.")
+            flash("The username or email already exists, please try again.")
             return redirect(request.referrer)
 
     return render_template('auth/register.html', title='Register', form=form)

@@ -10,9 +10,9 @@ class Config(object):
     PERMANENT_SESSION_LIFETIME = timedelta(hours=12)
     # Import cloudinary configuration environment variables
     cloudinary.config(
-        cloud_name = os.getenv('CLOUD_NAME'), 
-        api_key = os.getenv('API_KEY'), 
-        api_secret = os.getenv('API_SECRET'))
+        cloud_name=os.getenv('CLOUD_NAME'),
+        api_key=os.getenv('API_KEY'),
+        api_secret=os.getenv('API_SECRET'))
 
     # Import MongoDB configuration environment variables
     MONGODB_SETTINGS = {
