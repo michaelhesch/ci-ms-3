@@ -270,7 +270,7 @@
 
 ## Testing - TBU
 
-### Detailed testing information can be found in the testing file, [located here.](#)
+### Detailed testing information can be found in the testing file, [located here.](documentation/TESTING.md)
 
 ## Deployment - TBU
 
@@ -312,16 +312,52 @@
 
 [Click Here](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository#cloning-a-repository-to-github-desktop) to visit GitHub Help for more detailed explanations of the cloning process.
 
-### Heroku Deployment - TBU
+### Working With A Local Clone
 
-The project was deployed to Heroku using the following steps:
+1. Setup all dependencies:
+   1. Change directory to the location of the local clone.
+   2. Create a new Python virtual environment to ensure no conflicts occur with locally installed Python packages.  This is done with the command "python3 -m venv venv" (if needed install the Python virtual environment package with "pip install virtualenv")
+   3. Launch your virtual environment with ".\venv\Scripts\activate" (on Windows, syntax will differ for other operating systems)
+   4. Install all necessary dependencies for this project as specified in the requirements.txt file with the command "pip install -r requirements.txt"
 
-1. Log in to GitHub and locate the [GitHub Repository](https://github.com/michaelhesch/ci-ms-3/)
-2. From the Repository menu, select "Settings" at the far right of the menu bar.
-3. Scroll down the Settings page and select the "Pages" option.
-4. Under "Source", click the dropdown and select "Main" to select the main branch of the project.  Press "save".
-5. The page will automatically refresh.
-6. The site has now been published and GitHub will display the [link](https://michaelhesch.github.io/ci-ms-3/) in a green box.
+2. Ensure you have a MongoDB database set up (see MongoDB Database Setup section above).
+   1. Create the following collections: comment, user, and photo.
+
+3. Configure local enviornment variables
+   1. There are multiple ways to achieve this, however for this project I used an env.py file added to .gitignore - this is critically important to avoid exposing sensitive configuration data!
+   2. Configure your env.py file as follows:
+
+        ```python
+            import os
+
+            # Flask environment variables
+            os.environ.setdefault("IP", "0.0.0.0")
+            os.environ.setdefault("PORT", "5000")
+            os.environ.setdefault("SECRET_KEY", "[your_secret_key]")
+            # MongoDB environment variables
+            os.environ.setdefault("MONGO_URI", "[your_mongo_uri]")
+            os.environ.setdefault("MONGO_DB", "[your_db_name]")
+            # Cloudinary environment variables
+            os.environ.setdefault("CLOUD_NAME", "[your_cloud_name]")
+            os.environ.setdefault("API_KEY", "[your_api_key]")
+            os.environ.setdefault("API_SECRET", "[your_api_secretkey]")
+        ```
+
+### Heroku Deployment
+
+Heroku deployment is fast and efficient once the project is properly configured.  Heroku needs the requirements.txt and Procfile files included in the repository for this project to deploy the application to a live environment.
+
+If the Procfile was not cloned, this can easily be created from the terminal on Windows using "echo web: gunicorn run:app >Procfile".  Be sure to do this in the project's root directory.
+
+The project was deployed to Heroku using the following steps, which can be followed for a local clone:
+
+1. Log in to your Heroku account, then create a new app with a unique name.
+2. For the deployment method, select GitHub, then select "Connect to GitHub".
+3. After you have connected to the repository for the cloned app, you need to configure the Heroku environment variables.
+4. Open the "Settings" menu and click the "Reveal Config Vars" button to view the environment variables.
+5. Add all necessary variable and value pairs exactly as used in the locan environment variables file.
+6. Return to the "Deploy" tab and click "Deploy Branch" (unless you opted to enable automatic deployments)
+7. After the deployment process has completed, you can view your live application by clicking "View App", or navigating to the name of your app with .herokuapp.com added.
 
 ## Credits - TBU
 
@@ -339,7 +375,7 @@ The project was deployed to Heroku using the following steps:
 
 - [WTForms Crash Course](https://wtforms.readthedocs.io/en/2.3.x/crash_course/) : The WTForms crash course was used (in addition to the general WTForms documentation) to create the object models for Users, Photos, Comments and Categories, generate the corresponding forms (in each packages respective forms.py file), valdiate form data, configure forms for enhanced security and finally generate the form element HTML in template files.
 
-- [Code Institute Full-Stack Developer Course](https://www.codeinstitute.net/) : Code snippets were referenced from the Task Manager mini-project, as well as the guide for configuring the MongoDB database.
+- [Code Institute Full-Stack Developer Course](https://www.codeinstitute.net/) : Code snippets were referenced from the Task Manager mini-project, as well as the guide for configuring the MongoDB database and Heroku deployment.
 
 - [README Template](https://github.com/Code-Institute-Solutions/SampleREADME) : Template for the README.md file for this project was sourced from Code Institute.
 
