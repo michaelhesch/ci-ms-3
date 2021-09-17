@@ -10,7 +10,7 @@
             <legend class="border-bottom mb-4">Register a new account</legend>
             <!-- Username input -->
             <div class="form-group mb-4">
-              {{ form.username.label(class_="form-control-label") }}<br>
+              {{ form.username.label(class_="form-control-label") }}
               {% if form.username.errors %}
               {{ form.username(class_="form-control is-invalid") }}
               <div class="invalid-feedback">
@@ -24,7 +24,7 @@
             </div>
             <!-- Email address input -->
             <div class="form-group mb-4">
-              {{ form.email.label(class_="form-control-label") }}<br>
+              {{ form.email.label(class_="form-control-label") }}
               {% if form.email.errors %}
               {{ form.email(class_="form-control is-invalid") }}
               <div class="invalid-feedback">
@@ -33,46 +33,45 @@
                 {% endfor %}
               </div>
               {% else %}
-                {{ form.email(size=32, class_="form-control") }}<br>
+                {{ form.email(size=32, class_="form-control") }}
               {% endif %}
             </div>
             <!-- First name input -->
             <div class="form-group mb-4">
-              {{ form.first_name.label(class_="form-control-label") }}<br>
-              {{ form.first_name(size=32, class_="form-control") }}<br>
+              {{ form.first_name.label(class_="form-control-label") }}
+              {{ form.first_name(size=32, class_="form-control") }}
               {% for error in form.first_name.errors %}
                 <span style="color: red;">{{ error }}</span>
               {% endfor %}
             </div>
             <!-- Surname input -->
             <div class="form-group mb-4">
-              {{ form.last_name.label(class_="form-control-label") }}<br>
-              {{ form.last_name(class_="form-control") }}<br>
+              {{ form.last_name.label(class_="form-control-label") }}
+              {{ form.last_name(class_="form-control") }}
               {% for error in form.last_name.errors %}
                 <span style="color: red;">{{ error }}</span>
               {% endfor %}
             </div>
             <!-- Password input -->
             <div class="form-group mb-4">
-              {{ form.password.label(class_="form-control-label") }}<br>
-              {{ form.password(class_="form-control") }}<br>
+              {{ form.password.label(class_="form-control-label") }}
+              {{ form.password(class_="form-control") }}
               {% for error in form.password.errors %}
                 <span style="color: red;">{{ error }}</span>
               {% endfor %}
             </div>
             <!-- Repeat/confirm password input -->
             <div class="form-group mb-4">
-              {{ form.password2.label(class_="form-control-label") }}<br>
-              {{ form.password2(size=32, class_="form-control") }}<br>
+              {{ form.password2.label(class_="form-control-label") }}
+              {{ form.password2(size=32, class_="form-control") }}
               {% for error in form.password2.errors %}
                 <span style="color: red;">{{ error }}</span>
               {% endfor %}
             </div>
-            <div class="row form-group">
-              <div class="col">
-                {{ form.avatar.label(class_="form-control-label") }}<br />
-                {{ form.avatar(class_="form-control", default="1") }}
-              </div>
+            <!-- Avatar color selection input -->
+            <div class="form-group">
+              {{ form.avatar.label(class_="form-control-label") }}
+              {{ form.avatar(class_="form-control") }}
             </div>
           </fieldset>
           <div class="form-group mb-4">
