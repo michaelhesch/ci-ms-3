@@ -23,9 +23,50 @@
 The W3C Markup Validator, W3C CSS Validator, PEP8 Online and PyCharm were used to validate every page of the project to ensure there were no outstanding syntax errors in the project.  Results of those checks are documented in PDFs included in the project repository and can be accessed by following the links below.
 
 - [W3C Markup Validator](https://validator.w3.org/nu/)
-  - All pages validate without errors when validated from the deployed Heroku hosted site, except for one issue on the registration form page.
-  - 
-  - Upon review of each page, no outside errors remain in the project that are not due to Jinja templating syntax.
+  - All pages validate without errors when validated from the deployed Heroku hosted, except for one error on the Register page which appears to be returned from the way in which WTForms renders a RadioField in a form.
+  
+  - Vaidation documentation:
+    - [Index](validation/index-html.pdf)
+    - [Login](validation/login-html.pdf)
+    - [Register](validation/register-html.pdf)
+    - [Explore](validation/explore-html.pdf)
+    - [Add Photo](validation/upload-html.pdf)
+    - [Photo](validaton/photo-html.pdf)
+    - [Profile](validation/profile-html.pdf)
+    - [Edit Profile](validation/edit-profile-html.pdf)
+  
+  - Based on the HTML returned, it seems that this error is being returned due to the "for" label referring to a "ul" element with the corresponding ID, rather than an input field as it expects.  This is how WTForms / Jinja renders the HTML for a RadioField, and is not something I can configure.  The form and webpage behaves normally in functional testing and usage.
+  
+  - For reference, Jinja template code from the register.html file below, which produces the following HTML that returns this error:
+    - Error message returned:
+    - ![Register Form Validation](screenshots/register-validation.png)
+  
+    ```jinja2
+    {{ form.avatar.label(class_="form-control-label") }}
+    {{ form.avatar(class_="form-control") }}
+    ```
+
+    ```html
+    <label class="form-control-label" for="avatar">Choose Your Avatar Color</label>
+      <ul class="form-control" id="avatar">
+        <li>
+          <input checked id="avatar-0" name="avatar" type="radio" value="1"> 
+          <label for="avatar-0">Red</label>
+        </li>
+        <li>
+          <input id="avatar-1" name="avatar" type="radio" value="2"> 
+          <label for="avatar-1">Orange</label>
+        </li>
+        <li>
+          <input id="avatar-2" name="avatar" type="radio" value="3"> 
+          <label for="avatar-2">Teal</label>
+        </li>
+        <li>
+          <input id="avatar-3" name="avatar" type="radio" value="4">
+          <label for="avatar-3">Navy</label>
+        </li>
+      </ul>
+    ```
 
 - [W3C CSS Validator - Jigsaw](https://jigsaw.w3.org/css-validator/)
   - [Style.css Results](validation/MS3-CSS-Validation.pdf)
