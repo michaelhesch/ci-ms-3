@@ -8,7 +8,7 @@ from app.main import bp
 @bp.route('/')
 @bp.route('/index')
 def index():
-    if current_user.is_authenticated == "False":
+    if current_user.is_authenticated == False:
         flash("Welcome, please log in or register to access the site!")
         return render_template('index.html')
     else:
