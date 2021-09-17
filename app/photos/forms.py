@@ -2,54 +2,56 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField, ValidationError
 from wtforms.validators import DataRequired, Length
 
+
 # Photo upload form
 class UploadPhoto(FlaskForm):
     title = StringField(
-        'Photo Title', 
+        'Photo Title',
         validators=[DataRequired(
             message="Please enter your username."),
             Length(max=25)])
     description = TextAreaField(
-        'Description of your photo', 
+        'Description of your photo',
         validators=[DataRequired(
             message="Please enter a description 180 characters or less."),
             Length(min=0, max=180)])
     submit = SubmitField('Add Photo')
 
+
 # Photo editing form
 class EditPhotoForm(FlaskForm):
     title = StringField(
-        'Photo Title', 
+        'Photo Title',
         validators=[DataRequired(
             message="Please enter a title 25 characters or less."),
             Length(max=25)])
     description = TextAreaField(
-        'Description of your photo', 
+        'Description of your photo',
         validators=[DataRequired(
             message="Please enter a description 180 characters or less."),
             Length(min=0, max=180)])
     submit = SubmitField('Submit')
 
+
 # Photo comment form
 class AddComment(FlaskForm):
     comment_text = TextAreaField(validators=[
-        DataRequired('Please add text to submit a comment.'), 
+        DataRequired('Please add text to submit a comment.'),
         Length(min=2, max=200)])
     submit = SubmitField('Add Comment')
-    
+
     def validate_comment(form, comment_text):
         if len(comment_text.data) > 200:
             raise ValidationError('Comment must be less than 200 characters')
 
+
 # Photo edit comment form
 class EditComment(FlaskForm):
-    comment_text = TextAreaField('Edit Comment', 
-        validators=[
-            DataRequired('Comment cannot be blank!'), 
-            Length(min=2, max=200)])
+    comment_text = TextAreaField('Edit Comment', validators=[
+        DataRequired('Comment cannot be blank!'),
+        Length(min=2, max=200)])
     submit = SubmitField('Save Changes')
 
     def validate_comment(form, comment_text):
         if len(comment_text.data) > 200:
             raise ValidationError('Comment must be less than 200 characters')
-

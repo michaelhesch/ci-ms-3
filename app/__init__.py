@@ -26,7 +26,7 @@ def create_app(config_class=Config):
     from app.errors import bp as errors_bp
     app.register_blueprint(errors_bp)
 
-    # Note: if url_prefix is included for main route, 
+    # Note: if url_prefix is included for main route,
     # '/index' and '/' endpoints will not work
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
@@ -36,5 +36,5 @@ def create_app(config_class=Config):
 
     from app.photos import bp as photo_bp
     app.register_blueprint(photo_bp, url_prefix='/photos')
-    
+
     return app
