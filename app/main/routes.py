@@ -12,7 +12,7 @@ def index():
         flash("Welcome, please log in or register to access the site!")
         return render_template('index.html')
     else:
-        return redirect(url_for('photos.photo_feed', title="Explore"))
+        return redirect(url_for('photos.photo_feed'))
 
 
 @bp.route('/profile/<username>')
