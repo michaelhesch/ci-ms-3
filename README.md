@@ -8,7 +8,7 @@
 
  The purpose of Out of Office is to provide users with a platform for sharing their favourite photos from their holidays, and interacting with other user's holiday photos.  The site provides users with the ability to create an account, log in, and then easily share their photos, view other photos, as well as manage the photos they have uploaded to the platform.  The user can also leave "likes" and comments on any photo uploaded to the platform.
 
-- This is a full-stack web application built with Material Design Bootstrap, a Python back-end utilizing the Flask micro-framework, a MongoDB NoSQL database, 
+- This is a full-stack web application built with Material Design Bootstrap, a Python back-end utilizing the Flask micro-framework, a MongoDB NoSQL database, Cloudinary 
 
 [View the live project here.](https://ci-ms-3-mh.herokuapp.com/)
 
@@ -159,6 +159,20 @@
   - Select 'Python 3.6 or later' and copy the connection string provided
   - Set necessary environment variables in Python environment, both local git-ignored configuration and Heroku deployment environment
 
+### Cloudinary Implementation
+
+- This project uses Cloudinary to both manage user photo file uploads but also as a cloud hosting provider for the images displayed on the app.  Cloudinary's API also provides several very useful features that improve performance of the deployed site.
+- Cloudinary also offers a range of third party add-ons that further enhance the functionality provided by Cloudinary itself.  For this project, I have enabled the Amazon Rekognition AI Moderation add-on, which provides automatic artificial intelligence-based content moderation limiting a range of inapproprite content from being posted to the deployed site.  You can read moreabout this add-on [here.](https://cloudinary.com/documentation/aws_rekognition_ai_moderation_addon)
+
+#### Cloudinary Upload and Transformation Configuration
+
+- Each image uploaded to the site undergoes a series of transformations to improve site performance and optimize storage space used.  These settings include:
+  - Allowing Cloudinary to automatically determine the best quality settings to optimize file size while maintaining viewability.
+  - Setting max height and width to 1920 x 1080px
+  - Automatically cropping images while maintaining their original aspect ratio to fit this size requirement.
+  - Automatically moderating content uploaded to the site with Amazon Rekognition.
+- To provide essential defensive programming measures, the file types allowed both in the image upload input field as well as those accepted by Cloudinary for this project are restricted to JPG, JPEG and PNG files.
+
 ## Features
 
 ### All Pages
@@ -249,6 +263,8 @@
     - Masonry layout was used to render the photo cards to create a unique visual style in the 'Explore' and 'Profile' pages.  This is achieved using a combination of JavaScript and CSS properties applied to the container for the photo sections.
 1. [Google Fonts:](https://fonts.google.com/)
     - Google fonts are included with MBD, and this project uses the Roboto font family throughout the site.
+1. [Favicon.io](https://favicon.io)
+    - Favicon.io was used to generate the Favicons used for the browser tab as well as the navbar logo for the site.
 1. [Font Awesome:](https://fontawesome.com/)
     - Font Awesome icons are included with MDB, and this project uses the provided icons to provide simple, user-friendly ways to interact with different aspects of the site's functionality.
 1. [Balsamiq:](https://balsamiq.com/)
@@ -263,8 +279,8 @@
     - Git was used for version control by utilizing the Windows command prompt/terminal interface to commit and push to GitHub.
 1. [GitHub:](https://github.com/)
     - GitHub is used to store the project's code after being pushed from the local development machine using Git.
-1. [Heroku](https://id.heroku.com/login)
-    - Heroku was used to deploy the site and provides hosting for the live version of the site.
+1. [Heroku](https://www.heroku.com/)
+    - Heroku was used to deploy the site and provides cloud hosting for the live version of the site.
 1. [Code Institute Full-Stack Developer Course](https://www.codeinstitute.net/)
     - Code snippets were referenced for styling various elements of the site, and organization of the social media links footer section.
 
