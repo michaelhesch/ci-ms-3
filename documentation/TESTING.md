@@ -199,11 +199,11 @@ The W3C Markup Validator, W3C CSS Validator, PEP8 Online and PyCharm were used t
   
   1. [Mobile Score & Summary](documentation/lighthouse/Explore-Mobile.pdf)
 
-    ![Mobile Lighthouse Results](screenshots/Mobile-LH.png)
+    ![Mobile Lighthouse Results](screenshots/Mobile-LH.PNG)
   
   2. [Desktop Score & Summary](documentation/lighthouse/Explore-Desktop.pdf)
 
-    ![Desktop Lighthouse Results](screenshots/Desktop-LH.png)
+    ![Desktop Lighthouse Results](screenshots/Desktop-LH.PNG)
 
 - Please note that while efforts to correct some defects indicated in these results are due to issues found in external dependencies, such as MDBootstrap's CSS for example, or other faults that are beyond the scope of this project to remedy.
 
