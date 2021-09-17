@@ -31,7 +31,7 @@ The W3C Markup Validator, W3C CSS Validator, PEP8 Online and PyCharm were used t
     - [Register](validation/register-html.pdf)
     - [Explore](validation/explore-html.pdf)
     - [Add Photo](validation/upload-html.pdf)
-    - [Photo](validaton/photo-html.pdf)
+    - [Photo](validation/photo-html.pdf)
     - [Profile](validation/profile-html.pdf)
     - [Edit Profile](validation/edit-profile-html.pdf)
   
