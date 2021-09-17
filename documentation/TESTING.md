@@ -2,7 +2,7 @@
 
 # Testing
 
-[Return to Readme](#)
+[Return to Readme](/README.md)
 
 ## Table of Contents
 
@@ -15,19 +15,21 @@
 
 ### Code Validation
 
-The W3C Markup Validator and W3C CSS Validator Services were used to validate every page of the project to ensure there were no syntax errors in the project.  Results of those checks are documented in PDFs included in the project repository and can be accessed by following the links below.
+The W3C Markup Validator, W3C CSS Validator, PEP8 Online and PyCharm were used to validate every page of the project to ensure there were no outstanding syntax errors in the project.  Results of those checks are documented in PDFs included in the project repository and can be accessed by following the links below.
 
 - [W3C Markup Validator](https://validator.w3.org/nu/)
-  - [x Results](#)
-    - No warnings or errors returned.
-  - [x Results](#)
-    - No warnings or errors returned.
+  - Due to the use of the Jinja templating language, each HTML file will produce warnings and errors when validating using the W3C Markup validator.  However, every page on the site was checked by inserting its respective code into the base.html template directly in the W3C validator, and the warnings/errors returned for each page were reviewed to ensure only Jinja related errors were returned.
+  - Upon review of each page, no outside errors remain in the project that are not due to Jinja templating syntax.
 
 - [W3C CSS Validator - Jigsaw](https://jigsaw.w3.org/css-validator/)
-  - [Style.css Results](#)
-    - No warnings or errors returned.
+  - [Style.css Results](documentation/validation/MS3-CSS-Validation.pdf)
+    - No warnings or errors returned when validating style.css content directly.
+    - Note: multiple warnings are returned if validation is run on the deployed app due to dependencies such as Bootstrap.
 
-- [Pycharm](https://jshint.com/) - Pycharm was used to check Python code for PEP8 compliance.
+- [PEP8 Online](http://pep8online.com/) - PEP8 Online is a web-based PEP8 code format compliance checker which was used to check each Python file in this app for PEP8 compliance.
+  - Warnings returned for the app sub-package "__init__.py" files due to the need to import the routes package at the bottom of the file rather than the top, after the package blueprint is created.  Without this configuration the app will not work as it is not able to initalize any of the routes which depend upon the respective blueprints.  PyCharm does not produce any error or warning for this configuration.
+
+- [PyCharm](https://www.jetbrains.com/pycharm/) - Pycharm Python IDE was used as an additional double-check on all Python code for PEP8 compliance after checking each file with PEP8 Online.
   
 #### Functional Testing
 

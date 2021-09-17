@@ -48,30 +48,21 @@
                         -->
                         <div class="form-group my-3">
                           {{ editphotoform.title.label(class_="form-control-label") }}
-                          {% if editphotoform.title.errors %}
-                            <input class="form-control is-invalid" id="title" name="title" required type="text" value="{{ photo.title }}">
-                            {{ editphotoform.title(class_="form-control is-invalid") }}
-                            <div class="invalid-feedback">
-                              {% for error in editphotoform.title.errors %}
-                              <span style="color: red;">{{ error }}</span>
-                              {% endfor %}
-                            </div>
-                          {% else %}
-                            <input class="form-control" id="title" name="title" required type="text" value="{{ photo.title }}">
-                          {% endif %}
+                          <input class="form-control" id="title" name="title" required maxlength="25" type="text" value="{{ photo.title }}">
+                          <div class="invalid-feedback">
+                            {% for error in editphotoform.title.errors %}
+                            <span style="color: red;">{{ error }}</span>
+                            {% endfor %}
+                          </div>
                         </div>
                         <div class="form-group my-3">
                           {{ editphotoform.description.label(class_="form-control-label") }}
-                          {% if editphotoform.description.errors %}
-                            <textarea class="form-control is-invalid" id="description" name="description" required>{{ photo.description }}</textarea>
-                            <div class="invalid-feedback">
-                              {% for error in editphotoform.description.errors %}
-                              <span style="color: red;">{{ error }}</span>
-                              {% endfor %}
-                            </div>
-                          {% else %}
-                            <textarea class="form-control" id="description" name="description" required>{{ photo.description }}</textarea>
-                          {% endif %}
+                          <textarea class="form-control" id="description" name="description" maxlength="180" required>{{ photo.description }}</textarea>
+                          <div class="invalid-feedback">
+                            {% for error in editphotoform.description.errors %}
+                            <span style="color: red;">{{ error }}</span>
+                            {% endfor %}
+                          </div>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-light" data-mdb-dismiss="modal">
@@ -131,7 +122,7 @@
             {{ commentform.hidden_tag() }}
             <div class="form-group">
               {{ commentform.comment_text.label(class_="form-control-label") }}
-              {{ commentform.comment_text(class_="form-control", placeholder="Add a comment!") }}
+              {{ commentform.comment_text(class_="form-control", maxlength="180", placeholder="Add a comment!") }}
               {% for error in commentform.comment_text.errors %}
                 <span style="color: red;">{{ error }}</span>
               {% endfor %}
@@ -188,8 +179,12 @@
                             <form method="POST" action="{{ url_for('photos.edit_comment', id=comment.id) }}">
                               {{ editcommentform.hidden_tag() }}
                               {{ editcommentform.comment_text.label(class_="form-control-label") }}
-                              <!-- Explain why textarea is added here vs WTForms if that works -->
-                              <textarea class="form-control" id="comment_text" name="comment_text" required>{{ comment.comment_text }}</textarea>
+                              <!-- 
+                                Fields for title input and description textarea set directly due to WTForms errors encountered
+                                which were not able to be resolved despite exhaustive testing.  Existing values would not
+                                populate using WTForms templating to render the input fields.
+                              -->
+                              <textarea class="form-control" id="comment_text" name="comment_text" maxlength="180" required>{{ comment.comment_text }}</textarea>
                               {% for error in editcommentform.comment_text.errors %}
                                 <span style="color: red;">{{ error }}</span>
                               {% endfor %}
