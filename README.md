@@ -10,8 +10,6 @@
 
 - This is a full-stack web application built with Material Design Bootstrap, a Python back-end utilizing the Flask micro-framework, a MongoDB NoSQL database and Cloudinary.
 
-[View the live project here.](https://ci-ms-3-mh.herokuapp.com/)
-
 ----
 
 - [User Experience (UX)](#user-experience-ux)
